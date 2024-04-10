@@ -13,7 +13,7 @@
         <nav class="main-nav">
             <ul>
                 <li><a href="#">Blog</a></li>
-                <li><a href="#">Categorie</a></li>
+                <li><a href="#">Categories</a></li>
                 <li><a href="#">Contact</a></li>
                 <li><a href="#">Newsletter</a></li>
             </ul>
