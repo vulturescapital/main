@@ -11,7 +11,6 @@ header {
     font-weight: 700; /* Si 'Vultures Capital' doit être en gras */
     font-size: 2rem; /* Ajuster la taille selon vos besoins */
 }
-
 .header-content {
     display: flex;
     justify-content: space-between;

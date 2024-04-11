@@ -12,10 +12,10 @@
 body {
     font-family: 'Poppins', sans-serif;
     line-height: 1.6;
+    color: var(--text-color-light);
+    background-color: var(--background-color-light);
     margin: 0;
     padding: 0;
-    background-color: var(--background-color-light);
-    color: var(--text-color-light);
 }
 
 body.light-mode {
@@ -47,25 +47,75 @@ body.dark-mode {
     }
 }
 
-/* Adaptations pour le mode sombre */
-body.dark-mode header, body.dark-mode .navbar {
+.post {
+    background: #fff;
+    padding: 20px;
+    margin-bottom: 40px;
+    border-radius: 5px;
+}
+
+.post img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px 5px 0 0;
+}
+
+.post-date {
+    color: #888;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+.post h2 {
+    font-size: 1.5em;
+    color: #333;
+    margin: 10px 0;
+}
+
+.post p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.read-more {
+    background-color: #000;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 2px;
+    font-weight: bold;
+}
+
+.read-more:hover {
+    background-color: #555;
+}
+
+.category-card {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.category-card img {
+    width: auto;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 0.25rem;
+    margin-bottom: 15px;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+}
+
+
+body.dark-mode .navbar-brand {
+    color: var(--text-color-dark); /* Couleur pour le mode sombre */
+}
+body.dark-mode header,
+body.dark-mode .navbar-nav .nav-link {
+    color: var(--text-color-dark);
+}
+
+body.dark-mode header {
     background-color: var(--background-color-dark);
-    color: var(--text-color-dark);
-}
-
-body.dark-mode .header-logo, body.dark-mode .navbar-brand,
-body.dark-mode .main-nav a, body.dark-mode .navbar-nav .nav-link {
-    color: var(--text-color-dark);
-}
-
-@media (max-width: 768px) {
-    .main-nav, .navbar-nav {
-        display: block;
-        text-align: center;
-    }
-
-    .main-nav li, .navbar-nav li {
-        display: block;
-        margin: 5px 0;
-    }
 }
