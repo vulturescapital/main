@@ -13,9 +13,9 @@ try {
     // Configurez le mode d'erreur PDO sur Exception
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    echo "Connecté à la base de données $dbname avec succès.";
+    error_log("Connecté à la base de données $dbname avec succès.");
 } catch (PDOException $e) {
-    echo "Erreur de connexion : " . $e->getMessage();
+    error_log("Erreur de connexion : " . $e->getMessage());
 }
 ?>
 
@@ -44,6 +44,7 @@ try {
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <script src="../js/main.js"></script>
 <link rel="icon" type="image/png" href="../images/logo.png">
+
 </head>
 <body>
 <header>
@@ -54,7 +55,7 @@ try {
                 <li><a href="#">Blog</a></li>
                 <li><a href="./categories.php">Categories</a></li>
                 <li><a href="#">Contact</a></li>
-                <li><a href="#">roro</a></li>
+                <li><a href="#">Newsletter</a></li>
             </ul>
         </nav>
         <button id="theme-toggle">Dark Mode</button>
