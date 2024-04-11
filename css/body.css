@@ -1,88 +1,63 @@
-/* General Body Styling */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+:root {
+    --background-color-light: rgb(224, 221, 215);
+    --text-color-light: #333333;
+    --background-color-dark: #333333;
+    --text-color-dark: #ffffff;
+    --footer-background-light: rgb(224, 221, 215);
+    --footer-background-dark: #333333;
+}
+
 body {
-    font-family: 'Arial', sans-serif; /* Use a modern font */
-    color: #333; /* Standard text color for readability */
-    background-color: #f4f4f4; /* A light background to match the theme of the first image */
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    color: var(--text-color-light);
+    background-color: var(--background-color-light);
     margin: 0;
     padding: 0;
 }
 
-/* Container Styling */
+body.light-mode {
+    background-color: var(--background-color-light);
+    color: var(--text-color-light);
+}
+
+body.dark-mode {
+    background-color: var(--background-color-dark);
+    color: var(--text-color-dark);
+}
+
 .container {
     width: 80%;
     margin: auto;
-    padding: 2em 0; /* Adds vertical padding */
-}
-.post {
-    width: 100%; /* Take full width of the container */
-    /* No float */
-    display: block; /* This is the default display for divs and should stack them vertically */
+    padding: 2em 0;
+    overflow: hidden;
 }
 
-/* Post Styling */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1140px;
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        max-width: 960px;
+    }
+}
+
 .post {
-    background-color: #ffffff;
-    margin-bottom: 2em;
-    padding: 1em;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Adds a subtle shadow for depth */
+    background: #fff;
+    padding: 20px;
+    margin-bottom: 40px;
+    border-radius: 5px;
 }
 
 .post img {
-    max-width: 100%; /* Ensures image is not larger than the container */
+    max-width: 100%;
     height: auto;
-    display: block; /* Images are block level to allow for margin */
-    margin: 0 auto 1em auto; /* Centers the image and adds space below */
-}
-
-.post-date {
-    font-size: 0.85em;
-    color: #888;
-    text-align: center; /* Centers the date */
-    margin-bottom: 0.5em;
-}
-
-.post h2 {
-    text-align: center; /* Centers the title */
-    color: #333;
-    margin: 0 0 0.5em 0;
-}
-
-.post p {
-    font-size: 1em;
-    line-height: 1.6;
-    margin-bottom: 1em;
-    text-align: center; /* Centers the text */
-}
-
-.read-more {
-    background-color: #000;
-    color: #fff;
-    padding: 0.5em 1em;
-    text-decoration: none;
-    font-weight: bold;
-    display: block; /* Makes the button block level for easier centering */
-    width: fit-content; /* Makes the button wrap the text */
-    margin: auto; /* Centers the button */
-}
-/* Clearfix for .container */
-.container::after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
-.post {
-    background: #fff; /* Un fond blanc pour faire ressortir le post */
-    padding: 20px; /* Ajout d'espace autour du contenu */
-    margin-bottom: 40px; /* Espace entre les posts */
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* Ombre subtile pour le relief */
-    border-radius: 5px; /* Bords légèrement arrondis */
-}
-
-.post img {
-    max-width: 100%; /* Permet à l'image de s'adapter à la largeur du conteneur */
-    height: auto;
-    border-radius: 5px 5px 0 0; /* Arrondir les coins supérieurs */
+    border-radius: 5px 5px 0 0;
 }
 
 .post-date {
@@ -92,14 +67,14 @@ body {
 }
 
 .post h2 {
-    font-size: 1.5em; /* Taille de police plus grande pour le titre */
+    font-size: 1.5em;
     color: #333;
-    margin: 10px 0; /* Espace autour du titre */
+    margin: 10px 0;
 }
 
 .post p {
     color: #666;
-    margin-bottom: 20px; /* Espace avant le bouton 'Lire plus' */
+    margin-bottom: 20px;
 }
 
 .read-more {
@@ -107,23 +82,91 @@ body {
     color: #fff;
     text-decoration: none;
     padding: 10px 15px;
-    border-radius: 2px; /* Bords arrondis pour le bouton */
-    font-weight: bold; /* Texte en gras pour le bouton */
-    transition: background-color 0.3s ease; /* Animation de fond au survol */
+    border-radius: 2px;
+    font-weight: bold;
 }
 
 .read-more:hover {
-    background-color: #555; /* Changement de couleur au survol */
+    background-color: #555;
 }
-@media (min-width: 1200px) {
-    .container {
-      max-width: 1140px; /* Augmentez selon vos besoins */
-    }
-  }
-  
-  @media (min-width: 992px) {
-    .container {
-      max-width: 960px; /* Augmentez selon vos besoins */
-    }
-  }
 
+.category-card {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.category-card img {
+    width: auto;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 0.25rem;
+    margin-bottom: 15px;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+}
+
+.header-logo {
+    text-decoration: none;
+    color: var(--text-color-light);
+    font-weight: 700;
+    font-size: 2rem;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header {
+    background: var(--background-color-light);
+    color: var(--text-color-light);
+    padding: 10px 0;
+}
+
+header .navbar {
+    background-color: transparent;
+}
+
+header .navbar-toggler {
+    border-color: var(--text-color-light);
+}
+
+header .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(51, 51, 51, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+header .navbar-nav .nav-link {
+    color: var(--text-color-light);
+    font-size: 16px;
+}
+
+header .navbar-nav .nav-link:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .main-nav {
+        text-align: center;
+    }
+
+    .main-nav ul {
+        display: block;
+    }
+
+    .main-nav li {
+        display: block;
+        margin: 5px 0;
+    }
+}
+
+body.dark-mode header,
+body.dark-mode .navbar-nav .nav-link {
+    color: var(--text-color-dark);
+}
+
+body.dark-mode header {
+    background-color: var(--background-color-dark);
+}

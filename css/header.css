@@ -78,7 +78,6 @@ body.dark-mode .main-nav a {
 /* Couleur de fond du header selon le thème */
 header .navbar {
     background-color: var(--background-color-light);
-    transition: background-color 0.3s; /* Transition fluide pour le changement de couleur */
 }
 
 body.dark-mode header .navbar {
