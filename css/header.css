@@ -1,4 +1,14 @@
 /* Header Styles */
+.navbar {
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+/* Si vous utilisez toujours le conteneur Bootstrap */
+.navbar-expand-lg .container {
+    max-width: none;
+}
 header {
     background: var(--background-color-light);
     color: var(--text-color-light);
@@ -61,6 +71,47 @@ header {
     .main-nav li {
         display: block;
         margin: 5px 0; /* Espacement vertical pour les éléments de liste sur petit écran */
+    }
+}
+
+/* Ajustement des paddings du conteneur de la barre de navigation */
+header .container {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/* Assurez-vous que la classe .container n'a pas d'autres styles qui ajoutent du padding ou des marges indésirables */
+.container {
+    padding: 0; /* Enlève le padding par défaut */
+    /* Autres styles */
+}
+
+/* Utilisez les media queries pour ajuster le padding sur des écrans de différentes tailles */
+@media (min-width: 576px) {
+    .container {
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        padding-right: 30px;
+        padding-left: 30px;
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        padding-right: 30px;
+        padding-left: 30px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        padding-right: 30px;
+        padding-left: 30px;
     }
 }
 

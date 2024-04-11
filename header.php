@@ -25,9 +25,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="icon" type="image/png" href="../images/logo.png">
 </head>
-<body class="light-mode"> <!-- Ajoutez ici la classe par défaut du thème -->
+<body class="light-mode">
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light"> <!-- Retirer bg-light pour contrôler la couleur via le CSS -->
+    <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a href="index.php" class="navbar-brand">Vultures Capital</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
