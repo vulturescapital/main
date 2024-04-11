@@ -1,70 +1,56 @@
-<?php
-$host = 'vulturescapital.fr'; // Remplacez par l'adresse du serveur fournie par O2switch
-$dbname = 'kinu7234_vultures'; // Nom de votre base de données
-$user = 'kinu7234_romain'; // Nom d'utilisateur de la base de données
-$password = 'Napoleon0304!'; // Mot de passe de la base de données
-
-// DSN pour la connexion PDO à MySQL
-$dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
-
-try {
-    // Créez une instance de PDO pour établir une connexion à la BDD
-    $pdo = new PDO($dsn, $user, $password);
-    // Configurez le mode d'erreur PDO sur Exception
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    error_log("Connecté à la base de données $dbname avec succès.");
-} catch (PDOException $e) {
-    error_log("Erreur de connexion : " . $e->getMessage());
-}
-?>
-
+<?php include 'dbconfig.php'; ?>
 <html lang="en">
 <head>
+    <!-- Les scripts de thème doivent être chargés avant les autres ressources -->
     <script>
-      // Immediately invoked function to set the theme before the page renders
-      (function() {
-        // Check local storage for the theme preference
-        var theme = localStorage.getItem('theme');
-
-        // Apply the theme class to the body immediately
-        if (theme === 'dark') {
-          document.body.classList.add('dark-mode');
-          // Optionally, you might want to remove the light-mode class if it's set by default in your HTML
-          document.body.classList.remove('light-mode');
-        } else {
-          document.body.classList.add('light-mode');
-        }
-      })();
+        // Votre script pour définir le thème
+        (function() {
+            var theme = localStorage.getItem('theme');
+            if (theme === 'dark') {
+                document.body.classList.add('dark-mode');
+            } else {
+                document.body.classList.add('light-mode');
+            }
+        })();
     </script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vultures Blog</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3pV8TcC2-xxW6GLSsXK9saPc7PJihxpk964IviEry75+6gjV76o+mS0JX" crossorigin="anonymous">
-<link rel="stylesheet" href="../css/styles.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<script src="../js/main.js"></script>
-<link rel="icon" type="image/png" href="../images/logo.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vultures Blog</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Votre CSS personnalisé après Bootstrap pour pouvoir écraser les styles si nécessaire -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" type="image/png" href="../images/logo.png">
 </head>
-<body>
+<body class="light-mode"> <!-- Ajoutez ici la classe par défaut du thème -->
 <header>
-    <div class="container header-content">
-        <h1><a href="index.php" class="header-logo">Vultures Capital</a></h1>
-        <nav class="navbar navbar-expand-lg">
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav mr-auto">
+    <nav class="navbar navbar-expand-lg navbar-light"> <!-- Retirer bg-light pour contrôler la couleur via le CSS -->
+        <div class="container">
+            <a href="index.php" class="navbar-brand">Vultures Capital</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav ml-auto">
                     <li class="nav-item"><a href="#" class="nav-link">Blog</a></li>
                     <li class="nav-item"><a href="./categories.php" class="nav-link">Categories</a></li>
                     <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
                     <li class="nav-item"><a href="#" class="nav-link">Newsletter</a></li>
                 </ul>
             </div>
-        </nav>
-        <button id="theme-toggle" class="btn btn-dark">Dark Mode</button>
-        <div class="social-media">
-            <a href="https://twitter.com/VulturesGroup">
-                <i class="fa-brands fa-twitter"></i>
-            </a>
+            <!-- Bouton pour changer de thème -->
+            <button id="theme-toggle" class="btn btn-sm btn-dark">Dark Mode</button>
         </div>
-    </div>
+    </nav>
 </header>
+
+<!-- Bootstrap JavaScript à la fin du body pour un chargement de page optimal -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

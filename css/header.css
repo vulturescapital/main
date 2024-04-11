@@ -1,0 +1,86 @@
+/* Header Styles */
+header {
+    background: var(--background-color-light);
+    color: var(--text-color-light);
+    padding: 20px 0;
+}
+
+.header-logo {
+    text-decoration: none;
+    color: var(--text-color-light);
+    font-weight: 700; /* Si 'Vultures Capital' doit être en gras */
+    font-size: 2rem; /* Ajuster la taille selon vos besoins */
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-content .header-logo {
+    flex: 1;
+}
+
+.main-nav {
+    flex: 1;
+    text-align: right; /* Aligner la nav à droite */
+}
+
+.main-nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0; /* Enlève la marge par défaut */
+}
+
+.main-nav li {
+    display: inline; /* Afficher les éléments de la liste en ligne */
+    margin-left: 15px; /* Espacement entre les éléments de la liste */
+}
+
+.main-nav a {
+    text-decoration: none;
+    color: var(--text-color-light);
+    text-transform: uppercase;
+    font-size: 16px;
+}
+
+.main-nav a:hover {
+    text-decoration: underline;
+}
+
+/* Ajoutez ces styles si vous souhaitez que la navigation s'effondre dans un menu hamburger sur les écrans plus petits */
+@media (max-width: 768px) {
+    .main-nav {
+        text-align: center;
+    }
+
+    .main-nav ul {
+        display: block;
+    }
+
+    .main-nav li {
+        display: block;
+        margin: 5px 0; /* Espacement vertical pour les éléments de liste sur petit écran */
+    }
+}
+
+/* Dark mode adjustments */
+body.dark-mode header {
+    background-color: var(--background-color-dark);
+    color: var(--text-color-dark);
+}
+
+body.dark-mode .header-logo,
+body.dark-mode .main-nav a {
+    color: var(--text-color-dark);
+}
+/* Couleur de fond du header selon le thème */
+header .navbar {
+    background-color: var(--background-color-light);
+    transition: background-color 0.3s; /* Transition fluide pour le changement de couleur */
+}
+
+body.dark-mode header .navbar {
+    background-color: var(--background-color-dark);
+}
