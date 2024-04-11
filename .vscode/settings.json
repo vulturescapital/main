@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "chrome",
+        "request": "launch",
+        "name": "Lancer le serveur",
+        "url": "http://localhost:8080", // Modifiez l'URL en fonction de votre configuration
+        "webRoot": "${workspaceFolder}"
+      }
+    ]
+  }
+  

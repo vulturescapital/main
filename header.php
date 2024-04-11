@@ -1,8 +1,8 @@
 <?php
 $host = 'vulturescapital.fr'; // Remplacez par l'adresse du serveur fournie par O2switch
 $dbname = 'kinu7234_vultures'; // Nom de votre base de données
-$user = 'kinu7234_hugo'; // Nom d'utilisateur de la base de données
-$password = 'Heigbaunhf22'; // Mot de passe de la base de données
+$user = 'kinu7234_romain'; // Nom d'utilisateur de la base de données
+$password = 'Napoleon0304!'; // Mot de passe de la base de données
 
 // DSN pour la connexion PDO à MySQL
 $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
