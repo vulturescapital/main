@@ -40,25 +40,27 @@ try {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vultures Blog</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3pV8TcC2-xxW6GLSsXK9saPc7PJihxpk964IviEry75+6gjV76o+mS0JX" crossorigin="anonymous">
 <link rel="stylesheet" href="../css/styles.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <script src="../js/main.js"></script>
 <link rel="icon" type="image/png" href="../images/logo.png">
-
 </head>
 <body>
 <header>
     <div class="container header-content">
         <h1><a href="index.php" class="header-logo">Vultures Capital</a></h1>
-        <nav class="main-nav">
-            <ul>
-                <li><a href="#">Blog</a></li>
-                <li><a href="./categories.php">Categories</a></li>
-                <li><a href="#">Contact</a></li>
-                <li><a href="#">Newsletter</a></li>
-            </ul>
+        <nav class="navbar navbar-expand-lg">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item"><a href="#" class="nav-link">Blog</a></li>
+                    <li class="nav-item"><a href="./categories.php" class="nav-link">Categories</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">Newsletter</a></li>
+                </ul>
+            </div>
         </nav>
-        <button id="theme-toggle">Dark Mode</button>
+        <button id="theme-toggle" class="btn btn-dark">Dark Mode</button>
         <div class="social-media">
             <a href="https://twitter.com/VulturesGroup">
                 <i class="fa-brands fa-twitter"></i>
