@@ -11,7 +11,6 @@
         <nav class="footer-nav">
             <a href="#">Blog</a>
             <a href="#">À propos</a>
-            <a href="#">Conçu avec Squarespace</a>
         </nav>
     </div>
 </footer>

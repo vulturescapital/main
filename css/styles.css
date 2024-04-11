@@ -1,21 +1,44 @@
 /* Ajout des polices Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
+:root {
+    --background-color-light: rgb(238, 237, 235); /* Light mode background */
+    --text-color-light: #333333; /* Light mode text */
+    --background-color-dark: #333333; /* Dark mode background */
+    --text-color-dark: #ffffff; /* Dark mode text */
+    --footer-background-light: #eee; /* Light mode footer background */
+    --footer-background-dark: #333; /* Dark mode footer background */
+}
+
 body {
     font-family: 'Poppins', sans-serif;
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    color: #333;
-    background: rgb(238, 237, 235);
+    background-color: var(--background-color-light);
+    color: var(--text-color-light);
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for theme change */
 }
+
+/* Theme styles */
+body.light-mode {
+    background-color: var(--background-color-light);
+    color: var(--text-color-light);
+}
+
+body.dark-mode {
+    background-color: var(--background-color-dark);
+    color: var(--text-color-dark);
+}
+
+/* Header styles */
 .header-logo {
-    text-decoration: none; /* Empêche le soulignement */
-    color: #333; /* Couleur du texte */
-    /* autres styles que vous souhaitez appliquer */
+    text-decoration: none;
+    color: var(--text-color-light);
 }
+
 .container {
-    width: 80%;
+    width: 90%;
     margin: auto;
     overflow: hidden;
 }
@@ -27,16 +50,25 @@ body {
 }
 
 header {
-    background: rgb(238, 237, 235);
-    color: #333;
+    background: var(--background-color-light);
+    color: var(--text-color-light);
     padding: 10px 0;
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for theme change */
 }
 
-header h1 {
-    margin: 0;
-    font-family: 'Acumin Pro', sans-serif; /* Acumin Pro pour le titre si vous l'avez chargé */
+/* Header and links styling for dark mode */
+body.dark-mode header {
+    background-color: var(--background-color-dark);
+    color: var(--text-color-dark);
 }
 
+body.dark-mode .header-logo,
+body.dark-mode header .main-nav a,
+body.dark-mode header .social-media a {
+    color: var(--text-color-dark);
+}
+
+/* Navigation styles */
 header .main-nav ul {
     display: flex;
     list-style-type: none;
@@ -47,65 +79,80 @@ header .main-nav li:not(:last-child) {
     margin-right: 20px;
 }
 
-header .main-nav a, header .social-media a {
+header .main-nav a {
     text-decoration: none;
-    color: #333;
+    color: var(--text-color-light);
     text-transform: uppercase;
     font-size: 16px;
 }
 
-/* Effet de soulignement au survol pour les liens de la navigation */
+/* Hover effect for nav links */
 header .main-nav a:hover {
     text-decoration: underline;
 }
 
-
+/* Footer styles */
 .site-footer {
-    background: #eee; /* Adjust the color to match the image */
-    padding: 40px 0; /* Adjust padding to match the layout in the image */
+    background: var(--footer-background-light);
+    padding: 40px 0;
     text-align: center;
     font-family: 'Poppins', sans-serif;
+    transition: background-color 0.3s; /* Smooth transition for theme change */
 }
 
+/* Footer styling for dark mode */
+body.dark-mode .site-footer {
+    background: var(--footer-background-dark);
+}
+
+/* Footer content styles */
 .footer-content h2 {
-    margin-bottom: 10px; /* Adjust as needed */
+    margin-bottom: 10px;
 }
 
 .footer-content p {
-    margin-bottom: 20px; /* Adjust as needed */
+    margin-bottom: 20px;
 }
 
+/* Subscription form styles */
 .subscription-form {
-    margin-bottom: 20px; /* Adjust as needed */
+    margin-bottom: 20px;
 }
 
 .subscription-form input[type="email"] {
     padding: 10px;
     margin-right: 10px;
-    border: 1px solid #ccc; /* Adjust as needed */
-    border-radius: 2px; /* Adjust as needed */
+    border: 1px solid #ccc;
+    border-radius: 2px;
 }
 
 .subscription-form button {
     padding: 10px 20px;
-    background-color: #654321; /* Sample brown color; replace with actual color code */
+    background-color: #654321;
     color: white;
     border: none;
-    border-radius: 2px; /* Adjust as needed */
+    border-radius: 2px;
     cursor: pointer;
 }
 
-.subscription-form button:hover {
-    background-color: #543210; /* Darker brown for hover effect; replace with actual color code */
+/* Subscription form styling for dark mode */
+body.dark-mode .subscription-form input[type="email"],
+body.dark-mode .subscription-form button {
+    border-color: var(--text-color-dark);
 }
 
+body.dark-mode .subscription-form button {
+    background-color: #555;
+}
+
+/* Footer navigation styles */
 .footer-nav {
-    padding-top: 20px; /* Adjust as needed */
+    padding-top: 20px;
 }
 
 .footer-nav a {
-    margin: 0 10px; /* Adjust as needed */
-    color: #333;
+    margin: 0 10px;
+    color: var(--text-color-light);
     text-decoration: none;
 }
 
@@ -113,7 +160,12 @@ header .main-nav a:hover {
     text-decoration: underline;
 }
 
-/* Responsive adjustments as necessary */
+/* Footer links styling for dark mode */
+body.dark-mode .footer-nav a {
+    color: var(--text-color-dark);
+}
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
     .footer-content {
         padding: 0 20px;
@@ -121,12 +173,12 @@ header .main-nav a:hover {
 
     .footer-nav a {
         display: block;
-        margin-bottom: 10px; /* Adjust as needed */
+        margin-bottom: 10px;
     }
 
     .subscription-form input[type="email"],
     .subscription-form button {
         width: 100%;
-        margin: 10px 0; /* Adjust as needed */
+        margin: 10px 0;
     }
 }

@@ -1,11 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+      // Immediately invoked function to set the theme before the page renders
+      (function() {
+        // Check local storage for the theme preference
+        var theme = localStorage.getItem('theme');
+
+        // Apply the theme class to the body immediately
+        if (theme === 'dark') {
+          document.body.classList.add('dark-mode');
+          // Optionally, you might want to remove the light-mode class if it's set by default in your HTML
+          document.body.classList.remove('light-mode');
+        } else {
+          document.body.classList.add('light-mode');
+        }
+      })();
+    </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vultures Blog</title>
 <link rel="stylesheet" href="../css/styles.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<script src="../js/main.js"></script>
 </head>
 <body>
 <header>
@@ -19,8 +36,9 @@
                 <li><a href="#">Newsletter</a></li>
             </ul>
         </nav>
+        <button id="theme-toggle">Dark Mode</button>
         <div class="social-media">
-            <a href="twitter.com">
+            <a href="https://twitter.com/VulturesGroup">
                 <i class="fa-brands fa-twitter"></i>
             </a>
         </div>
