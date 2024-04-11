@@ -10,7 +10,7 @@
 <body>
 <header>
     <div class="container header-content">
-        <h1><a href="index.php" class="header-logo">Vultures</a></h1>
+        <h1><a href="index.php" class="header-logo">Vultures Capital</a></h1>
         <nav class="main-nav">
             <ul>
                 <li><a href="#">Blog</a></li>
