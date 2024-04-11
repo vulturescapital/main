@@ -2,7 +2,7 @@
 
 <footer class="site-footer">
     <div class="footer-content">
-        <h2>Vous adorez voyager ?</h2>
+        <h2>Newsletter</h2>
         <p>Inscrivez-vous pour recevoir les dernières informations.</p>
         <form class="subscription-form">
             <input type="email" placeholder="Adresse e-mail" required>
