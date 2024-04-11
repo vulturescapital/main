@@ -1,40 +1,70 @@
 <?php include 'header.php'; ?>
 
-<main class="container mt-4">
-    <div class="row">
-        <div class="container-fluid">
-            <div class="card">
-                <img src="../images/logo.png" class="card-img-top" alt="Styled Bandanas">
-                <div class="card-body">
-                    <h5 class="card-title">Styled Bandanas</h5>
-                    <p class="card-text">Spring is in full bloom and so are these bandanas! Here are some fun ways to style your new favorite headpiece.</p>
-                    <a href="#" class="btn btn-primary">Read More</a>
-                </div>
-            </div>
+<div id="articleCarousel" class="carousel slide" data-ride="carousel" data-interval="3000">>
+  <!-- Indicateurs -->
+  <ol class="carousel-indicators">
+    <li data-target="#articleCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#articleCarousel" data-slide-to="1"></li>
+    <li data-target="#articleCarousel" data-slide-to="2"></li>
+    <!-- Ajoutez autant d'indicateurs que vous avez de .carousel-item -->
+  </ol>
+
+  <!-- Wrapper pour les slides -->
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <div class="d-flex justify-content-start">
+        <!-- Première slide avec vos articles -->
+        <!-- Assurez-vous que vos cartes correspondent à la largeur du carrousel et sont scrollable horizontalement -->
+        <div class="card mr-2" >
+          <img src="../images/logo.png" class="card-img-top" alt="Styled Bandanas">
+          <div class="card-body">
+            <h5 class="card-title">Article</h5>
+            <p class="card-text">Description</p>
+            <a href="#" class="btn btn-primary">Read More</a>
+          </div>
         </div>
-        <div class="container-fluid">
-            <div class="card">
-                <img src="../images/logo.png" class="card-img-top" alt="Cool Down">
-                <div class="card-body">
-                    <h5 class="card-title">Cool Down</h5>
-                    <p class="card-text">Now that you’ve got your new workout routine in place, learn how to be efficient in cooling down.</p>
-                    <a href="#" class="btn btn-primary">Read More</a>
-                </div>
-            </div>
+        <div class="card mr-2" >
+          <img src="../images/logo.png" class="card-img-top" alt="Styled Bandanas">
+          <div class="card-body">
+            <h5 class="card-title">Article</h5>
+            <p class="card-text">Description</p>
+            <a href="#" class="btn btn-primary">Read More</a>
+          </div>
         </div>
-        <div class="col-12 mb-4">
-            <div class="card">
-                <img src="../images/logo.png" class="card-img-top" alt="Catching a Breath">
-                <div class="card-body">
-                    <h5 class="card-title">Catching a Breath</h5>
-                    <p class="card-text">Take a walk, look at some views and let yourself breathe. It’s ok to take that break.</p>
-                    <a href="#" class="btn btn-primary">Read More</a>
-                </div>
-            </div>
-        </div>
+        
+        <!-- Répétez pour autant d'articles que vous voulez dans la première slide -->
+        <!-- ... -->
+      </div>
     </div>
-</main>
+    <!-- Répétez pour les autres slides -->
+    <div class="carousel-item">
+      <div class="d-flex justify-content-start">
+      <div class="card mr-2">
+          <img src="../images/logo.png" class="card-img-top" alt="Styled Bandanas">
+          <div class="card-body">
+            <h5 class="card-title">Article</h5>
+            <p class="card-text">Description</p>
+            <a href="#" class="btn btn-primary">Read More</a>
+          </div>
+        </div>
+        <div class="card mr-2">
+          <img src="../images/logo.png" class="card-img-top" alt="Styled Bandanas">
+          <div class="card-body">
+            <h5 class="card-title">Article</h5>
+            <p class="card-text">Description</p>
+            <a href="#" class="btn btn-primary">Read More</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ... -->
+  </div>
+
+  <!-- Contrôles -->
+  <a class="carousel-control-next" href="#articleCarousel" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Suivant</span>
+  </a>
+</div>
 
 <?php include 'footer.php'; ?>
-</body>
-</html>

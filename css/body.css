@@ -16,6 +16,7 @@ body {
     background-color: var(--background-color-light);
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
 }
 
 body.light-mode {
@@ -97,7 +98,7 @@ body.dark-mode {
 
 .category-card img {
     width: auto;
-    height: 150px;
+    height: 100px;
     object-fit: cover;
     border-radius: 0.25rem;
     margin-bottom: 15px;
@@ -107,10 +108,21 @@ body.dark-mode {
     transform: translateY(-5px);
 }
 
+@media (max-width: 768px) {
+    .main-nav {
+        text-align: center;
+    }
 
-body.dark-mode .navbar-brand {
-    color: var(--text-color-dark); /* Couleur pour le mode sombre */
+    .main-nav ul {
+        display: block;
+    }
+
+    .main-nav li {
+        display: block;
+        margin: 5px 0;
+    }
 }
+
 body.dark-mode header,
 body.dark-mode .navbar-nav .nav-link {
     color: var(--text-color-dark);
@@ -118,4 +130,65 @@ body.dark-mode .navbar-nav .nav-link {
 
 body.dark-mode header {
     background-color: var(--background-color-dark);
+}
+.custom-container {
+    position: relative; /* Assurez-vous que votre conteneur personnalisé est positionné relativement */
+}
+.carousel-indicators {
+    text-align: center;
+    position: absolute;
+    bottom: -25px; /* Ajustez en fonction de la hauteur souhaitée sous les images du carrousel */
+    left: 0;
+    right: 0;
+}    
+.carousel-item .card {
+    margin-bottom: 2rem; /* Ajustez cette valeur selon l'espace souhaité entre les images et les tirets */
+}
+.newsletter-section { /* Assurez-vous que la section Newsletter a cette classe ou modifiez selon votre HTML */
+    padding-top: 2rem; /* Ajustez cette valeur selon l'espace souhaité entre les tirets et 'Newsletter' */
+}
+/* Light Mode */
+body.light-mode .carousel-indicators li {
+    background-color: #000; /* Noir pour le mode clair */
+}
+
+/* Dark Mode */
+body.dark-mode .carousel-indicators li {
+    background-color: #fff; /* Blanc pour le mode sombre */
+}
+/* Light Mode */
+body.light-mode .carousel-control-next-icon {
+    filter: invert(100%); /* Cela changera la flèche en noir */
+}
+
+/* Dark Mode */
+body.dark-mode .carousel-control-next-icon {
+    filter: invert(0%); /* Cela maintiendra la flèche en blanc */
+}
+.carousel-control-next {
+    right: -25px; /* Réglez ce nombre pour pousser le contrôle plus à droite */
+}
+.carousel-control-prev {
+    left: -25px; /* Réglez ce nombre pour pousser le contrôle plus à gauche */
+}
+.card {
+    margin-right: 15px; /* Espace entre les cartes */
+    min-width: 25%;
+    border-radius: 5px;
+}
+#articleCarousel {
+    margin-left: 15px; /* Ou la marge que vous souhaitez */
+}
+
+/* Pour un contrôle de couleur selon le thème */
+body.light-mode .carousel-indicators li {
+    background-color: #000;
+}
+
+body.light-mode .carousel-control-next-icon,
+body.light-mode .carousel-control-prev-icon {
+    filter: invert(1);
+}
+.custom-container .carousel {
+    padding-left: 15px; /* Ajustez si nécessaire pour aligner le contenu */
 }
