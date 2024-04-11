@@ -58,3 +58,75 @@ header .main-nav a, header .social-media a {
 header .main-nav a:hover {
     text-decoration: underline;
 }
+
+
+.site-footer {
+    background: #eee; /* Adjust the color to match the image */
+    padding: 40px 0; /* Adjust padding to match the layout in the image */
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+.footer-content h2 {
+    margin-bottom: 10px; /* Adjust as needed */
+}
+
+.footer-content p {
+    margin-bottom: 20px; /* Adjust as needed */
+}
+
+.subscription-form {
+    margin-bottom: 20px; /* Adjust as needed */
+}
+
+.subscription-form input[type="email"] {
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc; /* Adjust as needed */
+    border-radius: 2px; /* Adjust as needed */
+}
+
+.subscription-form button {
+    padding: 10px 20px;
+    background-color: #654321; /* Sample brown color; replace with actual color code */
+    color: white;
+    border: none;
+    border-radius: 2px; /* Adjust as needed */
+    cursor: pointer;
+}
+
+.subscription-form button:hover {
+    background-color: #543210; /* Darker brown for hover effect; replace with actual color code */
+}
+
+.footer-nav {
+    padding-top: 20px; /* Adjust as needed */
+}
+
+.footer-nav a {
+    margin: 0 10px; /* Adjust as needed */
+    color: #333;
+    text-decoration: none;
+}
+
+.footer-nav a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive adjustments as necessary */
+@media (max-width: 768px) {
+    .footer-content {
+        padding: 0 20px;
+    }
+
+    .footer-nav a {
+        display: block;
+        margin-bottom: 10px; /* Adjust as needed */
+    }
+
+    .subscription-form input[type="email"],
+    .subscription-form button {
+        width: 100%;
+        margin: 10px 0; /* Adjust as needed */
+    }
+}

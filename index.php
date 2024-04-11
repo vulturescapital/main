@@ -22,5 +22,6 @@
         <a href="#" class="read-more">Read More</a>
     </div>
 </main>
+<?php include 'footer.php'; ?>
 </body>
 </html>
