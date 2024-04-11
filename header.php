@@ -33,7 +33,7 @@
                 <li><a href="#">Blog</a></li>
                 <li><a href="./categories.php">Categories</a></li>
                 <li><a href="#">Contact</a></li>
-                <li><a href="#">Newsletter</a></li>
+                <li><a href="#">roro</a></li>
             </ul>
         </nav>
         <button id="theme-toggle">Dark Mode</button>
