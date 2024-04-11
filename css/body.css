@@ -64,14 +64,66 @@ body {
     width: fit-content; /* Makes the button wrap the text */
     margin: auto; /* Centers the button */
 }
-
-@media (min-width: 768px) {
-    /* Adjustments for larger screens can be made here if needed */
-}
-
 /* Clearfix for .container */
 .container::after {
     content: "";
     display: table;
     clear: both;
 }
+
+.post {
+    background: #fff; /* Un fond blanc pour faire ressortir le post */
+    padding: 20px; /* Ajout d'espace autour du contenu */
+    margin-bottom: 40px; /* Espace entre les posts */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* Ombre subtile pour le relief */
+    border-radius: 5px; /* Bords légèrement arrondis */
+}
+
+.post img {
+    max-width: 100%; /* Permet à l'image de s'adapter à la largeur du conteneur */
+    height: auto;
+    border-radius: 5px 5px 0 0; /* Arrondir les coins supérieurs */
+}
+
+.post-date {
+    color: #888;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+.post h2 {
+    font-size: 1.5em; /* Taille de police plus grande pour le titre */
+    color: #333;
+    margin: 10px 0; /* Espace autour du titre */
+}
+
+.post p {
+    color: #666;
+    margin-bottom: 20px; /* Espace avant le bouton 'Lire plus' */
+}
+
+.read-more {
+    background-color: #000;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 2px; /* Bords arrondis pour le bouton */
+    font-weight: bold; /* Texte en gras pour le bouton */
+    transition: background-color 0.3s ease; /* Animation de fond au survol */
+}
+
+.read-more:hover {
+    background-color: #555; /* Changement de couleur au survol */
+}
+@media (min-width: 1200px) {
+    .container {
+      max-width: 1140px; /* Augmentez selon vos besoins */
+    }
+  }
+  
+  @media (min-width: 992px) {
+    .container {
+      max-width: 960px; /* Augmentez selon vos besoins */
+    }
+  }
+
