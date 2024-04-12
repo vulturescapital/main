@@ -23,57 +23,47 @@
     <link rel="stylesheet" href="../css/body.css">
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="icon" type="image/png" href="../images/logo.png">
 </head>
 <body class="light-mode">
-<header>
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container">
-            <a href="index.php" class="navbar-brand">Vultures Capital</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
 
-            <div class="collapse navbar-collapse" id="navbarContent">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a href="#" class="nav-link">Articles</a></li>
-                    <li class="nav-item"><a href="./categories.php" class="nav-link">Categories</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">Newsletter</a></li>
-                    <div class="theme-switch-wrapper">
-                        <label class="theme-switch" for="checkbox">
-                            <input type="checkbox" id="checkbox" />
-                            <div class="slider round"></div>
-                        </label>
-                    </div>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container">
+                <a href="index.php" class="navbar-brand">Vultures Capital</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-                    <!-- Including Font Awesome for the icons -->
-                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-                    <!-- Custom Script for Switching Themes -->
-                    <script>
-                        const checkbox = document.getElementById('checkbox');
-                        checkbox.addEventListener('change', function() {
-                            if(this.checked) {
-                                document.body.classList.add('dark-mode');
-                                document.body.classList.remove('light-mode');
-                            } else {
-                                document.body.classList.add('light-mode');
-                                document.body.classList.remove('dark-mode');
-                            }
-                        });
-                    </script>
-
-                </ul>
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a href="#" class="nav-link">Articles</a></li>
+                        <li class="nav-item"><a href="./categories.php" class="nav-link">Categories</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link">Newsletter</a></li>
+                    </ul>
+                    <button id="theme-toggle" class="theme-toggle-btn">
+                      <i class="fas fa-sun"></i> <!-- Sun icon -->
+                      <i class="fas fa-moon" style="display:none;"></i> <!-- Moon icon -->
+                    </button>
+                </div>
             </div>
-        </div>
-    </nav>
-</header>
-
+        </nav>
+    </header>
 <!-- Bootstrap JavaScript à la fin du body pour un chargement de page optimal -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="../js/main.js"></script>
+<script>
+    const themeToggleButton = document.getElementById('theme-toggle');
+
+    themeToggleButton.addEventListener('click', function() {
+      document.body.classList.toggle('dark-mode');
+      document.body.classList.toggle('light-mode');
+    });
+</script>
 </body>
 </html>
