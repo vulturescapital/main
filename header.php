@@ -27,8 +27,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="icon" type="image/png" href="../images/logo.png">
 </head>
-<body class="light-mode">
-
+<body class="d-flex flex-column min-vh-100"> <!-- Add these classes here -->
     <header>
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container">
@@ -65,5 +64,3 @@
       document.body.classList.toggle('light-mode');
     });
 </script>
-</body>
-</html>

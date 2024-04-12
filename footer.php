@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="../css/styles.css">
 
-<footer class="site-footer">
+<footer class="site-footer mt-auto"> <!-- Add mt-auto class here -->
     <div class="footer-content">
         <h2>Newsletter</h2>
         <p>Inscrivez-vous pour recevoir les dernières informations.</p>
@@ -8,9 +8,7 @@
             <input type="email" name="email" placeholder="Adresse e-mail" required>
             <button type="submit">S'inscrire</button>
         </form>
-        <nav class="footer-nav">
-            <a href="#">Blog</a>
-            <a href="#">À propos</a>
-        </nav>
     </div>
 </footer>
+</body>
+</html>

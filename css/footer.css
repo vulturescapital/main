@@ -2,9 +2,12 @@
 /* Footer styles */
 .site-footer {
     background: var(--footer-background-light);
-    padding: 40px 0;
     text-align: center;
     font-family: 'Poppins', sans-serif;
+    position: relative; /* or absolute depending on the rest of your layout */
+    bottom: 0;
+    width: 100%;
+    margin-top: auto;
 }
 
 /* Footer styling for dark mode */
