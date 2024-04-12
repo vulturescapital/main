@@ -55,16 +55,33 @@ body.dark-mode .navbar-brand {
     color: var(--text-color-dark);
 }
 
-.theme-toggle-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 24px; /* Adjust icon size as needed */
+/* CSS for the theme toggle button */
+.theme-toggle {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+/* Remove the focus outline */
+#theme-toggle:focus {
+    outline: none;
+}
+.theme-toggle i {
+    display: none; /* Hide all icons by default */
+    color: #f0f0f0; /* Icon color */
 }
 
-.theme-toggle-btn i {
-  transition: color 0.3s;
+/* Show the moon icon when light mode is active */
+body.light-mode .theme-toggle .fa-moon {
+    display: inline;
+    color: var(--background-color-dark);
 }
+
+/* Show the sun icon when dark mode is active */
+body.dark-mode .theme-toggle .fa-sun {
+    display: inline;
+    color: var(--background-color-light);
+}
+
 
 /* Dark Mode Styles */
 body.dark-mode .theme-toggle-btn .fa-sun {

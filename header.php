@@ -44,9 +44,9 @@
                         <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
                         <li class="nav-item"><a href="#" class="nav-link">Newsletter</a></li>
                     </ul>
-                    <button id="theme-toggle" class="theme-toggle-btn">
-                      <i class="fas fa-sun"></i> <!-- Sun icon -->
-                      <i class="fas fa-moon" style="display:none;"></i> <!-- Moon icon -->
+                    <button id="theme-toggle" class="theme-toggle">
+                        <i class="fas fa-moon"></i>
+                        <i class="fas fa-sun"></i>
                     </button>
                 </div>
             </div>
