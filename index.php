@@ -1,6 +1,6 @@
 <?php include 'header.php'; ?>
 
-<div id="articleCarousel" class="carousel slide" data-ride="carousel" data-interval="3000">>
+<div id="articleCarousel" class="carousel slide" data-ride="carousel" data-interval="3000">
   <!-- Indicateurs -->
   <ol class="carousel-indicators">
     <li data-target="#articleCarousel" data-slide-to="0" class="active"></li>

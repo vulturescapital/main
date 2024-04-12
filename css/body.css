@@ -30,7 +30,7 @@ body.dark-mode {
 }
 
 .container {
-    width: 80%;
+    width: 90%;
     margin: auto;
     padding: 2em 0;
     overflow: hidden;
@@ -44,7 +44,7 @@ body.dark-mode {
 
 @media (min-width: 992px) {
     .container {
-        max-width: 960px;
+        max-width: 100%;
     }
 }
 
@@ -94,16 +94,25 @@ body.dark-mode {
 .category-card {
     margin-bottom: 20px;
     text-align: center;
+    /* Ajouter un padding pour de l'espace autour du contenu */
+    padding: 15px;
+    /* Optionnel: Ajouter un fond différent pour le mode sombre */
 }
 
 .category-card img {
-    width: auto;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 0.25rem;
-    margin-bottom: 15px;
+    width: 500%; /* Force l'image à prendre toute la largeur de .category-card */
+    height: 200px; /* Ajustez la hauteur comme souhaité */
+    object-fit: cover; /* Cela permet de s'assurer que l'image couvre la zone définie */
+    border-radius: 0.25rem; /* Les bords arrondis pour esthétique */
+    margin-bottom: 15px; /* Un peu d'espace entre l'image et le texte */
 }
 
+/* Assurer que le texte est centré dans la carte */
+.category-card h3,
+.category-card p {
+    margin: 10px 0;
+    text-align: center; /* Cela centrera le texte horizontalement */
+}
 .category-card:hover {
     transform: translateY(-5px);
 }
