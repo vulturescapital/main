@@ -114,14 +114,24 @@ header .container {
         padding-left: 30px;
     }
 }
-
+.navbar-light .navbar-brand {
+    color: var(--text-color-light)
+}
 /* Dark mode adjustments */
 body.dark-mode header {
     background-color: var(--background-color-dark);
     color: var(--text-color-dark);
 }
+body.light-mode .navbar-brand {
+    color: var(--text-color-light); /* Define light mode text color here */
+}
 
-body.dark-mode .header-logo,
+/* Dark Mode */
+body.dark-mode .navbar-brand {
+    color: var(--text-color-dark); /* Define dark mode text color here */
+}
+
+body.dark-mode .header-logo,.navbar-light .navbar-brand,
 body.dark-mode .main-nav a {
     color: var(--text-color-dark);
 }
@@ -132,4 +142,86 @@ header .navbar {
 
 body.dark-mode header .navbar {
     background-color: var(--background-color-dark);
+}
+/* Styles for the Dark and Light Mode Toggle */
+.theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+}
+
+.theme-switch {
+    display: inline-block;
+    height: 34px;
+    position: relative;
+    width: 60px;
+}
+
+.theme-switch input {
+    display:none;
+}
+
+.slider {
+    background-color: #333333;
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+}
+
+.slider:before {
+    background-color: white;
+    bottom: 4px;
+    content: "";
+    height: 26px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 26px;
+}
+
+input:checked + .slider {
+    background-color: rgb(224, 221, 215);
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* Adding icons inside the toggle switch */
+.theme-switch .slider:before {
+    font-family: "Font Awesome 5 Free";
+    content: "\f185"; /* sun icon */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+}
+
+input:checked + .slider:before {
+    content: "\f186"; /* moon icon */
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+    background-color: #333;
+    color: #fff;
+}
+
+/* Light Mode Styles */
+body.light-mode {
+    background-color: #fff;
+    color: #000;
 }

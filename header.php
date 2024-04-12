@@ -36,14 +36,36 @@
 
             <div class="collapse navbar-collapse" id="navbarContent">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a href="#" class="nav-link">Blog</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">Articles</a></li>
                     <li class="nav-item"><a href="./categories.php" class="nav-link">Categories</a></li>
                     <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
                     <li class="nav-item"><a href="#" class="nav-link">Newsletter</a></li>
+                    <div class="theme-switch-wrapper">
+                        <label class="theme-switch" for="checkbox">
+                            <input type="checkbox" id="checkbox" />
+                            <div class="slider round"></div>
+                        </label>
+                    </div>
+
+                    <!-- Including Font Awesome for the icons -->
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+                    <!-- Custom Script for Switching Themes -->
+                    <script>
+                        const checkbox = document.getElementById('checkbox');
+                        checkbox.addEventListener('change', function() {
+                            if(this.checked) {
+                                document.body.classList.add('dark-mode');
+                                document.body.classList.remove('light-mode');
+                            } else {
+                                document.body.classList.add('light-mode');
+                                document.body.classList.remove('dark-mode');
+                            }
+                        });
+                    </script>
+
                 </ul>
             </div>
-            <!-- Bouton pour changer de thème -->
-            <button id="theme-toggle" class="btn btn-sm btn-dark">Dark Mode</button>
         </div>
     </nav>
 </header>
