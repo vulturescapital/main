@@ -26,25 +26,33 @@ body.dark-mode .site-footer {
 
 /* Subscription form styles */
 .subscription-form {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .subscription-form input[type="email"] {
     padding: 10px;
     margin-right: 10px;
     border: 1px solid #ccc;
-    border-radius: 2px;
+    border-radius: 20px;
+    width: 300px;
 }
-
+.subscription-form input[type="email"]:focus,
+.subscription-form input[type="email"]:active {
+    outline: none;  /* Removes the outline on focus */
+    box-shadow: none;  /* Removes any shadow on focus */
+}
 .subscription-form button {
     padding: 10px 20px;
     background-color: #000000;
     color: white;
     border: none;
-    border-radius: 2px;
+    border-radius: 20px;
     cursor: pointer;
 }
-
+.subscription-form button:focus{
+    outline: none;  /* Removes the outline on focus */
+    box-shadow: none;
+}
 /* Subscription form styling for dark mode */
 body.dark-mode .subscription-form input[type="email"],
 body.dark-mode .subscription-form button {

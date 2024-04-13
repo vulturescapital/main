@@ -18,6 +18,13 @@ header, .navbar {
     font-weight: 700;
     font-size: 2rem;
 }
+.nav-link {
+    color: var(--text-color-light); /* or use a specific color */
+    background-color: transparent; /* Ensures no background color change */
+    text-transform: uppercase;
+    font-size: 16px;
+    text-decoration: none; /* No underline by default */
+}
 
 .header-content {
     display: flex;
@@ -41,9 +48,19 @@ header, .navbar {
 
 .navbar-light .navbar-brand {
     color: var(--text-color-light);
+    font-weight: bold;
+    font-size: 1.5rem;
 }
-
-
+.nav-link:not(:hover) {
+    text-decoration: none; /* Ensure no underline when not hovered */
+    color: var(--text-color-light); /* Ensure consistent color */
+}
+.nav-link:active,
+.nav-link:focus,
+.nav-link.active {
+    color: var(--text-color-light); /* Use the same color as your normal state */
+    background-color: transparent; /* No background color */
+}
 
 /* Dark mode adjustments */
 body.dark-mode header {
@@ -54,53 +71,6 @@ body.dark-mode header {
 body.dark-mode .navbar-brand {
     color: var(--text-color-dark);
 }
-
-/* CSS for the theme toggle button */
-.theme-toggle {
-    border: none;
-    background: none;
-    cursor: pointer;
-}
-/* Remove the focus outline */
-#theme-toggle:focus {
-    outline: none;
-}
-.theme-toggle i {
-    display: none; /* Hide all icons by default */
-    color: #f0f0f0; /* Icon color */
-}
-
-/* Show the moon icon when light mode is active */
-body.light-mode .theme-toggle .fa-moon {
-    display: inline;
-    color: var(--background-color-dark);
-}
-
-/* Show the sun icon when dark mode is active */
-body.dark-mode .theme-toggle .fa-sun {
-    display: inline;
-    color: var(--background-color-light);
-}
-
-
-/* Dark Mode Styles */
-body.dark-mode .theme-toggle-btn .fa-sun {
-  display: none;
-}
-
-body.dark-mode .theme-toggle-btn .fa-moon {
-  display: inline;
-}
-
-/* Light Mode Styles */
-body.light-mode .theme-toggle-btn .fa-sun {
-  display: inline;
-}
-
-body.light-mode .theme-toggle-btn .fa-moon {
-  display: none;
-}
-
 
 /* Media queries for container padding */
 @media (min-width: 576px) {
@@ -129,4 +99,40 @@ body.light-mode .theme-toggle-btn .fa-moon {
         padding-right: 30px;
         padding-left: 30px;
     }
+}
+/* Theme toggle button and icons */
+#theme-toggle {
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    margin-left: 20px;
+}
+#theme-toggle:focus,
+#theme-toggle:active {
+    outline: none;  /* Removes the outline on focus */
+    box-shadow: none;  /* Removes any shadow on focus */
+    border: none;  /* Ensures no border is visible on click */
+}
+
+/* Initially, hide the sun icon since light mode is the default */
+.fa-sun {
+    display: none;
+}
+
+/* No need to hide the moon icon because it should show by default */
+.fa-moon {
+    display: inline;
+    color: var(--background-color-dark); /* Example color for the moon icon */
+}
+
+/* When the body has the dark-mode class, we display the sun and hide the moon */
+body.dark-mode .fa-moon {
+    display: none;
+}
+
+body.dark-mode .fa-sun {
+    display: inline;
+    color: var(--background-color-light); /* Example color for the sun icon */
 }

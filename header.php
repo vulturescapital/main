@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="icon" type="image/png" href="../images/logo.png">
 </head>
-<body class="d-flex flex-column min-vh-100"> <!-- Add these classes here -->
+<body class="d-flex flex-column min-vh-100 light-mode">
     <header>
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container">
@@ -43,9 +43,9 @@
                         <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
                         <li class="nav-item"><a href="#" class="nav-link">Newsletter</a></li>
                     </ul>
-                    <button id="theme-toggle" class="theme-toggle">
-                        <i class="fas fa-moon"></i>
-                        <i class="fas fa-sun"></i>
+                    <button id="theme-toggle" class="btn">
+                        <i class="fa fa-moon"></i>
+                        <i class="fa fa-sun"></i>
                     </button>
                 </div>
             </div>
