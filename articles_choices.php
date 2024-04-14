@@ -62,6 +62,7 @@ try {
                 </div>
             </div>
         </div>
+
         <div class="container mt-4" id="article-container">
             <div class="row">
                 <?php foreach ($articles as $article):
@@ -69,6 +70,7 @@ try {
                     $categoryColor = htmlspecialchars($article['category_color']);
                 ?>
                     <div class="col-lg-3 col-md-4 col-sm-6 mb-4" data-category="<?= htmlspecialchars($article['category_id']); ?>">
+                        <a href="article.php?id=<?= htmlspecialchars($article['id']); ?>" class="article-link">
                         <div class="card h-100">
                             <img class="card-img-top" src="<?= htmlspecialchars($article['images']); ?>" alt="Article Image">
                             <div class="card-body">

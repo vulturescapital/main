@@ -400,6 +400,19 @@ p {
     overflow: hidden;
 
 }
+.article-link {
+    text-decoration: none; /* Removes underline from all text */
+    color: inherit; /* Text color will be inherited from parent element */
+}
+.article-link:hover, .article-link:visited, .article-link:link, .article-link:active {
+    text-decoration: none; /* Removes underline from all text on different link states */
+    color: inherit; /* Maintains the text color consistent on different link states */
+}
+.article-link .card-footer .badge {
+    background-color: inherit; /* It will take the color from the inline style */
+    color: #fff; /* Text color white */
+    /* Additional styles as needed */
+}
 
 .card-img-top {
     width: 100%;
