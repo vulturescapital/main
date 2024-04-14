@@ -1,4 +1,7 @@
 <?php include 'dbconfig.php'; ?>
+<?php session_start(); // Très important pour utiliser les variables de session
+    var_dump($_SESSION);
+?>
 <html lang="en">
 <head>
     <!-- Les scripts de thème doivent être chargés avant les autres ressources -->
@@ -41,6 +44,13 @@
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item"><a href="./articles_choices.php" class="nav-link">Articles</a></li>
                         <li class="nav-item"><a href="./categories.php" class="nav-link">Categories</a></li>
+                        <?php if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true): ?>
+                        <li class="nav-item"><a href="./adminlogin.php" class="nav-link">Admin Login</a></li>
+                            <?php endif; ?>
+                            <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
+                            <li class="nav-item"><a href="./editor.php" class="nav-link">Create an Article</a></li>
+                            <li class="nav-item"><a href="./logout.php" class="nav-link">Logout</a></li>
+                        <?php endif; ?>
                         <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
                         <li class="nav-item"><a href="#" class="nav-link">Newsletter</a></li>
                     </ul>
