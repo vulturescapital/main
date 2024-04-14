@@ -48,7 +48,10 @@ try {
         <p class="mb-4">Bienvenue sur cette page qui regroupe tous nos articles liés à l'actualité financière. Vous retrouverez ici des actus pour vous tenir au courant des dernières nouveautés, sorties et événements qui concernent la finance.</p>
 
         <div class="custom-select-wrapper">
-            <div class="custom-select-trigger">Select Category</div>
+            <div class="custom-select-trigger">
+                <span>Select Category</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
                 <div class="custom-options">
                     <span class="custom-option custom-option-all" data-value="all">Tout</span> <!-- Appliquez la classe ici -->
                     <?php foreach ($categories as $category): ?>

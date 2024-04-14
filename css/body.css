@@ -353,7 +353,11 @@ p {
     grid-column: 1 / -1; /* Makes 'All' span all columns */
     margin-bottom: 1rem; /* Adjust this value to increase the gap */
 }
-
+.custom-select-trigger i {
+    position: absolute;
+    right: 10px;
+    top: 35%;
+}
 .custom-options.show {
     max-height: 500px; /* Enough height to show all options */
     transform: scaleY(1); /* Scale to full size */
