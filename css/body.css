@@ -35,7 +35,6 @@ body.dark-mode {
     width: 90%;
     margin: auto;
     padding: 2em 0;
-    overflow: hidden;
 }
 
 @media (min-width: 1200px) {
@@ -201,3 +200,171 @@ body.light-mode .carousel-control-prev-icon {
 .custom-container .carousel {
     padding-left: 15px; /* Ajustez si nécessaire pour aligner le contenu */
 }
+
+.newsletter-section {
+  background-color: #FFA07A; /* Replace with your actual color */
+  padding: 50px 0; /* Adjust the padding to suit your design */
+  color: #333; /* Adjust the text color to suit your design */
+}
+
+.newsletter-section .container {
+  max-width: 1140px; /* Adjust the max-width to suit your design */
+  margin: auto;
+  padding: 0 15px;
+}
+
+.newsletter-section h2 {
+  font-size: 2rem; /* Adjust the font-size to suit your design */
+  margin-bottom: 15px;
+}
+
+.newsletter-section p {
+  margin-bottom: 25px;
+}
+
+.newsletter-section .btn-newsletter {
+  background-color: #FF4500; /* Replace with your actual button color */
+  color: #fff; /* Text color for the button */
+  border: none;
+  padding: 10px 20px; /* Adjust the padding to suit your design */
+  border-radius: 20px; /* Adjust the border-radius to suit your design */
+  font-weight: bold;
+  cursor: pointer;
+}
+.newsletter-section input[type="email"] {
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ccc; /* Ou toute autre couleur de bordure souhaitée */
+  border-radius: 20px; /* Ajustez selon le rayon de bordure que vous souhaitez */
+  outline: none; /* Supprime l'outline par défaut sur le focus */
+}
+.newsletter-section input[type="email"]:focus,.newsletter-section .btn-newsletter:focus,.newsletter-section .btn-newsletter:active,
+.newsletter-section input[type="email"]:active {
+    outline: none;  /* Removes the outline on focus */
+    box-shadow: none;  /* Removes any shadow on focus */
+}
+.newsletter-section .checkbox {
+  margin-top: 10px; /* Adjust the margin to suit your design */
+}
+
+.newsletter-section input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+.newsletter-section label {
+  font-size: 0.9rem; /* Adjust the font-size to suit your design */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .newsletter-section .container {
+    padding: 0 30px;
+  }
+
+  .newsletter-section h2 {
+    font-size: 1.75rem; /* Adjust the font-size to suit your design */
+  }
+
+  .newsletter-section p {
+    font-size: 1rem; /* Adjust the font-size to suit your design */
+  }
+}
+
+/* Styles for breadcrumb */
+.breadcrumb {
+    background: transparent;
+    padding: 0;
+    margin-bottom: 0.5rem;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: ">>";
+    padding: 0 0.5rem;
+    color: #6c757d;
+}
+
+.breadcrumb-item a {
+    color: #0275d8; /* Or your preferred color */
+    text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+    text-decoration: underline;
+}
+
+/* Styles for the page title and description */
+h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+p {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.custom-select-wrapper {
+    position: relative;
+    user-select: none;
+}
+
+.custom-select-trigger {
+    padding: 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    background-color: #fff;
+    width: 10%; /* Adjust width as needed */
+    box-sizing: border-box;
+    border-radius: 0.8rem;
+    display: block;
+    position: relative;
+    z-index: 2; /* Stays on top of other elements */
+    transition: all 0.3s ease; /* Smooth transition for hover effects, etc. */
+}
+
+.custom-options {
+    border: 1px solid #ccc;
+    display: grid; /* Maintain the grid display */
+    grid-template-columns: repeat(3, 1fr); /* Ensure 3 columns always */
+    grid-gap: 0.5rem;
+    column-gap: 10px;
+    position: absolute;
+    top: 120%; /* Positioned just below the trigger */
+    left: 0;
+    width: 20%; /* Match the trigger width if necessary */
+    background: white;
+    border-radius: 0.9rem;
+    overflow-y: hidden;
+    max-height: 0; /* Start with max-height at 0 for the collapsing effect */
+    transform-origin: top;
+    transform: scaleY(0); /* Start scaled down */
+    visibility: hidden; /* Start hidden */
+    padding: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease-in-out, max-height 0.3s ease-in-out, visibility 0.3s ease-in-out; /* Smooth transitions */
+    z-index: 1;
+    font-size: 1.1em;
+}
+
+.custom-options.show {
+    max-height: 500px; /* Enough height to show all options */
+    transform: scaleY(1); /* Scale to full size */
+    visibility: visible; /* Make visible */
+    overflow-y: auto; /* Allow scrolling */
+}
+
+
+.custom-option:hover {
+    font-weight: bold; /* Make text bold on hover */
+}
+.custom-select-trigger:focus + .custom-options,
+.custom-select-trigger:active + .custom-options,
+.custom-options.show {
+    transform: scaleY(1); /* Scale to show the content */
+    visibility: visible; /* Make the dropdown visible */
+    max-height: 500px; /* Provide enough space for the content */
+    transition: transform 0.2s ease-in-out, visibility 0.2s ease-in-out; /* Quicker transition for visibility */
+
+}
+
