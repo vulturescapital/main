@@ -59,26 +59,28 @@ include 'header.php';
     </article>
     <div class="related-articles-container">
         <h3>Articles Similaires</h3>
-        <div class="container mt-4" id="article-container">
-            <div class="row gx-0">
+        <div class="related-container mt-4">
+            <div class="related-row">
                 <?php foreach ($related_articles as $related_article): ?>
-                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4" data-category="<?= htmlspecialchars($related_article['category_id']); ?>">
-                        <a href="article.php?id=<?= htmlspecialchars($related_article['id']); ?>" class="article-link">
-                        <div class="card h-100">
-                            <img class="card-img-top" src="<?= htmlspecialchars($related_article['images']); ?>" alt="Article Image">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between">
-                                    <small class="text-muted"><?= htmlspecialchars($$related_article['date']); ?></small>
-                                    <small class="text-muted"><?= htmlspecialchars($$related_article['author']); ?></small>
+                    <div class="related-col mb-4">
+                        <a href="article.php?id=<?= htmlspecialchars($related_article['id']); ?>" class="related-article-link">
+                            <div class="related-card">
+                                <img class="related-img-top" src="<?= htmlspecialchars($related_article['images']); ?>" alt="Article Image">
+                                <div class="related-card-body">
+                                    <div class="related-date-author">
+                                        <small class="text-muted"><?= htmlspecialchars($related_article['date']); ?></small>
+                                        <small class="text-muted"><?= htmlspecialchars($related_article['author']); ?></small>
+                                    </div>
+                                    <h5 class="related-title"><?= htmlspecialchars($related_article['nom']); ?></h5>
                                 </div>
-                                <h5 class="card-title mt-2"><?= htmlspecialchars($related_article['nom']); ?></h5>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 <?php endforeach; ?>
             </div>
         </div>
     </div>
+
 </div>
 
 <?php include 'footer.php'; // Include the footer file if you have one ?>
