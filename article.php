@@ -34,7 +34,7 @@ if (!empty($_GET['id']) && is_numeric($_GET['id'])) {
 include 'header.php';
 ?>
 
-<div class="container mt-5 article-page">
+<div class="container mt-10 article-page custom-container-padding">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.php">Accueil</a></li>
@@ -49,13 +49,15 @@ include 'header.php';
             <p class="article-meta"><?= date("j F Y", strtotime($article['date'])); ?> at <?= date("g:i a", strtotime($article['date'])); ?> | <?= htmlspecialchars($article['duree_reading']); ?> minutes read</p>
         </header>
 
-        <figure class="article-image-container">
-            <img src="<?= htmlspecialchars($article['images']); ?>" alt="<?= htmlspecialchars($article['nom']); ?>" class="article-image">
-        </figure>
+        <div class="article-content-wrapper"> <!-- This is a new wrapper for image and content -->
+            <figure class="article-image-container">
+                <img src="<?= htmlspecialchars($article['images']); ?>" alt="<?= htmlspecialchars($article['nom']); ?>" class="article-image">
+            </figure>
 
-        <section class="article-content">
-            <?= nl2br(htmlspecialchars($article['texte'])); ?>
-        </section>
+            <section class="article-content">
+                <?= nl2br(htmlspecialchars($article['texte'])); ?>
+            </section>
+        </div>
     </article>
     <div class="related-articles-container">
         <h3>Articles Similaires</h3>
@@ -80,7 +82,6 @@ include 'header.php';
             </div>
         </div>
     </div>
-
 </div>
 
 <?php include 'footer.php'; // Include the footer file if you have one ?>

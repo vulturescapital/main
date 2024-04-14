@@ -514,6 +514,7 @@ p {
     font-size: 2rem;
     color: #333;
     margin-top: 1rem;
+    width: 66.5%;
 }
 
 .article-meta {
@@ -536,12 +537,14 @@ p {
     font-size: 1.5rem;
     color: #555;
     margin-bottom: 1rem;
+    width: 66.5%;
 }
 
 .article-content {
     font-size: 1rem;
     line-height: 1.6;
     color: #333; /* Adjust the text color as needed */
+    width: 66.5%;
 }
 
 .related-container {
@@ -609,7 +612,15 @@ p {
 }
 .related-articles-container {
     margin-top: 5em; /* Adjust the value to your preference */
+    width: 66.5%;
 }
-.card-title:hover {
-    text-decoration: none; /* Removes the underline or any text decoration on hover */
+.related-title:hover,
+.related-title:active,
+.related-title:focus,
+.related-title:visited {
+    text-decoration: none; /* Ensures no underline appears on hover */
+    color: inherit; /* The color will remain the same as it's inherited from the parent */
+}
+.custom-container-padding {
+    padding-left: 150px; /* Adds 50px padding to the left */
 }
