@@ -527,8 +527,8 @@ p {
 }
 
 .article-image {
-    max-width: 68%; /* Image takes full width of its container */
-    height: 30em; /* Maintain aspect ratio */
+    max-width: 60%; /* Image takes full width of its container */
+    /*height: 30em; /* Maintain aspect ratio */
     border-radius: 8px; /* Rounded corners for the image */
 }
 

@@ -1,28 +1,34 @@
 <?php
 include 'dbconfig.php';
+$article = [];
+$related_articles = [];
 
-// Check for an ID in the query string and validate it
-if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+$article = [];
+$related_articles = [];
+
+// Validate the ID and fetch article details.
+if (!empty($_GET['id']) && is_numeric($_GET['id'])) {
     $article_id = $_GET['id'];
 
-    // Prepare a statement to select the article
+    // Prepare and execute the statement to select the article.
     $stmt = $pdo->prepare("SELECT * FROM articles WHERE id = :id");
     $stmt->execute([':id' => $article_id]);
-
-    // Fetch the article
     $article = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // If article is not found, redirect or handle the error appropriately
-    if (!$article) {
-        // Redirect to a different page or show an error
-        header('Location: errorpage.php');
+    if ($article) {
+        // If the article is found, fetch related articles based on tags.
+        $related_articles_stmt = $pdo->prepare("SELECT * FROM articles WHERE FIND_IN_SET(:tag, tags) AND id != :article_id LIMIT 4");
+        $related_articles_stmt->execute([':tag' => $article['tags'], ':article_id' => $article['id']]);
+        $related_articles = $related_articles_stmt->fetchAll(PDO::FETCH_ASSOC);
+    } else {
+        header('Location: errorpage.php'); // Redirect to an error page if no article is found.
         exit;
     }
 } else {
-    // Redirect to a different page or show an error if ID is not set or not valid
-    header('Location: errorpage.php');
+    header('Location: errorpage.php'); // Redirect to an error page if ID is invalid.
     exit;
 }
+
 
 // Including the header part of your HTML page
 include 'header.php';
@@ -51,6 +57,28 @@ include 'header.php';
             <?= nl2br(htmlspecialchars($article['texte'])); ?>
         </section>
     </article>
+    <div class="related-articles-container">
+        <h3>Articles Similaires</h3>
+        <div class="container mt-4" id="article-container">
+            <div class="row gx-0">
+                <?php foreach ($related_articles as $related_article): ?>
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4" data-category="<?= htmlspecialchars($related_article['category_id']); ?>">
+                        <a href="article.php?id=<?= htmlspecialchars($related_article['id']); ?>" class="article-link">
+                        <div class="card h-100">
+                            <img class="card-img-top" src="<?= htmlspecialchars($related_article['images']); ?>" alt="Article Image">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <small class="text-muted"><?= htmlspecialchars($$related_article['date']); ?></small>
+                                    <small class="text-muted"><?= htmlspecialchars($$related_article['author']); ?></small>
+                                </div>
+                                <h5 class="card-title mt-2"><?= htmlspecialchars($related_article['nom']); ?></h5>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </div>
 </div>
 
 <?php include 'footer.php'; // Include the footer file if you have one ?>
