@@ -43,7 +43,6 @@
                 <div class="collapse navbar-collapse" id="navbarContent">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item"><a href="./articles_choices.php" class="nav-link">Articles</a></li>
-                        <li class="nav-item"><a href="./categories.php" class="nav-link">Categories</a></li>
                         <?php if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true): ?>
                         <li class="nav-item"><a href="./adminlogin.php" class="nav-link">Admin Login</a></li>
                             <?php endif; ?>
