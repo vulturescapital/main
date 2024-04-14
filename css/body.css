@@ -7,6 +7,7 @@
     --text-color-dark: #ffffff;
     --footer-background-light: rgb(224, 221, 215);
     --footer-background-dark: #333333;
+    --gray-light:#bebebe;
 }
 
 body {
@@ -314,7 +315,7 @@ p {
     border: 1px solid #ccc;
     cursor: pointer;
     background-color: #fff;
-    width: 10%; /* Adjust width as needed */
+    width: 20%; /* Adjust width as needed */
     box-sizing: border-box;
     border-radius: 0.8rem;
     display: block;
@@ -326,8 +327,8 @@ p {
 .custom-options {
     border: 1px solid #ccc;
     display: grid; /* Maintain the grid display */
-    grid-template-columns: repeat(3, 1fr); /* Ensure 3 columns always */
-    grid-gap: 0.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-gap: 0.6rem;
     column-gap: 10px;
     position: absolute;
     top: 120%; /* Positioned just below the trigger */
@@ -342,9 +343,15 @@ p {
     visibility: hidden; /* Start hidden */
     padding: 0.5rem;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    transition: transform 0.3s ease-in-out, max-height 0.3s ease-in-out, visibility 0.3s ease-in-out; /* Smooth transitions */
+    transition: transform 0.3s ease-in-out, max-height 0.3s ease-in-out, visibility 0.3s ease-in-out,color .3s ease;; /* Smooth transitions */
     z-index: 1;
-    font-size: 1.1em;
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--gray-light);
+}
+.custom-option-all {
+    grid-column: 1 / -1; /* Makes 'All' span all columns */
+    margin-bottom: 1rem; /* Adjust this value to increase the gap */
 }
 
 .custom-options.show {
@@ -357,6 +364,7 @@ p {
 
 .custom-option:hover {
     font-weight: bold; /* Make text bold on hover */
+    color: #495057; /* Change text color on hover if needed */
 }
 .custom-select-trigger:focus + .custom-options,
 .custom-select-trigger:active + .custom-options,
@@ -366,5 +374,104 @@ p {
     max-height: 500px; /* Provide enough space for the content */
     transition: transform 0.2s ease-in-out, visibility 0.2s ease-in-out; /* Quicker transition for visibility */
 
+}
+.container.mt-4 {
+  padding: 2px; /* Adjust padding as needed */
+}
+/* Adjust the overall grid layout */
+.articles-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin: auto;
+    max-width: 1200px;
+    padding: 0 15px;
+}
+
+.card {
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+
+}
+
+.card-img-top {
+  width: 100%;
+  height: 180px; /* Adjust as needed */
+  object-fit: cover;
+}
+
+.card-body {
+  flex: 1; /* Forces the card body to fill the available space, pushing the footer to the bottom */
+  padding: 15px; /* Adjust padding as needed */
+}
+
+.card-date-author {
+  display: flex;
+  justify-content: space-between; /* Aligns the date and author on the same line */
+  margin-bottom: 10px; /* Space between date/author and title */
+}
+
+.card-date-author small {
+  font-size: 0.75rem;
+  color: #6c757d;
+}
+
+.card-title {
+  font-size: 1rem; /* Example font size */
+  line-height: 1.2; /* Example line height */
+  max-height: 2.4rem; /* Example: 2 lines of text, adjust as needed */
+  overflow: hidden; /* Hides any content that overflows the element's box */
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Number of lines you want to display */
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis; /* Adds an ellipsis to any overflow text */
+}
+
+
+.card-footer {
+  padding: 10px 15px;
+  background-color: #fff;
+  display: flex;
+  justify-content: end; /* Positions the tag at the end */
+  align-items: center;
+  border-top: none;
+}
+
+.badge {
+  background-color: #007bff;
+  color: #fff; /* Sets the text color to white */
+  padding: 5px 15px;
+  border-radius: 15px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+
+/* Adjustments for responsive layout */
+@media (min-width: 1200px) {
+    .row {
+        grid-template-columns: repeat(4, 1fr); /* 4 columns for large screens */
+    }
+}
+
+@media (max-width: 1199px) {
+    .row {
+        grid-template-columns: repeat(3, 1fr); /* 3 columns for medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .row {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns for small screens */
+    }
+}
+
+@media (max-width: 576px) {
+    .row {
+        grid-template-columns: 1fr; /* 1 column for extra small screens */
+    }
 }
 

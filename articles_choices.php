@@ -9,6 +9,15 @@ try {
 } catch (PDOException $e) {
     die("Error: " . $e->getMessage());
 }
+try {
+    $stmt = $pdo->query("SELECT a.*, c.color as category_color,c.id as category_id
+                        FROM articles a
+                        JOIN categories c ON a.tags = c.name");
+    $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+} catch (PDOException $e) {
+    die("Error: " . $e->getMessage());
+}
 
 // HTML and PHP code to display the categories in a dropdown
 ?>
@@ -41,7 +50,7 @@ try {
         <div class="custom-select-wrapper">
             <div class="custom-select-trigger">Select Category</div>
                 <div class="custom-options">
-                    <span class="custom-option" data-value="all">All</span> <!-- The 'All' option -->
+                    <span class="custom-option custom-option-all" data-value="all">Tout</span> <!-- Appliquez la classe ici -->
                     <?php foreach ($categories as $category): ?>
                         <span class="custom-option" data-value="<?= htmlspecialchars($category['id']); ?>">
                             <?= htmlspecialchars($category['name']); ?>
@@ -50,7 +59,34 @@ try {
                 </div>
             </div>
         </div>
-        <div id="selected-category">Selected category: None</div>
+        <div class="container mt-4" id="article-container">
+            <div class="row">
+                <?php foreach ($articles as $article):
+                    // Assuming you have a JOIN to get the color from the categories table
+                    $categoryColor = htmlspecialchars($article['category_color']);
+                ?>
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4" data-category="<?= htmlspecialchars($article['category_id']); ?>">
+                        <div class="card h-100">
+                            <img class="card-img-top" src="<?= htmlspecialchars($article['images']); ?>" alt="Article Image">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <small class="text-muted"><?= htmlspecialchars($article['date']); ?></small>
+                                    <small class="text-muted"><?= htmlspecialchars($article['author']); ?></small>
+                                </div>
+                                <h5 class="card-title mt-2"><?= htmlspecialchars($article['nom']); ?></h5>
+                            </div>
+                            <div class="card-footer bg-white">
+                                <span class="badge" style="background-color: <?= $categoryColor; ?>; color: #fff;"><?= htmlspecialchars($article['tags']); ?></span>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+
+
+
+
 
         <!-- Include jQuery if it's not already included -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -61,6 +97,5 @@ try {
         <!-- Initialize Select2 and your custom scripts -->
         <script src="path_to_your_custom_scripts.js"></script>
         <!-- Insert the rest of your page content here -->
-
     </div>
 </body>

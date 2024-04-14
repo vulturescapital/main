@@ -40,8 +40,7 @@ updateIcons();
 
 $(document).ready(function() {
     $('.custom-select-trigger').on('click', function(e) {
-        e.stopPropagation(); // Prevent bubbling to avoid unintended closes
-        // Toggle 'show' class to control visibility and transformations
+        e.stopPropagation();
         $('.custom-options').toggleClass('show').css({
             transform: $('.custom-options').hasClass('show') ? 'scaleY(1)' : 'scaleY(0)',
             visibility: $('.custom-options').hasClass('show') ? 'visible' : 'hidden',
@@ -50,15 +49,14 @@ $(document).ready(function() {
     });
 
     $('.custom-option').on('click', function(e) {
-        e.stopPropagation(); // Prevent bubbling
+        e.stopPropagation();
         $('.custom-option').removeClass('selected');
         $(this).addClass('selected');
-        // Update display and close dropdown
         updateSelectedCategoryDisplay();
+        filterArticles($(this).attr('data-value'));
         $('.custom-options').removeClass('show').css('transform', 'scaleY(0)');
     });
 
-    // Close dropdown if clicking outside
     $(document).on('click', function() {
         $('.custom-options').removeClass('show').css('transform', 'scaleY(0)');
     });
@@ -67,5 +65,14 @@ $(document).ready(function() {
         var selected = $('.custom-option.selected').not('[data-value="all"]').text();
         $('#selected-category').text(selected ? 'Selected category: ' + selected : 'Selected category: None');
     }
-});
 
+    function filterArticles(categoryId) {
+        $('#article-container .col-lg-3').hide(); // Hide all articles
+
+        if (categoryId === 'all') {
+            $('#article-container .col-lg-3').show(); // Show all articles if "all" is selected
+        } else {
+            $('#article-container .col-lg-3[data-category="' + categoryId + '"]').show(); // Show articles of the selected category
+        }
+    }
+});
