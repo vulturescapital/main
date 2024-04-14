@@ -203,9 +203,9 @@ body.light-mode .carousel-control-prev-icon {
 }
 
 .newsletter-section {
-  background-color: #FFA07A; /* Replace with your actual color */
+  background-color: #143487; /* Replace with your actual color */
   padding: 50px 0; /* Adjust the padding to suit your design */
-  color: #333; /* Adjust the text color to suit your design */
+  color: var(--text-color-dark); /* Adjust the text color to suit your design */
 }
 
 .newsletter-section .container {
@@ -302,7 +302,7 @@ h1 {
 
 p {
     font-size: 1.2rem;
-    color: #666;
+    color: #7e7e7e;
 }
 
 .custom-select-wrapper {
