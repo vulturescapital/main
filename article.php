@@ -58,7 +58,7 @@ include 'header.php';
             </figure>
 
             <section class="article-content">
-                <?= nl2br(htmlspecialchars($article['texte'])); ?>
+                <?= $article['texte']; ?>
             </section>
         </div>
     </article>
