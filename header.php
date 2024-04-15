@@ -50,7 +50,15 @@
                         <?php endif; ?>
                         <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
                         <li class="nav-item"><a href="#" class="nav-link">Newsletter</a></li>
+                        <li class="nav-item search-icon">
+                            <a href="javascript:void(0);" class="nav-link" id="search-toggle"><i class="fas fa-search"></i></a>
+                        </li>
                     </ul>
+                    <div id="search-bar" class="search-bar d-none">
+                        <form action="search_results.php" method="GET">
+                            <input type="text" name="query" class="search-input" placeholder="Rechercher...">
+                        </form>
+                    </div>
                     <button id="theme-toggle" class="btn">
                         <i class="fa fa-moon"></i>
                         <i class="fa fa-sun"></i>
@@ -60,6 +68,15 @@
         </nav>
     </header>
 <!-- Bootstrap JavaScript à la fin du body pour un chargement de page optimal -->
+<script>
+    // Script pour basculer le champ de recherche
+    const searchToggle = document.getElementById('search-toggle');
+    const searchBar = document.getElementById('search-bar');
+
+    searchToggle.addEventListener('click', function() {
+        searchBar.classList.toggle('d-none');
+    });
+</script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
