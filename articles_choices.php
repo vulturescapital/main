@@ -3,7 +3,7 @@
 <?php
 include 'dbconfig.php';
 
-$articlesPerPage = 10;
+$articlesPerPage = 20;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $categoryId = isset($_GET['category_id']) ? $_GET['category_id'] : null;
 $startAt = ($page - 1) * $articlesPerPage;
@@ -117,13 +117,31 @@ try {
                     </div>
                 <?php endforeach; ?>
             </div>
-            <nav>
+            <nav aria-label="Page navigation">
                 <ul class="pagination">
+                    <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>">
+                        <a class="page-link" href="?page=<?= max(1, $page - 1); ?>" aria-label="Previous">
+                            <span aria-hidden="true">&laquo; Précédent</span>
+                        </a>
+                    </li>
+
+                    <!-- Numbered page links -->
                     <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                        <li class="page-item <?= ($page === $i) ? 'active' : '' ?>">
-                            <a class="page-link" href="?page=<?= $i; ?>"><?= $i; ?></a>
-                        </li>
+                        <?php if ($i === 1 || $i === $totalPages || ($i >= $page - 2 && $i <= $page + 2)): ?>
+                            <li class="page-item <?= ($page === $i) ? 'active' : '' ?>">
+                                <a class="page-link" href="?page=<?= $i; ?>"><?= $i; ?></a>
+                            </li>
+                        <?php elseif ($i === $page - 3 || $i === $page + 3): ?>
+                            <li class="page-item disabled"><span class="page-link">...</span></li>
+                        <?php endif; ?>
                     <?php endfor; ?>
+
+                    <!-- Next Button -->
+                    <li class="page-item <?= ($page >= $totalPages) ? 'disabled' : '' ?>">
+                        <a class="page-link" href="?page=<?= min($totalPages, $page + 1); ?>" aria-label="Next">
+                            <span aria-hidden="true">Suivant &raquo;</span>
+                        </a>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -151,4 +169,4 @@ try {
         <script src="path_to_your_custom_scripts.js"></script>
         <!-- Insert the rest of your page content here -->
     </div>
-</body>
+<?php include 'footer.php';

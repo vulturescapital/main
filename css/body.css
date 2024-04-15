@@ -625,3 +625,54 @@ p {
 .custom-container-padding {
     padding-left: 150px; /* Adds 50px padding to the left */
 }
+.pagination {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+}
+.pagination li {
+    margin: 0 5px;
+    position: relative; /* Ensure stacking context for z-index */
+}
+
+
+.pagination li.active a,
+.pagination li.active span {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.pagination li a:hover:not(.active),
+.pagination li span:hover:not(.active) {
+    background-color: #e9ecef;
+    border-color: #ddd;
+}
+
+.pagination .disabled a,
+.pagination .disabled span {
+    color: #6c757d;
+    background-color: #fff;
+    border-color: #ddd;
+    cursor: not-allowed;
+}
+
+/* Remove white rectangle if caused by an extra element */
+.pagination .extra-element {
+    display: none; /* Hide the extra element */
+}
+.pagination li a,
+.pagination li span {
+    color: #007bff;
+    text-decoration: none;
+    background-color: #fff;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 38px;
+}
+
