@@ -3,9 +3,6 @@ include 'dbconfig.php';
 $article = [];
 $related_articles = [];
 
-$article = [];
-$related_articles = [];
-
 // Validate the ID and fetch article details.
 if (!empty($_GET['id']) && is_numeric($_GET['id'])) {
     $article_id = $_GET['id'];
@@ -16,10 +13,30 @@ if (!empty($_GET['id']) && is_numeric($_GET['id'])) {
     $article = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($article) {
-        // If the article is found, fetch related articles based on tags.
-        $related_articles_stmt = $pdo->prepare("SELECT * FROM article WHERE FIND_IN_SET(:category_id, category_id) AND id != :article_id LIMIT 4");
-        $related_articles_stmt->execute([':category_id' => $article['category_id'], ':article_id' => $article['id']]);
+        // Fetch the text content of all other articles
+        $stmt = $pdo->prepare("SELECT id, texte FROM article WHERE id != :id");
+        $stmt->execute([':id' => $article_id]);
+        $allOtherArticles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Calculate Levenshtein distances
+        $levenshteinDistances = [];
+        foreach ($allOtherArticles as $otherArticle) {
+            $levDist = levenshtein($article['texte'], $otherArticle['texte']);
+            $levenshteinDistances[$otherArticle['id']] = $levDist;
+        }
+
+        // Sort articles by their Levenshtein distance (smallest distance first)
+        asort($levenshteinDistances);
+
+        // Get the IDs of the four most related articles
+        $closestMatchesIds = array_keys(array_slice($levenshteinDistances, 0, 4, true));
+
+        // Fetch the related articles with the closest match
+        $inQuery = implode(',', array_fill(0, count($closestMatchesIds), '?'));
+        $related_articles_stmt = $pdo->prepare("SELECT * FROM article WHERE id IN ($inQuery)");
+        $related_articles_stmt->execute($closestMatchesIds);
         $related_articles = $related_articles_stmt->fetchAll(PDO::FETCH_ASSOC);
+
     } else {
         header('Location: errorpage.php'); // Redirect to an error page if no article is found.
         exit;
@@ -28,7 +45,6 @@ if (!empty($_GET['id']) && is_numeric($_GET['id'])) {
     header('Location: errorpage.php'); // Redirect to an error page if ID is invalid.
     exit;
 }
-
 
 // Including the header part of your HTML page
 include 'header.php';
