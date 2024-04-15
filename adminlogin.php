@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
     
     // Préparer la requête SQL pour éviter les injections SQL
-    $stmt = $pdo->prepare("SELECT id, username, password FROM utilisateurs WHERE username = ?");
+    $stmt = $pdo->prepare("SELECT id, username, password FROM user WHERE username = ?");
     $stmt->bindParam(1, $username);
     
     // Exécuter la requête

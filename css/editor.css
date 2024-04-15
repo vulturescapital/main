@@ -1,0 +1,304 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+:root {
+    --background-color-light: rgb(224, 221, 215);
+    --text-color-light: #333333;
+    --background-color-dark: #333333;
+    --text-color-dark: #ffffff;
+    --footer-background-light: rgb(224, 221, 215);
+    --footer-background-dark: #333333;
+    --gray-light:#bebebe;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    color: var(--text-color-light);
+    background-color: var(--background-color-light);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    display: block;
+    flex-direction: column;
+    height : 100%
+}
+body.light-mode {
+    background-color: var(--background-color-light);
+    color: var(--text-color-light);
+}
+
+body.dark-mode {
+    background-color: var(--background-color-dark);
+    color: var(--text-color-dark);
+}
+
+.container {
+    width: 100%; /* Full width */
+    max-width: none; /* Important: this ensures that the container does not limit the width of the ck-editor */
+    margin: 0 auto; /* Center the container if necessary */
+    padding: 0; /* No padding to limit the width */
+}
+@media (max-width: 768px) {
+    .main-nav {
+        text-align: center;
+    }
+
+    .main-nav ul {
+        display: block;
+    }
+
+    .main-nav li {
+        display: block;
+        margin: 5px 0;
+    }
+}
+body.dark-mode header,
+body.dark-mode .navbar-nav .nav-link {
+    color: var(--text-color-dark);
+}
+
+body.dark-mode header {
+    background-color: var(--background-color-dark);
+}
+.custom-container {
+    position: relative; /* Assurez-vous que votre conteneur personnalisé est positionné relativement */
+}
+.newsletter-section { /* Assurez-vous que la section Newsletter a cette classe ou modifiez selon votre HTML */
+    padding-top: 2rem; /* Ajustez cette valeur selon l'espace souhaité entre les tirets et 'Newsletter' */
+}
+.card {
+    margin-right: 15px; /* Espace entre les cartes */
+    min-width: 25%;
+    border-radius: 5px;
+}
+.newsletter-section {
+  background-color: #143487; /* Replace with your actual color */
+  padding: 50px 0; /* Adjust the padding to suit your design */
+  color: var(--text-color-dark); /* Adjust the text color to suit your design */
+}
+
+.newsletter-section .container {
+  max-width: 1140px; /* Adjust the max-width to suit your design */
+  margin: auto;
+  padding: 0 15px;
+}
+
+.newsletter-section h2 {
+  font-size: 2rem; /* Adjust the font-size to suit your design */
+  margin-bottom: 15px;
+}
+
+.newsletter-section p {
+  margin-bottom: 25px;
+}
+
+.newsletter-section .btn-newsletter {
+  background-color: #ff0000; /* Replace with your actual button color */
+  color: #fff; /* Text color for the button */
+  border: none;
+  padding: 10px 20px; /* Adjust the padding to suit your design */
+  border-radius: 20px; /* Adjust the border-radius to suit your design */
+  font-weight: bold;
+  cursor: pointer;
+}
+.newsletter-section input[type="email"] {
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ccc; /* Ou toute autre couleur de bordure souhaitée */
+  border-radius: 20px; /* Ajustez selon le rayon de bordure que vous souhaitez */
+  outline: none; /* Supprime l'outline par défaut sur le focus */
+}
+.newsletter-section input[type="email"]:focus,.newsletter-section .btn-newsletter:focus,.newsletter-section .btn-newsletter:active,
+.newsletter-section input[type="email"]:active {
+    outline: none;  /* Removes the outline on focus */
+    box-shadow: none;  /* Removes any shadow on focus */
+}
+.newsletter-section .checkbox {
+  margin-top: 10px; /* Adjust the margin to suit your design */
+}
+
+.newsletter-section input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+.newsletter-section label {
+  font-size: 0.9rem; /* Adjust the font-size to suit your design */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .newsletter-section .container {
+    padding: 0 30px;
+  }
+
+  .newsletter-section h2 {
+    font-size: 1.75rem; /* Adjust the font-size to suit your design */
+  }
+
+  .newsletter-section p {
+    font-size: 1rem; /* Adjust the font-size to suit your design */
+  }
+}
+.container.mt-4 {
+  padding: 2px; /* Adjust padding as needed */
+}
+/* Adjust the overall grid layout */
+.articles-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin: auto;
+    max-width: 1200px;
+    padding: 0 15px;
+}
+
+.card {
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+
+}
+.article-link {
+    text-decoration: none; /* Removes underline from all text */
+    color: inherit; /* Text color will be inherited from parent element */
+}
+.article-link:hover, .article-link:visited, .article-link:link, .article-link:active {
+    text-decoration: none; /* Removes underline from all text on different link states */
+    color: inherit; /* Maintains the text color consistent on different link states */
+}
+.article-link .card-footer .badge {
+    background-color: inherit; /* It will take the color from the inline style */
+    color: #fff; /* Text color white */
+    /* Additional styles as needed */
+}
+
+.card-img-top {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border: 5px solid #fff; /* Add white border */
+    border-radius: 15px; /* Maintain border radius */
+}
+.badge {
+  background-color: #007bff;
+  color: #fff; /* Sets the text color to white */
+  padding: 5px 15px;
+  border-radius: 15px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+/* Adjustments for responsive layout */
+@media (min-width: 1200px) {
+    .row {
+        grid-template-columns: repeat(4, 1fr); /* 4 columns for large screens */
+    }
+}
+
+@media (max-width: 1199px) {
+    .row {
+        grid-template-columns: repeat(3, 1fr); /* 3 columns for medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .row {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns for small screens */
+    }
+}
+
+@media (max-width: 576px) {
+    .row {
+        grid-template-columns: 1fr; /* 1 column for extra small screens */
+    }
+}
+/* Full-width editor styling */
+.editor-container {
+    width: 100vw; /* Full width */
+    margin: 0; /* Reset margins */
+    padding: 10px; /* Reset padding */
+    overflow: hidden;
+    height: 100vh;
+}
+/* Editor area */
+.ck-editor__editable {
+    min-height: 80vh; /* 90% of the viewport height for a full-page experience */
+    width: 100%; /* Ensure the width is 100% of the editor container */
+    margin: 0; /* Reset margins */
+    padding: 1em; /* Comfortable padding inside the editor for the text */
+    box-shadow: none; /* Remove shadow if not needed */
+    border-radius: 0; /* Remove border-radius if not needed */
+    border: none; /* Remove borders */
+    height: auto;
+    /* Remove max-width if it was set anywhere for the editor */
+}
+.ck-editor {
+    width: 100%; /* Full width */
+    max-width: none; /* Ensures no max-width is applied */
+}
+.immediate-parent-selector {
+    width: 100%; /* Full width */
+    max-width: none; /* Ensures no max-width is applied */
+    margin: 0; /* Reset any margin */
+    padding: 0; /* Reset any padding */
+}
+.container {
+    width: 100%; /* Full width */
+    max-width: none; /* Important: this ensures that the container does not limit the width of the ck-editor */
+    margin: 0 auto; /* Center the container if necessary */
+    padding: 0; /* No padding to limit the width */
+}
+.container-parent { /* Replace .container-parent with the actual parent class if it exists */
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+}
+/* Apply full width for all screen sizes */
+@media (min-width: 992px) {
+    .container {
+        max-width: none;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: none;
+    }
+}
+.ck-editor__top {
+    top: 50px; /* Height of your header, adjust as needed */
+}
+/* Floating toolbar styles */
+#toolbar-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+    padding: 0.5em;
+    z-index: 100; /* Ensure the toolbar is above other content */
+}
+.button-category-publish {
+    background-color: #4CAF50; /* Green background */
+    border: none; /* Remove border */
+    color: white; /* Text color */
+    padding: 10px 20px; /* Top and bottom padding and left and right padding */
+    text-align: center; /* Center the text */
+    text-decoration: none; /* Remove underlines from text */
+    display: inline-block; /* Allow it to sit next to other inline elements */
+    font-size: 16px; /* Set the font size */
+    margin: 4px 2px; /* Margin on all sides */
+    cursor: pointer; /* Change mouse cursor on hover */
+    border-radius: 8px; /* Rounded corners */
+    transition-duration: 0.4s; /* Smooth transition for hover effect */
+    box-shadow: 0 9px #999; /* Shadow for a 3D effect */
+}
+
+.button-category-publish:hover {
+    background-color: #45a049; /* Darker shade of green */
+    box-shadow: 0 5px #666; /* Shadow effect on hover */
+    transform: translateY(4px); /* Push the button down to mimic a press */
+}
