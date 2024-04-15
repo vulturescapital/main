@@ -32,7 +32,13 @@ try {
     
     <div class="editor-container">
         <h1>Write Your Article</h1>
-        <form action="save_article.php" method="post">
+        <form action="save_article.php" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="articleTitle" placeholder="Enter your article title here" required>
+        </div>
+            <label for="mainImage">Main Image:</label>
+            <input type="file" name="mainImage" id="mainImage" required>
             <textarea id="editor" name="articleContent">Welcome to TinyMCE!</textarea>
             
             <label for="category">Category:</label>
@@ -48,7 +54,7 @@ try {
     </div>
     
     <!-- Include TinyMCE -->
-    <script src="https://cdn.tiny.cloud/1//tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/huipd2b5w0f8r3sba5bztwu825k42jnezpkea3zvdt0sqtv2/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
             selector: '#editor',
