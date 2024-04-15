@@ -76,3 +76,21 @@ $(document).ready(function() {
         }
     }
 });
+$(document).ready(function() {
+    $('.custom-option').on('click', function() {
+        var categoryId = $(this).data('value');
+        var page = 1; // Reset to page 1 or keep the current page depending on your needs
+        $.ajax({
+            url: '../articles_choices.php',
+            type: 'GET',
+            data: {
+                category_id: categoryId,
+                page: page
+            },
+            success: function(data) {
+                $('#article-container .row').html(data);
+                // Update pagination if needed
+            }
+        });
+    });
+});

@@ -1,8 +1,6 @@
 <?php include 'dbconfig.php'; ?>
 <?php session_start(); // Très important pour utiliser les variables de session
-    var_dump($_SESSION);
 ?>
-<html lang="en">
 <head>
     <!-- Les scripts de thème doivent être chargés avant les autres ressources -->
     <script>

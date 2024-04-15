@@ -1,26 +1,56 @@
 <?php include 'header.php'; ?>
+
 <?php
 include 'dbconfig.php';
 
-// Fetch categories from the database
-try {
-    $stmt = $pdo->query("SELECT id, name FROM categories");
-    $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    die("Error: " . $e->getMessage());
-}
-try {
-    $stmt = $pdo->query("SELECT a.*, c.color as category_color,c.id as category_id
-                        FROM articles a
-                        JOIN categories c ON a.tags = c.name");
-    $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$articlesPerPage = 10;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$categoryId = isset($_GET['category_id']) ? $_GET['category_id'] : null;
+$startAt = ($page - 1) * $articlesPerPage;
 
+try {
+    $categories = $pdo->query("SELECT id, name FROM category")->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     die("Error: " . $e->getMessage());
 }
 
-// HTML and PHP code to display the categories in a dropdown
+try {
+    $queryParams = [];
+    $query = "SELECT a.*, c.color AS category_color, c.name AS category_name
+              FROM article a
+              JOIN category c ON a.category_id = c.id";
+    if ($categoryId) {
+        $query .= " WHERE a.category_id = :category_id";
+        $queryParams[':category_id'] = $categoryId;
+    }
+    $query .= " ORDER BY a.id DESC LIMIT :startAt, :articlesPerPage";
+
+    $articleStmt = $pdo->prepare($query);
+    $articleStmt->bindValue(':startAt', $startAt, PDO::PARAM_INT);
+    $articleStmt->bindValue(':articlesPerPage', $articlesPerPage, PDO::PARAM_INT);
+    if ($categoryId) {
+        $articleStmt->bindParam(':category_id', $categoryId);
+    }
+    $articleStmt->execute();
+    $articles = $articleStmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Fetch the total count for pagination
+    $totalQuery = "SELECT COUNT(*) FROM article";
+    if ($categoryId) {
+        $totalQuery .= " WHERE category_id = :category_id";
+    }
+    $totalStmt = $pdo->prepare($totalQuery);
+    if ($categoryId) {
+        $totalStmt->bindParam(':category_id', $categoryId);
+    }
+    $totalStmt->execute();
+    $totalArticles = $totalStmt->fetchColumn();
+    $totalPages = ceil($totalArticles / $articlesPerPage);
+} catch (PDOException $e) {
+    die("Error: " . $e->getMessage());
+}
 ?>
+
 <body>
     <section class="newsletter-section">
         <div class="container">
@@ -72,23 +102,45 @@ try {
                     <div class="col-lg-3 col-md-4 col-sm-6 mb-4" data-category="<?= htmlspecialchars($article['category_id']); ?>">
                         <a href="article.php?id=<?= htmlspecialchars($article['id']); ?>" class="article-link">
                         <div class="card h-100">
-                            <img class="card-img-top" src="<?= htmlspecialchars($article['images']); ?>" alt="Article Image">
+                            <img class="card-img-top" src="<?= htmlspecialchars($article['image']); ?>" alt="Article Image">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
                                     <small class="text-muted"><?= htmlspecialchars($article['date']); ?></small>
                                     <small class="text-muted"><?= htmlspecialchars($article['author']); ?></small>
                                 </div>
-                                <h5 class="card-title mt-2"><?= htmlspecialchars($article['nom']); ?></h5>
+                                <h5 class="card-title mt-2"><?= htmlspecialchars($article['name']); ?></h5>
                             </div>
                             <div class="card-footer bg-white">
-                                <span class="badge" style="background-color: <?= $categoryColor; ?>; color: #fff;"><?= htmlspecialchars($article['tags']); ?></span>
+                                <span class="badge" style="background-color: <?= $categoryColor; ?>; color: #fff;"><?= htmlspecialchars($article['category_name']); ?></span>
                             </div>
                         </div>
                     </div>
                 <?php endforeach; ?>
             </div>
+            <nav>
+                <ul class="pagination">
+                    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                        <li class="page-item <?= ($page === $i) ? 'active' : '' ?>">
+                            <a class="page-link" href="?page=<?= $i; ?>"><?= $i; ?></a>
+                        </li>
+                    <?php endfor; ?>
+                </ul>
+            </nav>
         </div>
+        <script>
+            $('.custom-option').on('click', function() {
+                var value = $(this).data('value');
+                var url = 'articles_choices.php';
 
+                // If 'All' is selected, do not add the 'category_id' parameter
+                if (value !== 'all') {
+                    url += '?category_id=' + value;
+                }
+
+                window.location.href = url;
+            });
+
+        </script>
         <!-- Include jQuery if it's not already included -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
