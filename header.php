@@ -48,7 +48,7 @@
                             <li class="nav-item"><a href="./editor.php" class="nav-link">Create an Article</a></li>
                             <li class="nav-item"><a href="./logout.php" class="nav-link">Logout</a></li>
                         <?php endif; ?>
-                        <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
+                        <li class="nav-item"><a href="./halvorsen.php" class="nav-link">Contact</a></li>
                         <li class="nav-item"><a href="#" class="nav-link">Newsletter</a></li>
                         <li class="nav-item search-icon">
                             <a href="javascript:void(0);" class="nav-link" id="search-toggle"><i class="fas fa-search"></i></a>

@@ -78,6 +78,7 @@ include 'header.php';
             </section>
         </div>
     </article>
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="vultures_capital" data-color="#FFDD00" data-emoji=""  data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
     <div class="related-articles-container">
         <h3>Articles Similaires</h3>
         <div class="related-container mt-4">
@@ -102,5 +103,4 @@ include 'header.php';
         </div>
     </div>
 </div>
-
 <?php include 'footer.php'; // Include the footer file if you have one ?>
