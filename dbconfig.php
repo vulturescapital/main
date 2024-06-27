@@ -17,4 +17,5 @@ try {
 } catch (PDOException $e) {
     error_log("Erreur de connexion : " . $e->getMessage());
 }
+session_start(); // Start the session at the top of your script
 ?>
