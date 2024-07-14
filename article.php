@@ -63,51 +63,36 @@ if (!empty($_GET['id']) && is_numeric($_GET['id'])) {
 include 'header.php';
 ?>
 
-<div class="container mt-10 article-page custom-container-padding">
+<div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.php">Accueil</a></li>
-            <!-- Nom de la catégorie ou section -->
             <li class="breadcrumb-item"><a href="articles_choices.php">Finance</a></li>
-            <!-- Nom de l'article -->
-            <li class="breadcrumb-item active" aria-current="page"><?= htmlspecialchars($article['name']); ?></li>
+            <li class="breadcrumb-item active" aria-current="page">AI is Now Shovel Ready</li>
         </ol>
     </nav>
-    <div class="content-area">
-        <article class="article-content-wrapper">
-            <header class="article-header">
-                <h1 class="article-title"><?= htmlspecialchars($article['name']); ?></h1>
-                <h2 class="article-subtitle"><?= htmlspecialchars($article['header']); ?></h2>
-                <p class="article-meta"><?= date("j F Y", strtotime($article['date'])); ?> at <?= date("g:i a", strtotime($article['date'])); ?> | <?= htmlspecialchars($article['duree_reading']); ?> minutes read</p>
-            </header>
-            <figure class="article-image-container">
-                <img src="<?= htmlspecialchars($article['image']); ?>" alt="<?= htmlspecialchars($article['name']); ?>" class="article-image">
-            </figure>
-
-            <section class="article-content">
-                <?= $article['texte']; ?>
-            </section>
-        </article>
-        <aside class="sidebar">
-            <div class="most_viewed_article-container">
-                <h3>Les Articles les plus lus</h3>
-                <div class="most_viewed_article-row">
-                    <?php foreach ($most_viewed_articles as $article): ?>
-                        <div class="most_viewed_article-col mb-4">
-                            <a href="article.php?id=<?= htmlspecialchars($article['id']); ?>" class="most_viewed_article-article-link">
-                                <img class="most_viewed_article-img-top" src="<?= htmlspecialchars($article['image']); ?>" alt="<?= htmlspecialchars($article['name']); ?>">
-                                <div class="most_viewed_article-card-body">
-                                    <h5 class="most_viewed_article-title"><?= htmlspecialchars($article['name']); ?></h5>
-                                </div>
-                            </a>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-        </aside>
+    <div class="article-header">
+        <h1 class="article-title"><?= htmlspecialchars($article['name']); ?></h1>
+        <h2 class="article-subtitle"><?= htmlspecialchars($article['header']); ?></h2>
+        <p class="article-author">By <?= htmlspecialchars($article['author']); ?></p>
+        <?php
+            $date = new DateTime($article['date']);
+            $formattedDate = strtoupper($date->format('F j, Y'));
+        ?>
+        <p class="article-date">Published <?= htmlspecialchars($formattedDate); ?></p>
+        <p class="article-reading-time"><?= htmlspecialchars($article['duree_reading']); ?> min read</p>
     </div>
-   <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="vultures_capital" data-color="#333333" data-emoji="🥃"  data-font="Arial" data-text="Buy me a whisky" data-outline-color="#ffffff" data-font-color="#ffffff" data-coffee-color="#FFDD00" ></script>
-    <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="vultures_capital" data-description="Support me on Buy me a coffee!" data-message="" data-color="#333333" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+    <figure class="article-image-container">
+        <img src="<?= htmlspecialchars($article['image']); ?>" alt="<?= htmlspecialchars($article['name']); ?>" class="article-image">
+    </figure>
+    <div class="article-content">
+        <section class="article-content">
+            <?= $article['texte']; ?>
+        </section>
+    </div>
+    <div class="buy-me-a-coffee-container">
+        <a href="https://www.buymeacoffee.com/vultures_capital"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=vultures_capital&button_colour=5F7FFF&font_colour=ffffff&font_family=Lato&outline_colour=000000&coffee_colour=FFDD00" /></a>
+    </div>
     <div class="related-articles-container">
         <h3>Articles Similaires</h3>
         <div class="related-container mt-4">

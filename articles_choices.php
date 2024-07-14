@@ -1,4 +1,5 @@
-<?php include 'header.php'; ?>
+<?php
+include 'header.php'; ?>
 
 <?php
 include 'dbconfig.php';
@@ -55,7 +56,7 @@ try {
     <section class="newsletter-section">
         <div class="container">
             <h2>Newsletter</h2>
-            <p>Recevez un récapitulatif de l'actualité chaque lundi Et c'est tout.</p>
+            <p>Recevez les meilleurs news de the Vultures community.</p>
             <form action="add_email_process.php" method="POST">
                 <input type="email" name="email" placeholder="Votre adresse e-mail" required>
                 <button type="submit" class="btn-newsletter">S'inscrire !</button>
@@ -105,7 +106,12 @@ try {
                             <img class="card-img-top" src="<?= htmlspecialchars($article['image']); ?>" alt="Article Image">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
-                                    <small class="text-muted"><?= htmlspecialchars($article['date']); ?></small>
+                                    <?php
+                                        // Format and display the publication date
+                                        $date = new DateTime($article['date']);
+                                        $formattedDate = strtoupper($date->format('F j, Y'));
+                                    ?>
+                                    <small class="text-muted"><?= htmlspecialchars($formattedDate); ?></small>
                                     <small class="text-muted"><?= htmlspecialchars($article['author']); ?></small>
                                 </div>
                                 <h5 class="card-title mt-2"><?= htmlspecialchars($article['name']); ?></h5>
@@ -165,8 +171,7 @@ try {
         <!-- Include the Select2 JS -->
         <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 
-        <!-- Initialize Select2 and your custom scripts -->
-        <script src="path_to_your_custom_scripts.js"></script>
         <!-- Insert the rest of your page content here -->
     </div>
+
 <?php include 'footer.php';
