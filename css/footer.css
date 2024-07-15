@@ -1,102 +1,35 @@
-
-/* Footer styles */
-.site-footer {
-    background: var(--footer-background-light);
-    text-align: center;
-    font-family: 'Poppins', sans-serif;
-    position: relative; /* or absolute depending on the rest of your layout */
-    bottom: 0;
-    width: 100%;
-    margin-top: auto;
+.footer {
+    background-color: #5572e5; /* Blue color */
+    color: white; /* Text color */
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    font-family: Arial, sans-serif;
 }
 
-/* Footer styling for dark mode */
-body.dark-mode .site-footer {
-    background: var(--footer-background-dark);
+.footer-section {
+    flex: 1;
 }
 
-/* Footer content styles */
-.footer-content h2 {
+.footer-section h4 {
+    font-size: 18px;
     margin-bottom: 10px;
 }
 
-.footer-content p {
-    margin-bottom: 20px;
+.footer-section ul {
+    list-style-type: none;
+    padding: 0;
 }
 
-/* Subscription form styles */
-.subscription-form {
-    margin-bottom: 30px;
+.footer-section ul li {
+    margin-bottom: 5px;
 }
 
-.subscription-form input[type="email"] {
-    padding: 10px;
-    margin-right: 10px;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    width: 300px;
-}
-.subscription-form input[type="email"]:focus,
-.subscription-form input[type="email"]:active {
-    outline: none;  /* Removes the outline on focus */
-    box-shadow: none;  /* Removes any shadow on focus */
-}
-.subscription-form button {
-    padding: 10px 20px;
-    background-color: #000000;
+.footer-section ul li a {
     color: white;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-}
-.subscription-form button:focus{
-    outline: none;  /* Removes the outline on focus */
-    box-shadow: none;
-}
-/* Subscription form styling for dark mode */
-body.dark-mode .subscription-form input[type="email"],
-body.dark-mode .subscription-form button {
-    border-color: var(--text-color-dark);
-}
-
-body.dark-mode .subscription-form button {
-    background-color: #555;
-}
-
-/* Footer navigation styles */
-.footer-nav {
-    padding-top: 20px;
-}
-
-.footer-nav a {
-    margin: 0 10px;
-    color: var(--text-color-light);
     text-decoration: none;
 }
 
-.footer-nav a:hover {
-    text-decoration: underline;
-}
-
-/* Footer links styling for dark mode */
-body.dark-mode .footer-nav a {
-    color: var(--text-color-dark);
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .footer-content {
-        padding: 0 20px;
-    }
-
-    .footer-nav a {
-        display: block;
-        margin-bottom: 10px;
-    }
-
-    .subscription-form input[type="email"],
-    .subscription-form button {
-        width: 100%;
-        margin: 10px 0;
-    }
+.footer-section ul li a:hover {
+    text-decoration: none;
 }

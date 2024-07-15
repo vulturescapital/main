@@ -71,6 +71,7 @@ include 'header.php';
             <li class="breadcrumb-item active" aria-current="page">AI is Now Shovel Ready</li>
         </ol>
     </nav>
+    <hr class="horizontal-line">
     <div class="article-header">
         <h1 class="article-title"><?= htmlspecialchars($article['name']); ?></h1>
         <h2 class="article-subtitle"><?= htmlspecialchars($article['header']); ?></h2>
@@ -82,6 +83,7 @@ include 'header.php';
         <p class="article-date">Published <?= htmlspecialchars($formattedDate); ?></p>
         <p class="article-reading-time"><?= htmlspecialchars($article['duree_reading']); ?> min read</p>
     </div>
+    <hr class="horizontal-line">
     <figure class="article-image-container">
         <img src="<?= htmlspecialchars($article['image']); ?>" alt="<?= htmlspecialchars($article['name']); ?>" class="article-image">
     </figure>
@@ -90,9 +92,69 @@ include 'header.php';
             <?= $article['texte']; ?>
         </section>
     </div>
+    <div class="share-container">
+        <h2>SHARE</h2>
+        <div class="share-buttons">
+            <a href="#" class="share-button" title="Share on Facebook" onclick="shareOnFacebook(); return false;">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18.77 7.46H14.5v-1.9c0-.9.6-1.1 1-1.1h3V.5h-4.33C10.24.5 9.5 3.44 9.5 5.32v2.15h-3v4h3v12h5v-12h3.85l.42-4z"/>
+                </svg>
+            </a>
+            <a href="#" class="share-button" title="Share on Twitter" onclick="shareOnTwitter(); return false;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+            </a>
+            <a href="#" class="share-button" title="Share on LinkedIn" onclick="shareOnLinkedIn(); return false;">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+            </a>
+            <a href="#" class="share-button" title="Share via Email" onclick="shareViaEmail(); return false;">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                </svg>
+            </a>
+            <button class="share-link" onclick="copyLink()">Copy Link</button>
+        </div>
+    </div>
+    <script>
+        function getShareableLink() {
+            return encodeURIComponent(window.location.href);
+        }
+
+        function getArticleTitle() {
+            return encodeURIComponent(document.title);
+        }
+
+        function shareOnFacebook() {
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${getShareableLink()}`, '_blank');
+        }
+
+        function shareOnTwitter() {
+            window.open(`https://x.com/intent/tweet?url=${getShareableLink()}&text=${getArticleTitle()}`, '_blank');
+        }
+
+        function shareOnLinkedIn() {
+            window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${getShareableLink()}&title=${getArticleTitle()}`, '_blank');
+        }
+
+        function shareViaEmail() {
+            window.location.href = `mailto:?subject=${getArticleTitle()}&body=Check out this article: ${getShareableLink()}`;
+        }
+
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(function() {
+                alert('Link copied to clipboard!');
+            }, function(err) {
+                console.error('Could not copy text: ', err);
+            });
+        }
+    </script>
     <div class="buy-me-a-coffee-container">
         <a href="https://www.buymeacoffee.com/vultures_capital"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=vultures_capital&button_colour=5F7FFF&font_colour=ffffff&font_family=Lato&outline_colour=000000&coffee_colour=FFDD00" /></a>
     </div>
+    <hr class="horizontal-line">
     <div class="related-articles-container">
         <h3>Articles Similaires</h3>
         <div class="related-container mt-4">
@@ -112,5 +174,13 @@ include 'header.php';
             </div>
         </div>
     </div>
+    <div class="newsletter-content">
+        <h2>Newsletter</h2>
+        <p>Inscrivez-vous pour recevoir les dernières informations.</p>
+        <form class="subscription-form" action="add_email_process.php" method="post">
+            <input type="email" name="email" placeholder="Adresse e-mail" required>
+            <button type="submit">S'inscrire</button>
+        </form>
+    </div>
 </div>
-<?php include 'footer.php'; // Include the footer file if you have one ?>
+<?php include 'footer.php'; ?>

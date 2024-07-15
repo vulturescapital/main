@@ -33,6 +33,14 @@
       </div>
     </div>
   </div>
+  <div class="newsletter-content">
+    <h2>Newsletter</h2>
+    <p>Inscrivez-vous pour recevoir les dernières informations.</p>
+    <form class="subscription-form" action="add_email_process.php" method="post">
+        <input type="email" name="email" placeholder="Adresse e-mail" required>
+        <button type="submit">S'inscrire</button>
+    </form>
+  </div>
 </div>
 
 <?php include 'footer.php'; ?>

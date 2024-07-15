@@ -11,7 +11,7 @@
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: Unica, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, FZLanTingHeiS, sans-serif;
     line-height: 1.6;
     color: var(--text-color-light);
     background-color: var(--background-color-light);
@@ -203,7 +203,7 @@ body.light-mode .carousel-control-prev-icon {
 }
 
 .newsletter-section {
-  background-color: #143487; /* Replace with your actual color */
+  background-color: #5572e5; /* Replace with your actual color */
   padding: 50px 0; /* Adjust the padding to suit your design */
   color: var(--text-color-dark); /* Adjust the text color to suit your design */
 }
@@ -728,5 +728,109 @@ p {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 20px 0;
+}
+
+.newsletter-content p {
+    margin-bottom: 20px;
+}
+
+/* Subscription form styles */
+.subscription-form {
+    margin-bottom: 30px;
+}
+
+.subscription-form input[type="email"] {
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    width: 300px;
+}
+.subscription-form input[type="email"]:focus,
+.subscription-form input[type="email"]:active {
+    outline: none;  /* Removes the outline on focus */
+    box-shadow: none;  /* Removes any shadow on focus */
+}
+.subscription-form button {
+    padding: 10px 20px;
+    background-color: #000000;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.subscription-form button:focus{
+    outline: none;  /* Removes the outline on focus */
+    box-shadow: none;
+
+}
+.share-container {
+    text-align: center;
+    margin-bottom: 40px; /* Added space under the share element */
+}
+
+.share-container h2 {
+    font-size: 20px; /* Slightly reduced font size */
+    margin-bottom: 15px;
+    font-weight: 100;
+    text-transform: uppercase; /* Makes "SHARE" all caps */
+    letter-spacing: 1px; /* Adds some letter spacing for a sleeker look */
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.share-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+    border: 1px solid #000; /* Changed from 2px to 1px for thinner circle */
+    font-size: 18px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.share-button:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+.share-button svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
+.share-link {
+    margin-left: 15px;
+    padding: 10px 20px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.share-link:hover {
+    background-color: #333;
+}
+
+
+.horizontal-line {
+    border: none;
+    border-top: 1px solid #333;
     margin: 20px 0;
 }

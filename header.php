@@ -42,9 +42,8 @@
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item"><a href="./articles_choices.php" class="nav-link">Articles</a></li>
                         <?php if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true): ?>
-                        <li class="nav-item"><a href="./adminlogin.php" class="nav-link">Admin Login</a></li>
-                            <?php endif; ?>
-                            <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
+                        <?php endif; ?>
+                        <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
                             <li class="nav-item"><a href="./editor.php" class="nav-link">Create an Article</a></li>
                             <li class="nav-item"><a href="./logout.php" class="nav-link">Logout</a></li>
                         <?php endif; ?>

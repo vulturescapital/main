@@ -173,5 +173,4 @@ try {
 
         <!-- Insert the rest of your page content here -->
     </div>
-
-<?php include 'footer.php';
+<?php include 'footer.php'; ?>

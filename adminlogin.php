@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['user_id'] = $row['id'];
 
             // Rediriger vers la page d'accueil de l'admin
-            header("Location: index_admin.php");
+            header("Location: header.php");
             exit;
         } else {
             // Si les identifiants sont incorrects, rediriger vers la page de connexion avec un message d'erreur
@@ -67,7 +67,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 }
-
-// Inclure le pied de page
-include 'footer.php';
 ?>
+<?php include 'footer.php'; ?>
