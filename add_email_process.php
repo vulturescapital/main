@@ -1,47 +1,98 @@
 <?php
-// Vérifiez que le formulaire a été soumis
-if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['email'])) {
-    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+session_start();
+ob_start();
 
-    // Assurez-vous que l'email est valide.
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        // Redirigez vers une page d'erreur ou affichez un message.
-        header('Location: ' . $_SERVER['HTTP_REFERER'] . '?error=invalid_email');
-        exit;
+// Helper function to get the referer URL and clean query parameters
+function get_clean_referer_url() {
+    if (!empty($_SERVER['HTTP_REFERER'])) {
+        $url = $_SERVER['HTTP_REFERER'];
+        // Parse URL to remove existing query parameters related to success or error codes
+        $parsed_url = parse_url($url);
+        parse_str($parsed_url['query'] ?? '', $query_params);
+
+        // Remove specific query parameters
+        unset($query_params['success'], $query_params['error']);
+
+        // Rebuild the URL without the specific query parameters
+        $clean_url = '';
+        if (!empty($parsed_url['path'])) {
+            $clean_url .= $parsed_url['path'];
+        }
+        if (!empty($query_params)) {
+            $clean_url .= '?' . http_build_query($query_params);
+        }
+        return $clean_url;
     }
+    return '/'; // Default to home if referer is not set
+}
 
-    // Inclure le fichier de configuration de la base de données
-    require_once 'dbconfig.php';
+// Helper function to append query parameters correctly
+function append_query_params($url, $params) {
+    $parsed_url = parse_url($url);
+    parse_str($parsed_url['query'] ?? '', $query_params);
+    $query_params = array_merge($query_params, $params);
 
-    try {
-        // Vérifier si l'e-mail est déjà inscrit
-        $checkStmt = $pdo->prepare("SELECT * FROM newsletter WHERE email = :email");
-        $checkStmt->execute(['email' => $email]);
-        if ($checkStmt->rowCount() > 0) {
-            // L'adresse e-mail est déjà utilisée
-            header('Location: ' . $_SERVER['HTTP_REFERER'] . '?error=email_exists');
+    $clean_url = '';
+    if (!empty($parsed_url['path'])) {
+        $clean_url .= $parsed_url['path'];
+    }
+    if (!empty($query_params)) {
+        $clean_url .= '?' . http_build_query($query_params);
+    }
+    return $clean_url;
+}
+
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['email']) && !empty($_POST['csrf_token'])) {
+    // Validate CSRF token
+    if (hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+        $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+
+        // Validate the email
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            header('Location: ' . append_query_params(get_clean_referer_url(), ['error' => 'invalid_email']));
             exit;
         }
 
-        // Préparez la requête SQL pour insérer un nouvel e-mail
-        $stmt = $pdo->prepare("INSERT INTO newsletter (email) VALUES (:email)");
-        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-        $stmt->execute();
+        // Include the database configuration file
+        require_once 'dbconfig.php';
 
-        // Redirection vers la page d'origine avec un paramètre de succès
-        header('Location: ' . $_SERVER['HTTP_REFERER'] . '?success=1');
-        exit();
+        try {
+            // Check if the email is already subscribed
+            $checkStmt = $pdo->prepare("SELECT * FROM newsletter WHERE email = :email");
+            $checkStmt->execute(['email' => $email]);
+            if ($checkStmt->rowCount() > 0) {
+                header('Location: ' . append_query_params(get_clean_referer_url(), ['error' => 'email_exists']));
+                exit;
+            }
 
-    } catch (PDOException $e) {
-        // Log l'erreur pour une révision par un administrateur
-        error_log("Erreur lors de l'inscription : " . $e->getMessage());
-        // Redirigez vers la page d'origine avec un paramètre d'erreur
-        header('Location: ' . $_SERVER['HTTP_REFERER'] . '?error=db_error');
-        exit();
+            // Prepare the SQL query to insert a new email
+            $stmt = $pdo->prepare("INSERT INTO newsletter (email) VALUES (:email)");
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt->execute();
+
+            // Redirect to the original page with a success parameter
+            header('Location: ' . append_query_params(get_clean_referer_url(), ['success' => '1']));
+            exit;
+
+        } catch (PDOException $e) {
+            // Log the error for review by an admin
+            error_log("Error during subscription: " . $e->getMessage());
+
+            // Redirect to the original page with an error parameter
+            header('Location: ' . append_query_params(get_clean_referer_url(), ['error' => 'db_error']));
+            exit;
+        }
+    } else {
+        // Invalid CSRF token
+        header('Location: ' . append_query_params(get_clean_referer_url(), ['error' => 'invalid_csrf']));
+        exit;
     }
 } else {
-    // Si les données du formulaire ne sont pas reçues, redirigez vers la page du formulaire
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
-    exit();
+    header('Location: ' . get_clean_referer_url());
+    exit;
 }
+
+// End output buffering and flush the output
+ob_end_flush();
 ?>

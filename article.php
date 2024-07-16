@@ -62,7 +62,8 @@ if (!empty($_GET['id']) && is_numeric($_GET['id'])) {
 // Including the header part of your HTML page
 include 'header.php';
 ?>
-
+<div id="popup" class="popup"></div>
+<div id="notification" class="notification"></div>
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -92,7 +93,7 @@ include 'header.php';
             <?= $article['texte']; ?>
         </section>
     </div>
-    <div class="share-container">
+        <div class="share-container">
         <h2>SHARE</h2>
         <div class="share-buttons">
             <a href="#" class="share-button" title="Share on Facebook" onclick="shareOnFacebook(); return false;">
@@ -119,36 +120,51 @@ include 'header.php';
         </div>
     </div>
     <script>
-        function getShareableLink() {
-            return encodeURIComponent(window.location.href);
-        }
-
-        function getArticleTitle() {
-            return encodeURIComponent(document.title);
-        }
-
-        function shareOnFacebook() {
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${getShareableLink()}`, '_blank');
-        }
-
-        function shareOnTwitter() {
-            window.open(`https://x.com/intent/tweet?url=${getShareableLink()}&text=${getArticleTitle()}`, '_blank');
-        }
-
-        function shareOnLinkedIn() {
-            window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${getShareableLink()}&title=${getArticleTitle()}`, '_blank');
-        }
-
-        function shareViaEmail() {
-            window.location.href = `mailto:?subject=${getArticleTitle()}&body=Check out this article: ${getShareableLink()}`;
-        }
-
-        function copyLink() {
-            navigator.clipboard.writeText(window.location.href).then(function() {
-                alert('Link copied to clipboard!');
-            }, function(err) {
-                console.error('Could not copy text: ', err);
+        // Function to get query parameters
+        function getQueryParams() {
+            const params = {};
+            window.location.search.substring(1).split("&").forEach(pair => {
+                const [key, value] = pair.split("=");
+                params[key] = decodeURIComponent(value);
             });
+            return params;
+        }
+
+        // Function to show pop-up message
+        function showPopup(message, type) {
+            const popup = document.getElementById("popup");
+            popup.innerText = message;
+            popup.classList.add("show");
+            popup.classList.add(type);
+            setTimeout(() => {
+                popup.classList.remove("show");
+                popup.classList.remove(type);
+            }, 3000);
+        }
+
+        // Display appropriate message based on query parameter
+        const queryParams = getQueryParams();
+        if (queryParams.success) {
+            showPopup("Subscription successful!", "success");
+        } else if (queryParams.error) {
+            let message;
+            switch (queryParams.error) {
+                case "invalid_email":
+                    message = "Invalid email address!";
+                    break;
+                case "email_exists":
+                    message = "Email is already subscribed!";
+                    break;
+                case "db_error":
+                    message = "Database error occurred!";
+                    break;
+                case "invalid_csrf":
+                    message = "Invalid CSRF token!";
+                    break;
+                default:
+                    message = "An unknown error occurred!";
+            }
+            showPopup(message, "error");
         }
     </script>
     <div class="buy-me-a-coffee-container">
@@ -174,13 +190,31 @@ include 'header.php';
             </div>
         </div>
     </div>
-    <div class="newsletter-content">
-        <h2>Newsletter</h2>
-        <p>Inscrivez-vous pour recevoir les dernières informations.</p>
-        <form class="subscription-form" action="add_email_process.php" method="post">
-            <input type="email" name="email" placeholder="Adresse e-mail" required>
-            <button type="submit">S'inscrire</button>
+    <hr class="horizontal-line">
+    <div class="newsletter-container">
+        <div class="newsletter-header">JOIN OUR MAILING LIST</div>
+        <div class="newsletter-title">
+            Get the best stories from<br>
+            the Vulture community.
+        </div>
+        <form class="newsletter-form" action="add_email_process.php" method="post">
+            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+            <input type="email" name="email" placeholder="Email Address" class="newsletter-input" required>
+            <button type="submit" class="newsletter-submit">Submit</button>
         </form>
     </div>
+    <hr class="horizontal-line">
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const notification = document.getElementById('notification');
+        const statusMessage = <?php echo json_encode($status_message); ?>;
+
+        if (statusMessage) {
+            notification.textContent = statusMessage;
+            notification.classList.add(statusMessage.includes('successfully') ? 'success' : 'error');
+            notification.style.display = 'block';
+        }
+    });
+</script>
 <?php include 'footer.php'; ?>
