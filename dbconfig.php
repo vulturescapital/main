@@ -1,13 +1,13 @@
 <?php
-require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
-// Start the session only if not already started
+use Dotenv\Dotenv;
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Load environment variables from .env file
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../main');
 $dotenv->load();
 
 $host = $_ENV['DB_HOST'];
