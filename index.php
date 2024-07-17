@@ -1,32 +1,27 @@
-<?php
-// Start the session if not already started
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-// Include the database configuration file
-require_once 'dbconfig.php';
-
-// Including the header part of your HTML page
-include 'header.php';
-?>
-
-<div class="container">
-    <div class="message">
-        <p>Our website is currently under construction. Be the first to know when we launch by joining our mailing list.</p>
-        <p>Notre site Web est actuellement en cours de construction. Soyez le premier à savoir quand nous lançons en rejoignant notre liste de diffusion.</p>
+<?php include 'header.php'; ?>
+<main class="container">
+    <div class="post">
+        <img src="path-to-image.jpg" alt="Styled Bandanas">
+        <div class="post-date">05.04.20</div>
+        <h2>Styled Bandanas</h2>
+        <p>Spring is in full bloom and so are these bandanas! Here are some fun ways to style your new favorite headpiece.</p>
+        <a href="#" class="read-more">Read More</a>
     </div>
-    <hr class="horizontal-line">
-    <div class="newsletter-container">
-        <div class="newsletter-header">JOIN OUR MAILING LIST</div>
-        <div class="newsletter-title">
-            Don't miss our opening! Subscribe now!
-        </div>
-        <form class="newsletter-form" action="add_email_process.php" method="post">
-            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
-            <input type="email" name="email" placeholder="Email Address" class="newsletter-input" required>
-            <button type="submit" class="newsletter-submit">Submit</button>
-        </form>
+    <div class="post">
+        <img src="path-to-image.jpg" alt="Cool Down">
+        <div class="post-date">05.01.20</div>
+        <h2>Cool Down</h2>
+        <p>Now that you’ve got your new workout routine in place, learn how to be efficient in cooling down.</p>
+        <a href="#" class="read-more">Read More</a>
     </div>
-    <hr class="horizontal-line">
-</div>
+    <div class="post">
+        <img src="path-to-image.jpg" alt="Catching a Breath">
+        <div class="post-date">04.13.20</div>
+        <h2>Catching a Breath</h2>
+        <p>Take a walk, look at some views and let yourself breathe. It’s ok to take that break.</p>
+        <a href="#" class="read-more">Read More</a>
+    </div>
+</main>
+<?php include 'footer.php'; ?>
+</body>
+</html>
