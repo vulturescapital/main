@@ -12,7 +12,6 @@ include 'header.php';
 ?>
 
 <div class="container">
-    <img src="./images/logo_vultures.svg" alt="Under Construction Image" style="width:100%; height:auto;">-
     <div class="message">
         <p>Our website is currently under construction. Be the first to know when we launch by joining our mailing list.</p>
         <p>Notre site Web est actuellement en cours de construction. Soyez le premier à savoir quand nous lançons en rejoignant notre liste de diffusion.</p>
