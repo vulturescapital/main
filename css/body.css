@@ -887,3 +887,42 @@ p {
     visibility: visible;
     opacity: 1;
 }
+
+.newsletter-outer {
+    text-align: center;
+}
+.newsletter-title-page {
+    font-family: PitchSans,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,FZLanTingHeiS,sans-serif;
+    font-size: 4.5rem;
+    line-height: .85;
+    text-transform: uppercase;
+    margin-bottom: 10rem;
+}
+.newsletter-container {
+    position: relative;
+    padding: 40px 20px;
+    margin-top: 20px;
+}
+.newsletter-container::before,
+.newsletter-container::after {
+    content: '';
+    position: absolute;
+}
+.newsletter-container::before {
+    top: 20px;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+.newsletter-container::after {
+    left: 20px;
+    right: 20px;
+    top: 0;
+    bottom: 0;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+
