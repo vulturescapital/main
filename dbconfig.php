@@ -1,6 +1,11 @@
 <?php
 require __DIR__ . '/vendor/autoload.php';
 
+// Start the session only if not already started
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 // Load environment variables from .env file
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
@@ -18,8 +23,11 @@ try {
     $pdo = new PDO($dsn, $user, $password);
     // Set PDO error mode to Exception
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    echo "Connected to the database $dbname successfully.";
+
+    error_log("Connected to the database $dbname successfully.");
 } catch (PDOException $e) {
-    echo "Connection error: " . $e->getMessage();
+    error_log("Connection error: " . $e->getMessage());
+    // Handle the error gracefully
+    die("Database connection failed: " . $e->getMessage());
 }
 ?>
