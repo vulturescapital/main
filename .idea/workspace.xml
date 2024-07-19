@@ -5,9 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f178aba7-ae90-4fcd-b0d7-447262fdbe24" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/newsletter.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/css/body.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/body.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/article.php" beforeDir="false" afterPath="$PROJECT_DIR$/article.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/articles_choices.php" beforeDir="false" afterPath="$PROJECT_DIR$/articles_choices.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dbconfig.php" beforeDir="false" afterPath="$PROJECT_DIR$/dbconfig.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/header.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,21 +68,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.attractor.executor": "Run",
-    "Python.ff.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "pre-prod",
-    "last_opened_file_path": "/Users/hugolemonnier/Desktop/All/Private /vultures/main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;PHP Script.index.php.executor&quot;: &quot;Run&quot;,
+    &quot;Python.attractor.executor&quot;: &quot;Run&quot;,
+    &quot;Python.ff.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;pre-prod&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/hugolemonnier/Desktop/All/Private /vultures/main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/images" />
@@ -92,8 +98,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-PY-241.18034.82" />
-        <option value="bundled-python-sdk-975db3bf15a3-2767605e8bc2-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-241.18034.82" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-PS-241.18034.69" />
+        <option value="bundled-php-predefined-ba97393d7c68-48a1a656d44e-com.jetbrains.php.sharedIndexes-PS-241.18034.69" />
       </set>
     </attachedChunks>
   </component>
@@ -137,6 +143,12 @@
       <workItem from="1721236242967" duration="8000" />
       <workItem from="1721236260837" duration="1391000" />
       <workItem from="1721251012270" duration="2000" />
+      <workItem from="1721323324324" duration="1916000" />
+      <workItem from="1721335240464" duration="1380000" />
+      <workItem from="1721336629379" duration="1630000" />
+      <workItem from="1721374654076" duration="605000" />
+      <workItem from="1721397312747" duration="916000" />
+      <workItem from="1721427967711" duration="148000" />
     </task>
     <servers />
   </component>

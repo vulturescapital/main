@@ -2,7 +2,6 @@
 include 'header.php'; ?>
 
 <?php
-include 'dbconfig.php';
 
 $articlesPerPage = 20;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;

@@ -1,5 +1,5 @@
 <?php
-include 'dbconfig.php';
+include 'header.php';
 $article = [];
 $related_articles = [];
 
@@ -58,9 +58,6 @@ if (!empty($_GET['id']) && is_numeric($_GET['id'])) {
     header('Location: errorpage.php'); // Redirect to an error page if ID is invalid.
     exit;
 }
-
-// Including the header part of your HTML page
-include 'header.php';
 ?>
 <div id="popup" class="popup"></div>
 <div id="notification" class="notification"></div>
