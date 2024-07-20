@@ -1,5 +1,5 @@
 <?php
-$host = 'vulturescapital.fr';
+$host = 'cassis.o2switch.net';
 $dbname = 'kinu7234_vultures'; // Nom de votre base de données
 $user = 'kinu7234_romain'; // Nom d'utilisateur de la base de données
 $password = 'Napoleon0304!'; // Mot de passe de la base de données

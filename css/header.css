@@ -7,6 +7,9 @@ header, .navbar {
     margin-top: 0 !important; /* !important to ensure override */
     padding-top: 0 !important; /* Also ensure no padding is causing the issue */
 }
+.navbar{
+    margin-bottom: -80px;
+}
 .navbar-nav {
     display: flex;
     align-items: center;

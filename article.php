@@ -62,13 +62,13 @@ if (!empty($_GET['id']) && is_numeric($_GET['id'])) {
 <div id="popup" class="popup"></div>
 <div id="notification" class="notification"></div>
 <div class="container">
-    <nav aria-label="breadcrumb">
+    <!-- <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.php">Accueil</a></li>
             <li class="breadcrumb-item"><a href="articles_choices.php">Finance</a></li>
             <li class="breadcrumb-item active" aria-current="page">AI is Now Shovel Ready</li>
         </ol>
-    </nav>
+    </nav>-->
     <hr class="horizontal-line">
     <div class="article-header">
         <h1 class="article-title"><?= htmlspecialchars($article['name']); ?></h1>
@@ -90,7 +90,7 @@ if (!empty($_GET['id']) && is_numeric($_GET['id'])) {
             <?= $article['texte']; ?>
         </section>
     </div>
-        <div class="share-container">
+    <div class="share-container">
         <h2>SHARE</h2>
         <div class="share-buttons">
             <a href="#" class="share-button" title="Share on Facebook" onclick="shareOnFacebook(); return false;">
@@ -117,14 +117,45 @@ if (!empty($_GET['id']) && is_numeric($_GET['id'])) {
         </div>
     </div>
     <script>
-        // Function to get query parameters
-        function getQueryParams() {
-            const params = {};
-            window.location.search.substring(1).split("&").forEach(pair => {
-                const [key, value] = pair.split("=");
-                params[key] = decodeURIComponent(value);
+        function getCleanUrl() {
+            const url = new URL(window.location.href);
+            url.search = ''; // Remove query parameters
+            url.hash = ''; // Remove hash
+            return url.href;
+        }
+
+        function shareOnFacebook() {
+            const url = getCleanUrl();
+            const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+            window.open(facebookUrl, '_blank');
+        }
+
+        function shareOnTwitter() {
+            const url = getCleanUrl();
+            const text = document.querySelector('.article-title').innerText;
+            const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
+            window.open(twitterUrl, '_blank');
+        }
+
+        function shareOnLinkedIn() {
+            const url = getCleanUrl();
+            const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+            window.open(linkedInUrl, '_blank');
+        }
+
+        function shareViaEmail() {
+            const url = getCleanUrl();
+            const subject = document.querySelector('.article-title').innerText;
+            const body = `Check out this article: ${url}`;
+            const mailtoUrl = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailtoUrl;
+        }
+
+        function copyLink() {
+            const url = getCleanUrl();
+            navigator.clipboard.writeText(url).then(() => {
+            }).catch(err => {
             });
-            return params;
         }
 
         // Function to show pop-up message
@@ -137,6 +168,16 @@ if (!empty($_GET['id']) && is_numeric($_GET['id'])) {
                 popup.classList.remove("show");
                 popup.classList.remove(type);
             }, 3000);
+        }
+
+        // Function to get query parameters
+        function getQueryParams() {
+            const params = {};
+            window.location.search.substring(1).split("&").forEach(pair => {
+                const [key, value] = pair.split("=");
+                params[key] = decodeURIComponent(value);
+            });
+            return params;
         }
 
         // Display appropriate message based on query parameter
@@ -187,7 +228,6 @@ if (!empty($_GET['id']) && is_numeric($_GET['id'])) {
             </div>
         </div>
     </div>
-    <hr class="horizontal-line">
     <div class="newsletter-container">
         <div class="newsletter-header">JOIN OUR MAILING LIST</div>
         <div class="newsletter-title">
@@ -195,12 +235,11 @@ if (!empty($_GET['id']) && is_numeric($_GET['id'])) {
             the Vulture community.
         </div>
         <form class="newsletter-form" action="add_email_process.php" method="post">
-            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
             <input type="email" name="email" placeholder="Email Address" class="newsletter-input" required>
             <button type="submit" class="newsletter-submit">Submit</button>
         </form>
     </div>
-    <hr class="horizontal-line">
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
