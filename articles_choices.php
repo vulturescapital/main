@@ -52,27 +52,12 @@ try {
 ?>
 
 <body>
-    <section class="newsletter-section">
-        <div class="container">
-            <h2>Newsletter</h2>
-            <p>Recevez les meilleurs news de the Vultures community.</p>
-            <form action="add_email_process.php" method="POST">
-                <input type="email" name="email" placeholder="Votre adresse e-mail" required>
-                <button type="submit" class="btn-newsletter">S'inscrire !</button>
-                <div class="checkbox">
-                    <input type="checkbox" id="consent" required>
-                    <label for="consent">Oui, j'accepte de recevoir votre newsletter selon votre politique de confidentialité</label>
-                </div>
-            </form>
-        </div>
-    </section>
-
     <div class="container mt-4">
-        <nav aria-label="breadcrumb">
+        <!--<nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index.php">Accueil</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Actu des finances</li>
-            </ol>
+            </ol>-->
         </nav>
         <h1 class="mt-4 mb-4">Actu des finances</h1>
         <p class="mb-4">Bienvenue sur cette page qui regroupe tous nos articles liés à l'actualité financière. Vous retrouverez ici des actus pour vous tenir au courant des dernières nouveautés, sorties et événements qui concernent la finance.</p>
