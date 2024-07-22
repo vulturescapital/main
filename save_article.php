@@ -6,14 +6,15 @@ session_start();
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-function calculateExtraReadingTimeForImages($content) {
-    $initialSecondsPerImage = 12/60;
-    $minimumSecondsPerImage = 1/60;
+function calculateExtraReadingTimeForImages($content)
+{
+    $initialSecondsPerImage = 12 / 60;
+    $minimumSecondsPerImage = 1 / 60;
     $extraReadingTimeInSeconds = 0;
     $imageCount = substr_count($content, '<img>');
 
     for ($i = 0; $i < $imageCount; $i++) {
-        $secondsToAdd = max($initialSecondsPerImage - $i/60, $minimumSecondsPerImage);
+        $secondsToAdd = max($initialSecondsPerImage - $i / 60, $minimumSecondsPerImage);
         $extraReadingTimeInSeconds += $secondsToAdd;
     }
     return $extraReadingTimeInSeconds;
@@ -67,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['articleContent']) && 
         // Check if $uploadOk is set to 0 by an error
         if ($uploadOk === 0) {
             echo "Sorry, your file was not uploaded.";
-        // if everything is ok, try to upload file
+            // if everything is ok, try to upload file
         } else {
             if (!move_uploaded_file($_FILES["mainImage"]["tmp_name"], $imageFile)) {
                 echo "Sorry, there was an error uploading your file.";

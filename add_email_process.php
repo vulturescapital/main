@@ -3,7 +3,8 @@ session_start();
 ob_start();
 
 // Helper function to get the referer URL and clean query parameters
-function get_clean_referer_url() {
+function get_clean_referer_url()
+{
     if (!empty($_SERVER['HTTP_REFERER'])) {
         $url = $_SERVER['HTTP_REFERER'];
         // Parse URL to remove existing query parameters related to success or error codes
@@ -27,7 +28,8 @@ function get_clean_referer_url() {
 }
 
 // Helper function to append query parameters correctly
-function append_query_params($url, $params) {
+function append_query_params($url, $params)
+{
     $parsed_url = parse_url($url);
     parse_str($parsed_url['query'] ?? '', $query_params);
     $query_params = array_merge($query_params, $params);

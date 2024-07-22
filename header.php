@@ -10,7 +10,7 @@ if (empty($_SESSION['csrf_token'])) {
     <!-- Les scripts de thème doivent être chargés avant les autres ressources -->
     <script>
         // Votre script pour définir le thème
-        (function() {
+        (function () {
             var theme = localStorage.getItem('theme');
             if (theme === 'dark') {
                 document.body.classList.add('dark-mode');
@@ -28,56 +28,57 @@ if (empty($_SESSION['csrf_token'])) {
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/body.css">
     <link rel="stylesheet" href="../css/footer.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="icon" type="image/png" href="../images/logo.png">
 </head>
 <body class="d-flex flex-column min-vh-100 light-mode">
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light">
-            <div class="container">
-                <a href="index.php" class="navbar-brand">Vultures</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a href="index.php" class="navbar-brand">Vultures</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
+                    aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                <div class="collapse navbar-collapse" id="navbarContent">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a href="./articles_choices.php" class="nav-link">Articles</a></li>
-                        <?php if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true): ?>
-                        <?php endif; ?>
-                        <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
-                            <li class="nav-item"><a href="./editor.php" class="nav-link">Create an Article</a></li>
-                            <li class="nav-item"><a href="./logout.php" class="nav-link">Logout</a></li>
-                        <?php endif; ?>
-                        <li class="nav-item"><a href="./contact.php" class="nav-link">Contact</a></li>
-                        <li class="nav-item"><a href="./newsletter.php" class="nav-link">Newsletter</a></li>
-                        <li class="nav-item search-icon">
-                            <a href="javascript:void(0);" class="nav-link" id="search-toggle"><i class="fas fa-search"></i></a>
-                        </li>
-                    </ul>
-                    <div id="search-bar" class="search-bar d-none">
-                        <form action="search_results.php" method="GET">
-                            <input type="text" name="query" class="search-input" placeholder="Rechercher...">
-                        </form>
-                    </div>
-                    <button id="theme-toggle" class="btn">
-                        <i class="fa fa-moon"></i>
-                        <i class="fa fa-sun"></i>
-                    </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a href="./articles_choices.php" class="nav-link">Articles</a></li>
+                    <?php if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true): ?>
+                    <?php endif; ?>
+                    <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
+                        <li class="nav-item"><a href="./editor.php" class="nav-link">Create an Article</a></li>
+                        <li class="nav-item"><a href="./logout.php" class="nav-link">Logout</a></li>
+                    <?php endif; ?>
+                    <li class="nav-item"><a href="./contact.php" class="nav-link">Contact</a></li>
+                    <li class="nav-item"><a href="./newsletter.php" class="nav-link">Newsletter</a></li>
+                    <li class="nav-item search-icon">
+                        <a href="javascript:void(0);" class="nav-link" id="search-toggle"><i class="fas fa-search"></i></a>
+                    </li>
+                </ul>
+                <div id="search-bar" class="search-bar d-none">
+                    <form action="search_results.php" method="GET">
+                        <input type="text" name="query" class="search-input" placeholder="Rechercher...">
+                    </form>
                 </div>
+                <button id="theme-toggle" class="btn">
+                    <i class="fa fa-moon"></i>
+                    <i class="fa fa-sun"></i>
+                </button>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
+</header>
 <!-- Bootstrap JavaScript à la fin du body pour un chargement de page optimal -->
 <script>
     // Script pour basculer le champ de recherche
     const searchToggle = document.getElementById('search-toggle');
     const searchBar = document.getElementById('search-bar');
 
-    searchToggle.addEventListener('click', function() {
+    searchToggle.addEventListener('click', function () {
         searchBar.classList.toggle('d-none');
     });
 </script>
@@ -90,8 +91,8 @@ if (empty($_SESSION['csrf_token'])) {
 <script>
     const themeToggleButton = document.getElementById('theme-toggle');
 
-    themeToggleButton.addEventListener('click', function() {
-      document.body.classList.toggle('dark-mode');
-      document.body.classList.toggle('light-mode');
+    themeToggleButton.addEventListener('click', function () {
+        document.body.classList.toggle('dark-mode');
+        document.body.classList.toggle('light-mode');
     });
 </script>

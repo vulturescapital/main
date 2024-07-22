@@ -75,15 +75,16 @@ if (!empty($_GET['id']) && is_numeric($_GET['id'])) {
         <h2 class="article-subtitle"><?= htmlspecialchars($article['header']); ?></h2>
         <p class="article-author">By <?= htmlspecialchars($article['author']); ?></p>
         <?php
-            $date = new DateTime($article['date']);
-            $formattedDate = strtoupper($date->format('F j, Y'));
+        $date = new DateTime($article['date']);
+        $formattedDate = strtoupper($date->format('F j, Y'));
         ?>
         <p class="article-date">Published <?= htmlspecialchars($formattedDate); ?></p>
         <p class="article-reading-time"><?= htmlspecialchars($article['duree_reading']); ?> min read</p>
     </div>
     <hr class="horizontal-line">
     <figure class="article-image-container">
-        <img src="<?= htmlspecialchars($article['image']); ?>" alt="<?= htmlspecialchars($article['name']); ?>" class="article-image">
+        <img src="<?= htmlspecialchars($article['image']); ?>" alt="<?= htmlspecialchars($article['name']); ?>"
+             class="article-image">
     </figure>
     <div class="article-content">
         <section class="article-content">
@@ -206,7 +207,8 @@ if (!empty($_GET['id']) && is_numeric($_GET['id'])) {
         }
     </script>
     <div class="buy-me-a-coffee-container">
-        <a href="https://www.buymeacoffee.com/vultures_capital"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=vultures_capital&button_colour=5F7FFF&font_colour=ffffff&font_family=Lato&outline_colour=000000&coffee_colour=FFDD00" /></a>
+        <a href="https://www.buymeacoffee.com/vultures_capital"><img
+                    src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=vultures_capital&button_colour=5F7FFF&font_colour=ffffff&font_family=Lato&outline_colour=000000&coffee_colour=FFDD00"/></a>
     </div>
     <hr class="horizontal-line">
     <div class="related-articles-container">
@@ -215,9 +217,11 @@ if (!empty($_GET['id']) && is_numeric($_GET['id'])) {
             <div class="related-row">
                 <?php foreach ($related_articles as $related_article): ?>
                     <div class="related-col mb-4">
-                        <a href="article.php?id=<?= htmlspecialchars($related_article['id']); ?>" class="related-article-link">
+                        <a href="article.php?id=<?= htmlspecialchars($related_article['id']); ?>"
+                           class="related-article-link">
                             <div class="related-card">
-                                <img class="related-img-top" src="<?= htmlspecialchars($related_article['image']); ?>" alt="Article Image">
+                                <img class="related-img-top" src="<?= htmlspecialchars($related_article['image']); ?>"
+                                     alt="Article Image">
                                 <div class="related-card-body">
                                     <h5 class="related-title"><?= htmlspecialchars($related_article['name']); ?></h5>
                                 </div>
@@ -242,7 +246,7 @@ if (!empty($_GET['id']) && is_numeric($_GET['id'])) {
     </div>
 </div>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const notification = document.getElementById('notification');
         const statusMessage = <?php echo json_encode($status_message); ?>;
 
