@@ -25,45 +25,52 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Article Editor</title>
-    <link rel="stylesheet" type="text/css" href="css/editor.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-<?php include 'header.php'; ?>
+<?php include 'header_admin.php'; ?>
 
 <div class="editor-container">
-    <h1>Write Your Article</h1>
-    <form action="save_article.php" method="post" enctype="multipart/form-data">
+    <h1>Create Your Article</h1>
+    <form action="processes/save_article.php" method="post" enctype="multipart/form-data">
         <div class="form-group">
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="articleTitle" placeholder="Enter your article title here" required>
+            <label for="title">Title</label>
+            <input type="text" id="title" name="articleTitle" placeholder="Enter your captivating title here" required>
         </div>
-        <label for="mainImage">Main Image:</label>
-        <input type="file" name="mainImage" id="mainImage" required>
-        <textarea id="editor" name="articleContent">Welcome to TinyMCE!</textarea>
 
-        <label for="category">Category:</label>
-        <select id="category" name="category_id">
-            <option value="">Select a category</option>
-            <?php foreach ($categories as $category): ?>
-                <option value="<?= htmlspecialchars($category['id']) ?>"><?= htmlspecialchars($category['name']) ?></option>
-            <?php endforeach; ?>
-        </select>
+        <div class="form-group">
+            <label for="mainImage">Featured Image</label>
+            <input type="file" name="mainImage" id="mainImage" required>
+        </div>
 
-        <input type="submit" class="button-category-publish" value="Select the category & Publish">
+        <div class="form-group">
+            <label for="category">Category</label>
+            <select id="category" name="category_id" required>
+                <option value="">Select a category</option>
+                <?php foreach ($categories as $category): ?>
+                    <option value="<?= htmlspecialchars($category['id']) ?>"><?= htmlspecialchars($category['name']) ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="editor">Content</label>
+            <textarea id="editor" name="articleContent">Start writing your amazing article here!</textarea>
+        </div>
+
+        <button type="submit" class="button-category-publish">Publish Article</button>
     </form>
 </div>
 
-<!-- Include TinyMCE -->
-<script src="https://cdn.tiny.cloud/1/huipd2b5w0f8r3sba5bztwu825k42jnezpkea3zvdt0sqtv2/tinymce/7/tinymce.min.js"
-        referrerpolicy="origin"></script>
+<script src="https://cdn.tiny.cloud/1/r0jevhd96d198uc5hif2msl0nr3r3g4k3hd8xbwgnecunv9z/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
     tinymce.init({
         selector: '#editor',
-        // Define your TinyMCE configuration here
         plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate mentions tableofcontents footnotes mergetags autocorrect typography inlinecss markdown',
         toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-
-        // ...other TinyMCE configurations
+        height: 500,
+        menubar: false,
+        statusbar: false,
     });
 </script>
 </body>

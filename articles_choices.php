@@ -2,7 +2,6 @@
 include 'header.php'; ?>
 
 <?php
-
 $articlesPerPage = 20;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $categoryId = isset($_GET['category_id']) ? $_GET['category_id'] : null;
