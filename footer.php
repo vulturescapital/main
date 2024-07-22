@@ -13,7 +13,7 @@
         <div class="footer-section">
             <h4>LOGIN</h4>
             <ul>
-                <li><a href="adminlogin.php">Admin Login</a></li>
+                <li><a href="admin_login.php">Admin Login</a></li>
             </ul>
         </div>
     </div>

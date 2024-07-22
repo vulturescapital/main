@@ -1,8 +1,10 @@
 <?php
 session_start();
 ob_start();
+set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__ . '/..');
 
-// Helper function to get the referer URL and clean query parameters
+// Include the database configuration file
+require_once 'dbconfig.php';
 function get_clean_referer_url()
 {
     if (!empty($_SERVER['HTTP_REFERER'])) {
@@ -56,9 +58,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['email']) && !empty($_
             exit;
         }
 
-        // Include the database configuration file
-        require_once 'dbconfig.php';
-
         try {
             // Check if the email is already subscribed
             $checkStmt = $pdo->prepare("SELECT * FROM newsletter WHERE email = :email");
@@ -97,4 +96,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['email']) && !empty($_
 
 // End output buffering and flush the output
 ob_end_flush();
+$conn = null;
 ?>

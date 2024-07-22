@@ -42,13 +42,13 @@ if (empty($_SESSION['csrf_token'])) {
             <li><a href="./index_admin.php">Overview</a></li>
             <li><a href="#">Quickstart</a></li>
             <li><a href="./editor.php">Add Article</a></li>
-            <li><a href="#">Posts</a></li>
+            <li><a href="./admin_post.php">Posts</a></li>
             <li><a href="#">Categories</a></li>
             <li><a href="#">Comments</a></li>
             <li><a href="#">Users</a></li>
             <li><a href="#">Settings</a></li>
         </ul>
-        <a href="./logout.php" class="logout-btn">Se déconnecter</a>
+        <a href="processes/logout.php" class="logout-btn">Se déconnecter</a>
     </div>
     <button class="toggle-sidebar">
         <i class="fas fa-chevron-left"></i>

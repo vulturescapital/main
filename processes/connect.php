@@ -1,6 +1,8 @@
 <?php
 session_start();
 ob_start();
+set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__ . '/..');
+
 
 // Include the database configuration file
 require_once 'dbconfig.php';
@@ -27,19 +29,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['user_id'] = $row['id'];
 
             // Rediriger vers la page d'accueil de l'admin
-            header("Location: index_admin.php");
+            header("Location: ../index_admin.php");
             exit;
         } else {
             // Si les identifiants sont incorrects, définir un message d'erreur
             $_SESSION['error'] = "Invalid username or password";
-            header("Location: adminlogin.php");
+            header("Location: ../admin_login.php");
             exit;
         }
     } else {
         // Si le nom d'utilisateur n'existe pas, définir un message d'erreur
         $_SESSION['error'] = "Invalid username or password";
-        header("Location: adminlogin.php");
+        header("Location: ../admin_login.php");
         exit;
     }
 }
+$conn = null;
 ?>

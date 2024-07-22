@@ -1,10 +1,11 @@
 <?php
-// dbconfig.php should be included here
-include 'dbconfig.php';
-
 session_start();
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: index.php");
+    exit;
+}
+set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__ . '/..');
+require_once 'dbconfig.php';
 
 function calculateExtraReadingTimeForImages($content)
 {
@@ -54,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['articleContent']) && 
         }
 
         // Check file size
-        if ($_FILES["mainImage"]["size"] > 500000) { // Size in bytes
+        if ($_FILES["mainImage"]["size"] > 1000000) { // Size in bytes
             echo "Sorry, your file is too large.";
             $uploadOk = 0;
         }
@@ -90,11 +91,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['articleContent']) && 
 
         // Bind and execute
         $stmt->execute([$title, $author, $date, $category_id, $imageFile, null, $totalReadingTimeInSeconds, $content, null]);
-
+        header("Location: ../index_admin.php");
         echo "Article saved successfully.";
     }
 
     // Close connection
     $pdo = null;
 }
+$conn = null;
 ?>

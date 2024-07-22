@@ -619,7 +619,7 @@ p {
     width: 100%; /* Adjust the width as necessary */
 }
 
-.buy-me-a-coffee-container {
+.buy-me-a-coffee-container a {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -665,7 +665,7 @@ p {
 .share-container h2 {
     font-size: 20px; /* Slightly reduced font size */
     margin-bottom: 15px;
-    margin-top: 60px;
+    margin-top: 20px;
     font-weight: 100;
     text-transform: uppercase; /* Makes "SHARE" all caps */
     letter-spacing: 1px; /* Adds some letter spacing for a sleeker look */
@@ -723,15 +723,14 @@ p {
 
 
 .horizontal-line {
-    border: none;
     border-top: 0.5px solid #333;
-    margin-top: -50px;
+
     margin-bottom: 20px;
 }
 
 /* Styles for the outer container */
 .article-content {
-    max-width: 950px;
+    max-width: 800px;
     margin: 0 auto;
     padding: 20px;
 }

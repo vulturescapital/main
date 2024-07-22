@@ -13,7 +13,7 @@ error_reporting(E_ALL);
             unset($_SESSION['error']);
         }
         ?>
-        <form action="connect.php" method="post">
+        <form action="processes/connect.php" method="post">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
             <label for="password">Password:</label>
