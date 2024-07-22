@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
 
 :root {
     --text-color: #353740;
@@ -9,10 +10,10 @@
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: Rosart, Georgia, Times New Roman, FZNewBaoSong, serif;
     line-height: 1.6;
-    color: var(--text-color-light);
-    background-color: var(--background-color-light);
+    color: var(--text-color);
+    background-color: white;
     margin: 0;
     padding: 0;
     min-height: 100vh;
@@ -21,18 +22,19 @@ body {
 }
 
 .container {
-    width: 100%; /* Full width */
-    max-width: none; /* Important: this ensures that the container does not limit the width of the ck-editor */
-    margin: 0 auto; /* Center the container if necessary */
-    padding: 0; /* No padding to limit the width */
+    width: 100%;
+    max-width: none;
+    margin: 0 auto;
+    padding: 0;
 }
+
 .editor-container {
     flex: 1;
     width: 90%;
     max-width: 1200px;
     margin: 2rem auto;
     padding: 2rem;
-    background-color: #ffffff;
+    background-color: #fbf7f0;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
 }
@@ -42,6 +44,7 @@ h1 {
     text-align: center;
     margin-bottom: 2rem;
 }
+
 .form-group {
     margin-bottom: 1.5rem;
 }
@@ -49,7 +52,7 @@ h1 {
 label {
     display: block;
     margin-bottom: 0.5rem;
-    color: var(--text-color-light);
+    color: var(--text-color);
     font-weight: 600;
 }
 
@@ -58,16 +61,18 @@ input[type="file"],
 select {
     width: 100%;
     padding: 0.75rem;
-    border: 1px solid #ddd;
+    border: 1px solid black;
     border-radius: 4px;
     font-size: 1rem;
     transition: border-color 0.3s ease;
+    background: var(--background-color);
 }
+
 input[type="text"]:focus,
 input[type="file"]:focus,
 select:focus {
     outline: none;
-    border-color: var(--primary-color);
+    border-color: black;
 }
 
 .button-category-publish {
@@ -92,33 +97,39 @@ select:focus {
 /* TinyMCE specific styles */
 .tox-tinymce {
     border-radius: 4px !important;
-    border-color: #ddd !important;
 }
 
 .tox .tox-toolbar {
     background-color: #f8f9fa !important;
 }
-@media (max-width: 768px) {
-    .editor-container {
-        width: 95%;
-        padding: 1rem;
-    }
-}
 
 .sidebar {
     width: var(--sidebar-width);
     height: 100vh;
-    background-color: white;
+    background-color: var(--background-color);
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0,0,0,0.1);
     position: fixed;
     overflow-y: auto;
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
 }
+
+.sidebar.collapsed {
+    transform: translateX(-100%);
+}
+
 .main-content {
-    margin-left: var(--sidebar-width);
+    flex-grow: 1;
+    margin-left: calc(var(--sidebar-width) + 40px);
     padding: 20px;
-    width: calc(100% - var(--sidebar-width));
+    transition: margin-left 0.3s ease-in-out;
 }
+
+.main-content.expanded {
+    margin-left: 40px;
+}
+
 .logo {
     font-size: 1.5em;
     font-weight: bold;
@@ -127,26 +138,32 @@ select:focus {
     margin-bottom: 30px;
     display: block;
 }
+
 .logo:hover {
-    color: var(--primary-color);  /* Keeps the same color on hover */
-    text-decoration: none;  /* Explicitly removes underline on hover */
+    color: var(--primary-color);
+    text-decoration: none;
 }
+
 .nav-links {
     list-style-type: none;
     padding: 0;
 }
+
 .nav-links li {
     margin-bottom: 15px;
 }
+
 .nav-links a {
     text-decoration: none;
     color: var(--text-color);
     font-size: 1em;
     transition: color 0.3s ease;
 }
+
 .nav-links a:hover, .nav-links a.active {
     color: var(--primary-color);
 }
+
 .logout-btn {
     background-color: var(--primary-color);
     color: white;
@@ -158,13 +175,15 @@ select:focus {
     display: inline-block;
     margin-top: 20px;
 }
+
 .content-box {
-    background-color: white;
+    background-color: var(--background-color);
     border-radius: 8px;
     padding: 20px;
     margin-bottom: 20px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+
 .search-bar {
     width: 100%;
     padding: 10px;
@@ -172,6 +191,7 @@ select:focus {
     border-radius: 5px;
     margin-bottom: 20px;
 }
+
 .code-block {
     background-color: #f6f6f6;
     border-radius: 5px;
@@ -179,17 +199,90 @@ select:focus {
     font-family: 'Courier New', Courier, monospace;
     overflow-x: auto;
 }
+
 .model-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
 }
+
 .model-card {
-    background-color: white;
+    background-color: var(--background-color);
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+
 .model-card h3 {
     margin-top: 0;
+}
+
+/* Updated toggle sidebar styles */
+.toggle-sidebar {
+    position: fixed;
+    left: var(--sidebar-width);
+    bottom: 20px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 0 50% 50% 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: left 0.3s ease-in-out, background-color 0.3s ease, box-shadow 0.3s ease;
+    z-index: 1001;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    outline: none; /* Remove default outline */
+}
+
+.toggle-sidebar:hover,
+.toggle-sidebar:focus {
+    background-color: #0056b3;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.2); /* Slightly larger shadow for focus/hover */
+}
+
+.toggle-sidebar i {
+    font-size: 20px;
+    transition: transform 0.3s ease;
+}
+
+.toggle-sidebar.collapsed {
+    left: 0;
+}
+
+.toggle-sidebar.collapsed i {
+    transform: rotate(180deg);
+}
+
+/* Remove focus outline for mouse users, keep it for keyboard navigation */
+.toggle-sidebar:focus:not(:focus-visible) {
+    outline: none;
+}
+
+@media (max-width: 768px) {
+    .editor-container {
+        width: 95%;
+        padding: 1rem;
+    }
+
+    .toggle-sidebar {
+        bottom: 10px;
+        width: 30px;
+        height: 30px;
+    }
+
+    .toggle-sidebar i {
+        font-size: 16px;
+    }
+
+    .main-content {
+        margin-left: calc(var(--sidebar-width) + 30px);
+    }
+
+    .main-content.expanded {
+        margin-left: 30px;
+    }
 }

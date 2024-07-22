@@ -7,7 +7,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     <div class="sidebar">
         <a href="index_admin.php" class="logo">Vultures</a>
         <ul class="nav-links">
-            <li><a href="#" class="active">Overview</a></li>
+            <li><a href="#">Overview</a></li>
             <li><a href="./editor.php" >Add Article</a></li>
             <li><a href="#">Quickstart</a></li>
             <li><a href="#">Posts</a></li>

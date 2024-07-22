@@ -30,10 +30,13 @@ try {
 <body>
 <?php include 'header_admin.php'; ?>
 <div class="container">
+    <button class="toggle-sidebar">
+        <i class="fas fa-chevron-left"></i>
+    </button>
     <div class="sidebar">
         <a href="index_admin.php" class="logo">Vultures</a>
         <ul class="nav-links">
-            <li><a href="#" class="active">Overview</a></li>
+            <li><a href="./index_admin.php" >Overview</a></li>
             <li><a href="./editor.php" >Add Article</a></li>
             <li><a href="#">Quickstart</a></li>
             <li><a href="#">Posts</a></li>
@@ -79,6 +82,17 @@ try {
     </div>
 </div>
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const toggleBtn = document.querySelector('.toggle-sidebar');
+        const sidebar = document.querySelector('.sidebar');
+        const mainContent = document.querySelector('.main-content');
+
+        toggleBtn.addEventListener('click', function() {
+            sidebar.classList.toggle('collapsed');
+            mainContent.classList.toggle('expanded');
+            toggleBtn.classList.toggle('collapsed');
+        });
+    });
     // Add active class to current nav item
     const navItems = document.querySelectorAll('.nav-links a');
     navItems.forEach(item => {
