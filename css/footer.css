@@ -1,10 +1,16 @@
 .footer {
-    background-color: #5572e5; /* Blue color */
-    color: white; /* Text color */
+    flex-shrink: 0;
+    background-color: #5572e5;
+    color: white;
+    width: 100%;
+}
+
+.footer-content {
     display: flex;
     justify-content: space-between;
     padding: 20px;
-    font-family: Arial, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .footer-section {
