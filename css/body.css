@@ -2,7 +2,7 @@
 
 :root {
     --background-color-light: #fbf7f0;
-    --text-color-light: #333333;
+    --text-color-light: #003300;
     --background-color-dark: #333333;
     --text-color-dark: #ffffff;
     --footer-background-light: #fbf7f0;
@@ -392,7 +392,7 @@ p {
 }
 
 .badge {
-  background-color: #007bff;
+  background-color: var(--text-color-light);
   color: #fff; /* Sets the text color to white */
   padding: 5px 15px;
   border-radius: 15px;
@@ -610,8 +610,7 @@ p {
 .pagination li.active a,
 .pagination li.active span {
     color: #fff;
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: var(--text-color-light);
 }
 
 .pagination li a:hover:not(.active),
@@ -634,7 +633,7 @@ p {
 }
 .pagination li a,
 .pagination li span {
-    color: #007bff;
+    color: var(--text-color-light);
     text-decoration: none;
     background-color: #fff;
     border-radius: 5px;
@@ -907,7 +906,7 @@ p {
     font-size: 16px;
 }
 .newsletter-submit {
-    background-color: #000;
+    background-color: var(--text-color-light);
     color: #fff;
     border: none;
     padding: 12px 24px;
@@ -941,7 +940,7 @@ p {
 
 .contact-form input:focus,
 .contact-form textarea:focus {
-    border-color: #5572e5;
+    border-color: var(--text-color-light);
     box-shadow: 0 0 5px rgba(85, 114, 229, 0.2);
     outline: none;
 }
@@ -949,7 +948,7 @@ p {
 .contact-form button {
     padding: 15px 30px;
     margin-top: 30px;
-    background-color: #5572e5;
+    background-color: var(--text-color-light);
     color: white;
     border: none;
     border-radius: 5px;
@@ -960,7 +959,7 @@ p {
 }
 
 .contact-form button:hover {
-    background-color: #455bbf;
+    background-color: var(--text-color-light);
 }
 
 .contact-form .form-group {
@@ -1020,7 +1019,7 @@ p {
 .login-container input[type="submit"] {
     width: 100%;
     padding: 10px;
-    background-color: #007bff;
+    background-color: var(--text-color-light);
     color: white;
     border: none;
     border-radius: 4px;
@@ -1028,5 +1027,5 @@ p {
     font-size: 16px;
 }
 .login-container input[type="submit"]:hover {
-    background-color: #0056b3;
+    background-color: var(--text-color-light);
 }

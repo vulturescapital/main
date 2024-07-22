@@ -3,7 +3,7 @@
 
 :root {
     --text-color: #353740;
-    --primary-color: #007bff;
+    --primary-color: #003300;
     --background-color: #fbf7f0;
     --sidebar-width: 250px;
     --secondary-color: #2ecc71;
@@ -108,7 +108,7 @@ select:focus {
     height: 100vh;
     background-color: var(--background-color);
     padding: 20px;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     position: fixed;
     overflow-y: auto;
     transition: transform 0.3s ease-in-out;
@@ -121,13 +121,13 @@ select:focus {
 
 .main-content {
     flex-grow: 1;
-    margin-left: calc(var(--sidebar-width) + 40px);
+    margin-left: var(--sidebar-width);
     padding: 20px;
     transition: margin-left 0.3s ease-in-out;
 }
 
 .main-content.expanded {
-    margin-left: 40px;
+    margin-left: 30px;
 }
 
 .logo {
@@ -160,10 +160,6 @@ select:focus {
     transition: color 0.3s ease;
 }
 
-.nav-links a:hover, .nav-links a.active {
-    color: var(--primary-color);
-}
-
 .logout-btn {
     background-color: var(--primary-color);
     color: white;
@@ -181,7 +177,7 @@ select:focus {
     border-radius: 8px;
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .search-bar {
@@ -210,14 +206,14 @@ select:focus {
     background-color: var(--background-color);
     border-radius: 8px;
     padding: 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .model-card h3 {
     margin-top: 0;
 }
 
-/* Updated toggle sidebar styles */
+/* Styles mis à jour pour le bouton de bascule de la barre latérale */
 .toggle-sidebar {
     position: fixed;
     left: var(--sidebar-width);
@@ -225,23 +221,17 @@ select:focus {
     background-color: var(--primary-color);
     color: white;
     border: none;
-    border-radius: 0 50% 50% 0;
+    border-radius: 0 5px 5px 0;
     width: 30px;
-    height: 30px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: left 0.3s ease-in-out, background-color 0.3s ease, box-shadow 0.3s ease;
-    z-index: 1001;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-    outline: none; /* Remove default outline */
-}
-
-.toggle-sidebar:hover,
-.toggle-sidebar:focus {
-    background-color: #0056b3;
-    box-shadow: 2px 0 8px rgba(0,0,0,0.2); /* Slightly larger shadow for focus/hover */
+    transition: left 0.3s ease-in-out, background-color 0.3s ease;
+    z-index: 1002;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    outline: none; /* Remove the outline/border on click */
 }
 
 .toggle-sidebar i {
@@ -257,32 +247,35 @@ select:focus {
     transform: rotate(180deg);
 }
 
-/* Remove focus outline for mouse users, keep it for keyboard navigation */
-.toggle-sidebar:focus:not(:focus-visible) {
-    outline: none;
+.sidebar {
+    transform: translateX(0);
+    transition: transform 0.3s ease-in-out;
+}
+
+.sidebar.collapsed {
+    transform: translateX(-100%);
+}
+
+.main-content {
+    margin-left: var(--sidebar-width);
+    transition: margin-left 0.3s ease-in-out;
+}
+
+.main-content.expanded {
+    margin-left: 30px;
 }
 
 @media (max-width: 768px) {
-    .editor-container {
-        width: 95%;
-        padding: 1rem;
-    }
-
     .toggle-sidebar {
-        bottom: 10px;
-        width: 30px;
-        height: 30px;
+        width: 25px;
+        height: 50px;
     }
 
     .toggle-sidebar i {
         font-size: 16px;
     }
 
-    .main-content {
-        margin-left: calc(var(--sidebar-width) + 30px);
-    }
-
     .main-content.expanded {
-        margin-left: 30px;
+        margin-left: 25px;
     }
 }

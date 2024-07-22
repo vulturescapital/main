@@ -1,7 +1,7 @@
 /* Header Styles */
 header {
     background: var(--background-color-light);
-    color: var(--text-color-light);
+    color: #003300;
 }
 header, .navbar {
     margin-top: 0 !important; /* !important to ensure override */
@@ -48,7 +48,7 @@ header, .navbar {
 }
 
 .navbar-light .navbar-brand {
-    color: var(--text-color-light);
+    color: #003300;
     font-weight: bold;
     font-size: 1.5rem;
 }

@@ -24,29 +24,10 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Article Editor</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
 <?php include 'header_admin.php'; ?>
-<div class="container">
-    <button class="toggle-sidebar">
-        <i class="fas fa-chevron-left"></i>
-    </button>
-    <div class="sidebar">
-        <a href="index_admin.php" class="logo">Vultures</a>
-        <ul class="nav-links">
-            <li><a href="./index_admin.php" >Overview</a></li>
-            <li><a href="./editor.php" >Add Article</a></li>
-            <li><a href="#">Quickstart</a></li>
-            <li><a href="#">Posts</a></li>
-            <li><a href="#">Categories</a></li>
-            <li><a href="#">Comments</a></li>
-            <li><a href="#">Users</a></li>
-            <li><a href="#">Settings</a></li>
-        </ul>
-        <a href="./logout.php" class="logout-btn">Se déconnecter</a>
-    </div>
     <div class="main-content">
         <div class="editor-container">
             <h1>Create Your Article</h1>
@@ -81,46 +62,6 @@ try {
         </div>
     </div>
 </div>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const toggleBtn = document.querySelector('.toggle-sidebar');
-        const sidebar = document.querySelector('.sidebar');
-        const mainContent = document.querySelector('.main-content');
-
-        toggleBtn.addEventListener('click', function() {
-            sidebar.classList.toggle('collapsed');
-            mainContent.classList.toggle('expanded');
-            toggleBtn.classList.toggle('collapsed');
-        });
-    });
-    // Add active class to current nav item
-    const navItems = document.querySelectorAll('.nav-links a');
-    navItems.forEach(item => {
-        item.addEventListener('click', function(e) {
-            // Remove the preventDefault() call
-            navItems.forEach(i => i.classList.remove('active'));
-            this.classList.add('active');
-
-            // Store the active link in localStorage
-            localStorage.setItem('activeLink', this.getAttribute('href'));
-        });
-    });
-
-    // Set active class based on current page URL or stored value
-    function setActiveLink() {
-        const currentPage = window.location.pathname;
-        const storedActiveLink = localStorage.getItem('activeLink');
-
-        navItems.forEach(item => {
-            if (item.getAttribute('href') === currentPage || item.getAttribute('href') === storedActiveLink) {
-                item.classList.add('active');
-            }
-        });
-    }
-
-    // Call setActiveLink when the page loads
-    window.addEventListener('load', setActiveLink);
-</script>
 
 
 <script src="https://cdn.tiny.cloud/1/r0jevhd96d198uc5hif2msl0nr3r3g4k3hd8xbwgnecunv9z/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
@@ -134,5 +75,6 @@ try {
         statusbar: false,
     });
 </script>
+
 </body>
 </html>

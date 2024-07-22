@@ -35,9 +35,40 @@ if (empty($_SESSION['csrf_token'])) {
     <link rel="icon" type="image/png" href="../images/logo.png">
 </head>
 <body>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-<script src="../js/main.js"></script>
+<div class="container">
+    <div class="sidebar">
+        <a href="index_admin.php" class="logo">Vultures</a>
+        <ul class="nav-links">
+            <li><a href="./index_admin.php">Overview</a></li>
+            <li><a href="#">Quickstart</a></li>
+            <li><a href="./editor.php">Add Article</a></li>
+            <li><a href="#">Posts</a></li>
+            <li><a href="#">Categories</a></li>
+            <li><a href="#">Comments</a></li>
+            <li><a href="#">Users</a></li>
+            <li><a href="#">Settings</a></li>
+        </ul>
+        <a href="./logout.php" class="logout-btn">Se déconnecter</a>
+    </div>
+    <button class="toggle-sidebar">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggleBtn = document.querySelector('.toggle-sidebar');
+            const sidebar = document.querySelector('.sidebar');
+            const mainContent = document.querySelector('.main-content');
+
+            toggleBtn.addEventListener('click', function () {
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+                toggleBtn.classList.toggle('collapsed');
+            });
+        });
+    </script>
