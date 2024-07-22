@@ -1,6 +1,6 @@
 .footer {
     flex-shrink: 0;
-    background-color: var(--text-color-light);
+    background-color: var(--text-color-light-bis);
     color: white;
     width: 100%;
 }

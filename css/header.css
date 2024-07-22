@@ -1,7 +1,7 @@
 /* Header Styles */
 header {
     background: var(--background-color-light);
-    color: #003300;
+    color: var(--text-color-light-bis);
 }
 header, .navbar {
     margin-top: 0 !important; /* !important to ensure override */
@@ -15,7 +15,7 @@ header, .navbar {
 
 .header-logo {
     text-decoration: none;
-    color: var(--text-color-light);
+    color: var(--text-color-light-bis);
     font-weight: 700;
     font-size: 2rem;
 }
@@ -41,7 +41,7 @@ header, .navbar {
 
 .navbar-brand,
 .nav-link {
-    color: var(--text-color-light);
+    color: var(--text-color-light-bis);
     text-transform: uppercase;
     font-size: 16px;
     text-decoration: none;
@@ -54,7 +54,7 @@ header, .navbar {
 }
 .nav-link:not(:hover) {
     text-decoration: none; /* Ensure no underline when not hovered */
-    color: var(--text-color-light); /* Ensure consistent color */
+    color: var(--text-color-light-bis); /* Ensure consistent color */
 }
 .nav-link:active,
 .nav-link:focus,

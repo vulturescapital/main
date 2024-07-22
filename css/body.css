@@ -2,7 +2,8 @@
 
 :root {
     --background-color-light: #fbf7f0;
-    --text-color-light: #003300;
+    --text-color-light: #333333;
+    --text-color-light-bis:#003300 ;
     --background-color-dark: #333333;
     --text-color-dark: #ffffff;
     --footer-background-light: #fbf7f0;
@@ -52,47 +53,6 @@ body.dark-mode {
         max-width: 100%;
     }
 }
-
-.post {
-    background: #fff;
-    padding: 20px;
-    margin-bottom: 40px;
-    border-radius: 5px;
-}
-
-.post img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 5px 5px 0 0;
-}
-
-.post-date {
-    color: #888;
-    font-size: 0.9em;
-    margin-top: 5px;
-}
-
-.post h2 {
-    font-size: 1.5em;
-    color: #333;
-    margin: 10px 0;
-}
-
-.post p {
-    color: #666;
-    margin-bottom: 20px;
-}
-
-.read-more {
-    background-color: #000;
-    color: #fff;
-    text-decoration: none;
-    padding: 10px 15px;
-    border-radius: 2px;
-    font-weight: bold;
-}
-
-
 
 .category-card {
     margin-bottom: 20px;
@@ -604,21 +564,26 @@ p {
 .pagination li {
     margin: 0 5px;
     position: relative; /* Ensure stacking context for z-index */
+    color: var(--text-color-light-bis);
 }
 
 
 .pagination li.active a,
 .pagination li.active span {
     color: #fff;
-    background-color: var(--text-color-light);
+    background-color: var(--text-color-light-bis);
 }
 
 .pagination li a:hover:not(.active),
 .pagination li span:hover:not(.active) {
-    background-color: #e9ecef;
-    border-color: #ddd;
+    background-color: var(--text-color-light-bis);
+    border:none;
 }
-
+.page-item.active .page-link {
+    background-color: var(--text-color-light-bis); /* Change this to your desired color */
+    color: white; /* Optional: change text color */
+    border: none; /* Optional: change border color */
+}
 .pagination .disabled a,
 .pagination .disabled span {
     color: #6c757d;
@@ -855,6 +820,7 @@ p {
     padding: 20px;
     position: relative;
     z-index: 1;
+    color: var(--text-color-light-bis);
 }
 .newsletter-container::before,
 .newsletter-container::after {
@@ -906,7 +872,7 @@ p {
     font-size: 16px;
 }
 .newsletter-submit {
-    background-color: var(--text-color-light);
+    background-color: var(--text-color-light-bis);
     color: #fff;
     border: none;
     padding: 12px 24px;
@@ -1019,13 +985,10 @@ p {
 .login-container input[type="submit"] {
     width: 100%;
     padding: 10px;
-    background-color: var(--text-color-light);
+    background-color: var(--text-color-light-bis);
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
-}
-.login-container input[type="submit"]:hover {
-    background-color: var(--text-color-light);
 }
