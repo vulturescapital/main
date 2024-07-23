@@ -72,7 +72,7 @@ if (!empty($_GET['id']) && is_numeric($_GET['id'])) {
     <hr class="horizontal-line">
     <div class="article-header">
         <h1 class="article-title"><?= htmlspecialchars($article['name']); ?></h1>
-        <h2 class="article-subtitle"><?= htmlspecialchars($article['header']); ?></h2>
+        <h2 class="article-subtitle"><?= $article['header']; ?></h2>
         <p class="article-author">By <?= htmlspecialchars($article['author']); ?></p>
         <?php
         $date = new DateTime($article['date']);

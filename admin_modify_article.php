@@ -1,66 +1,40 @@
 <?php
-include 'header_admin.php';
-
+session_start();
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: index.php");
     exit;
 }
 
-$id = isset($_GET['id']) ? $_GET['id'] : null;
+// Include your database configuration file
+include 'dbconfig.php';
 
-if (!$id) {
-    echo "Article ID not provided.";
-    exit;
+// Check if article ID is provided
+if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+    die("Invalid article ID");
 }
 
+$article_id = $_GET['id'];
+
+// Fetch the article data
 try {
-    // Fetch the article data
     $stmt = $pdo->prepare("SELECT * FROM article WHERE id = ?");
-    $stmt->execute([$id]);
+    $stmt->execute([$article_id]);
     $article = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$article) {
-        echo "Article not found.";
-        exit;
+        die("Article not found");
     }
 
-    // Fetch all categories
-    $categories = $pdo->query("SELECT * FROM category")->fetchAll(PDO::FETCH_ASSOC);
+    // Fetch categories
+    $stmt = $pdo->query("SELECT id, name FROM category");
+    $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Fetch all users
-    $users = $pdo->query("SELECT id, username FROM user")->fetchAll(PDO::FETCH_ASSOC);
-
-    // Handle form submission
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $name = $_POST['name'];
-        $author = $_POST['author'];
-        $date = $_POST['date'];
-        $image = $_POST['image'];
-        $duree_reading = $_POST['duree_reading'];
-        $texte = $_POST['texte'];
-        $header = $_POST['header'];
-        $category_id = $_POST['category_id'];
-
-        // File upload handling
-        $file = $article['file']; // Keep existing file by default
-        if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
-            $uploadDir = 'uploads/';
-            $uploadFile = $uploadDir . basename($_FILES['file']['name']);
-            if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadFile)) {
-                $file = $uploadFile;
-            }
-        }
-
-        // Update the article
-        $updateStmt = $pdo->prepare("UPDATE article SET name = ?, author = ?, date = ?, image = ?, file = ?, duree_reading = ?, texte = ?, header = ?, category_id = ? WHERE id = ?");
-        $updateStmt->execute([$name, $author, $date, $image, $file, $duree_reading, $texte, $header, $category_id, $id]);
-
-        echo "<p class='success-message'>Article updated successfully!</p>";
-    }
+    // Fetch users (authors)
+    $stmt = $pdo->query("SELECT id, username FROM user");
+    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 } catch (PDOException $e) {
-    echo "Error: " . $e->getMessage();
-    exit;
+    die("Error: " . $e->getMessage());
 }
 ?>
 
@@ -69,172 +43,157 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modify Article</title>
-    <style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <?php
+    // ... (Keep the existing PHP code at the top)
+    ?>
 
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+        <style>
+            .button-container {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 20px;
+            }
 
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-color);
-            font-weight: 600;
-        }
+            .button {
+                padding: 10px 20px;
+                font-size: 16px;
+                cursor: pointer;
+                border: none;
+                border-radius: 5px;
+                transition: background-color 0.3s;
+            }
 
-        input[type="text"],
-        input[type="file"],
-        input[type="date"],
-        input[type="number"],
-        select,
-        textarea {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 1rem;
-            background-color: white;
-        }
+            .button-preview {
+                background-color: #4CAF50;
+                color: white;
+            }
 
-        input[type="text"]:focus,
-        input[type="file"]:focus,
-        input[type="date"]:focus,
-        input[type="number"]:focus,
-        select:focus,
-        textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
+            .button-preview:hover {
+                background-color: #45a049;
+            }
 
-        .button-category-publish {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 4px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            display: block;
-            width: 100%;
-            margin-top: 2rem;
-        }
+            .button-update {
+                background-color: #008CBA;
+                color: white;
+            }
 
-        .button-category-publish:hover {
-            background-color: var(--secondary-color);
-        }
+            .button-update:hover {
+                background-color: #007B9E;
+            }
+        </style>
+    </head>
+    <body>
+    <?php include 'header_admin.php'; ?>
+    <div class="main-content">
+        <div class="editor-container">
+            <h1>Edit Article</h1>
+            <form id="articleForm" action="processes/admin_update_article.php" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="article_id" value="<?= htmlspecialchars($article['id']) ?>">
 
-        .success-message {
-            background-color: var(--secondary-color);
-            color: white;
-            padding: 1rem;
-            border-radius: 4px;
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-    </style>
-    <script src="https://cdn.tiny.cloud/1/r0jevhd96d198uc5hif2msl0nr3r3g4k3hd8xbwgnecunv9z/tinymce/5/tinymce.min.js"
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <p>Current Title: <?= htmlspecialchars($article['name']) ?></p>
+                    <input type="text" id="title" name="articleTitle" value="<?= htmlspecialchars($article['name']) ?>"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label>Featured Image</label>
+                    <p>Current image: <?= htmlspecialchars($article['image']) ?></p>
+                    <input type="file" name="mainImage" id="mainImage">
+                </div>
+
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <p>Current Category: <?= htmlspecialchars($article['category_id']) ?></p>
+                    <select id="category" name="category_id" required>
+                        <?php foreach ($categories as $category): ?>
+                            <option value="<?= htmlspecialchars($category['id']) ?>" <?= $category['id'] == $article['category_id'] ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($category['name']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="author">Author</label>
+                    <p>Current author(s): <?= htmlspecialchars($article['author']) ?></p>
+                    <select id="author" name="author_id" required>
+                        <?php foreach ($users as $user): ?>
+                            <option value="<?= htmlspecialchars($user['id']) ?>" <?= $user['username'] == $article['author'] ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($user['username']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Publication Date</label>
+                    <p>Current Date: <?= htmlspecialchars($article['date']) ?></p>
+                    <input type="datetime-local" id="date" name="date"
+                           value="<?= date('Y-m-d\TH:i', strtotime($article['date'])) ?>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="duree_reading">Reading Duration (minutes)
+                        : <?= htmlspecialchars($article['duree_reading']) ?></label>
+                </div>
+
+                <div class="form-group">
+                    <label for="header">Header</label>
+                    <textarea id="header" name="header"><?= htmlspecialchars($article['header']) ?></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="editor">Content</label>
+                    <textarea id="editor" name="articleContent"><?= htmlspecialchars($article['texte']) ?></textarea>
+                </div>
+
+                <div class="button-container">
+                    <button type="button" class="button button-preview" onclick="submitForm('preview')">Preview
+                        Article
+                    </button>
+                    <button type="submit" class="button button-update">Update Article</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.tiny.cloud/1/r0jevhd96d198uc5hif2msl0nr3r3g4k3hd8xbwgnecunv9z/tinymce/7/tinymce.min.js"
             referrerpolicy="origin"></script>
     <script>
         tinymce.init({
-            selector: '#header, #texte',
-            height: 300,
-            plugins: [
-                'advlist autolink lists link image charmap print preview anchor',
-                'searchreplace visualblocks code fullscreen',
-                'insertdatetime media table paste code help wordcount'
-            ],
-            toolbar: 'undo redo | formatselect | ' +
-                'bold italic backcolor | alignleft aligncenter ' +
-                'alignright alignjustify | bullist numlist outdent indent | ' +
-                'removeformat | help',
-            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
-            width: '100%',
-            resize: false,
-            elementpath: false,
-            branding: false
+            selector: '#editor, #header',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate mentions tableofcontents footnotes mergetags autocorrect typography inlinecss markdown',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+            height: 500,
+            menubar: false,
+            statusbar: false,
         });
+
+        function submitForm(action) {
+            var form = document.getElementById('articleForm');
+
+            // Ensure TinyMCE content is updated
+            tinymce.triggerSave();
+
+            if (action === 'preview') {
+                // Change form action to preview page
+                form.action = 'admin_preview_articles.php';
+                form.target = '_blank'; // Open in a new tab
+            }
+
+            form.submit();
+        }
     </script>
-</head>
-<body>
-<div class="main-content">
-    <h1>Modify Article</h1>
-    <form action="" method="post" enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="name">Title</label>
-            <input type="text" id="name" name="name" value="<?= htmlspecialchars($article['name']) ?>" required>
-        </div>
 
-        <div class="form-group">
-            <label for="category_id">Category</label>
-            <select id="category_id" name="category_id" required>
-                <option value="">Select a category</option>
-                <?php foreach ($categories as $category): ?>
-                    <option value="<?= $category['id'] ?>" <?= $category['id'] == $article['category_id'] ? 'selected' : '' ?>>
-                        <?= htmlspecialchars($category['name']) ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="author">Author</label>
-            <select id="author" name="author" required>
-                <option value="">Select an author</option>
-                <?php foreach ($users as $user): ?>
-                    <option value="<?= $user['username'] ?>" <?= $user['username'] == $article['author'] ? 'selected' : '' ?>>
-                        <?= htmlspecialchars($user['username']) ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="date">Date</label>
-            <input type="date" id="date" name="date" value="<?= htmlspecialchars($article['date']) ?>" required>
-        </div>
-
-        <div class="form-group">
-            <label for="duree_reading">Reading Time (minutes)</label>
-            <input type="number" id="duree_reading" name="duree_reading"
-                   value="<?= htmlspecialchars($article['duree_reading']) ?>" required>
-        </div>
-
-        <div class="form-group">
-            <label for="image">Image URL</label>
-            <input type="text" id="image" name="image" value="<?= htmlspecialchars($article['image']) ?>">
-        </div>
-
-        <div class="form-group">
-            <label for="file">File</label>
-            <input type="file" id="file" name="file">
-            <?php if ($article['file']): ?>
-                <p>Current file: <?= htmlspecialchars($article['file']) ?></p>
-            <?php endif; ?>
-        </div>
-
-        <div class="form-group">
-            <label
-
-                    for="header">Header</label>
-            <textarea id="header" name="header"><?= htmlspecialchars($article['header']) ?></textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="texte">Content</label>
-            <textarea id="texte" name="texte"><?= htmlspecialchars($article['texte']) ?></textarea>
-        </div>
-
-        <div class="form-group">
-            <label>Views</label>
-            <input type="text" value="<?= htmlspecialchars($article['views']) ?>" readonly>
-        </div>
-
-        <button type="submit" class="button-category-publish">Update Article</button>
-    </form>
-</div>
-
-<?php include 'footer_admin.php'; ?>
-</body>
-</html>
+    </body>
+    </html>

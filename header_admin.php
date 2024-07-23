@@ -27,7 +27,6 @@ if (empty($_SESSION['csrf_token'])) {
     <!-- Votre CSS personnalisé après Bootstrap pour pouvoir écraser les styles si nécessaire -->
     <link rel="stylesheet" href="../css/editor.css">
     <link rel="stylesheet" type="text/css" href="css/editor.css">
-
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
