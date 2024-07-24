@@ -40,12 +40,15 @@ if (!empty($_GET['id']) && is_numeric($_GET['id'])) {
         // Get the IDs of the four most related articles
         $closestMatchesIds = array_keys(array_slice($levenshteinDistances, 0, 4, true));
 
-        // Fetch the related articles with the closest match
-        $inQuery = implode(',', array_fill(0, count($closestMatchesIds), '?'));
-        $related_articles_stmt = $pdo->prepare("SELECT * FROM article WHERE id IN ($inQuery)");
-        $related_articles_stmt->execute($closestMatchesIds);
-        $related_articles = $related_articles_stmt->fetchAll(PDO::FETCH_ASSOC);
+        if (!empty($closestMatchesIds)) {
+            // Fetch the related articles with the closest match
+            $inQuery = implode(',', array_fill(0, count($closestMatchesIds), '?'));
+            $related_articles_stmt = $pdo->prepare("SELECT * FROM article WHERE id IN ($inQuery)");
+            $related_articles_stmt->execute($closestMatchesIds);
+            $related_articles = $related_articles_stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
 
+        // Fetch the most viewed articles excluding the current one
         $most_viewed_stmt = $pdo->prepare("SELECT * FROM article WHERE id != :id ORDER BY views DESC LIMIT 5");
         $most_viewed_stmt->execute([':id' => $article_id]);
         $most_viewed_articles = $most_viewed_stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -62,13 +65,6 @@ if (!empty($_GET['id']) && is_numeric($_GET['id'])) {
 <div id="popup" class="popup"></div>
 <div id="notification" class="notification"></div>
 <div class="container" style="margin-top: -80px">
-    <!-- <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.php">Accueil</a></li>
-            <li class="breadcrumb-item"><a href="articles_choices.php">Finance</a></li>
-            <li class="breadcrumb-item active" aria-current="page">AI is Now Shovel Ready</li>
-        </ol>
-    </nav>-->
     <hr class="horizontal-line">
     <div class="article-header">
         <h1 class="article-title"><?= htmlspecialchars($article['name']); ?></h1>
@@ -106,7 +102,9 @@ if (!empty($_GET['id']) && is_numeric($_GET['id'])) {
             </a>
             <a href="#" class="share-button" title="Share on LinkedIn" onclick="shareOnLinkedIn(); return false;">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h
+
+.003z"/>
                 </svg>
             </a>
             <a href="#" class="share-button" title="Share via Email" onclick="shareViaEmail(); return false;">
@@ -215,20 +213,23 @@ if (!empty($_GET['id']) && is_numeric($_GET['id'])) {
         <h3>Articles Similaires</h3>
         <div class="related-container mt-4">
             <div class="related-row">
-                <?php foreach ($related_articles as $related_article): ?>
-                    <div class="related-col mb-4">
-                        <a href="article.php?id=<?= htmlspecialchars($related_article['id']); ?>"
-                           class="related-article-link">
-                            <div class="related-card">
-                                <img class="related-img-top" src="<?= htmlspecialchars($related_article['image']); ?>"
-                                     alt="Article Image">
-                                <div class="related-card-body">
-                                    <h5 class="related-title"><?= htmlspecialchars($related_article['name']); ?></h5>
+                <?php if (!empty($related_articles)): ?>
+                    <?php foreach ($related_articles as $related_article): ?>
+                        <div class="related-col mb-4">
+                            <a href="article.php?id=<?= htmlspecialchars($related_article['id']); ?>"
+                               class="related-article-link">
+                                <div class="related-card">
+                                    <img class="related-img-top"
+                                         src="<?= htmlspecialchars($related_article['image']); ?>"
+                                         alt="Article Image">
+                                    <div class="related-card-body">
+                                        <h5 class="related-title"><?= htmlspecialchars($related_article['name']); ?></h5>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
-                    </div>
-                <?php endforeach; ?>
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
     </div>
