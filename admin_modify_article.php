@@ -1,12 +1,9 @@
 <?php
-session_start();
+include 'dbconfig.php';
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: index.php");
     exit;
 }
-
-// Include your database configuration file
-include 'dbconfig.php';
 
 // Check if article ID is provided
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
@@ -96,7 +93,7 @@ try {
 
             <div class="form-group">
                 <label>Featured Image</label>
-                <input type="hidden" name="current_image" value="<?php echo htmlspecialchars($article['image']); ?>">
+                <input type="hidden" name="current_image" value="<?= htmlspecialchars($article['image']); ?>">
                 <p>Current image: <?= htmlspecialchars($article['image']) ?></p>
                 <div style="position: relative;">
                     <input type="file" name="mainImage" id="mainImage"
@@ -140,7 +137,7 @@ try {
 
             <div class="form-group">
                 <label for="duree_reading">Reading Duration</label>
-                <p class="current-value">Current duration: <?= htmlspecialchars($article['duree_reading']) ?>minutes</p>
+                <p class="current-value">Current duration: <?= htmlspecialchars($article['duree_reading']) ?> minutes</p>
                 <input type="hidden" name="duree_reading" value="<?= htmlspecialchars($article['duree_reading']) ?>">
             </div>
 
@@ -155,9 +152,8 @@ try {
             </div>
 
             <div class="button-container">
-                <button type="button" class="button button-preview" onclick="submitForm('preview')">Preview Article
-                </button>
-                <button type="submit" class="button button-update">Update Article</button>
+                <button type="button" class="button button-preview" onclick="submitForm('preview')">Preview Article</button>
+                <button type="button" class="button button-update" onclick="submitForm('update')">Update Article</button>
             </div>
         </form>
     </div>
@@ -249,6 +245,10 @@ try {
             // Change form action to preview page
             form.action = 'admin_preview_articles.php';
             form.target = '_blank'; // Open in a new tab
+        } else {
+            // Set form back to the update action
+            form.action = 'processes/admin_update_article.php';
+            form.target = ''; // Open in the same tab
         }
 
         form.submit();
@@ -261,7 +261,6 @@ try {
         document.querySelector('input[name="duree_reading"]').value = initialReadingTime;
     });
 </script>
-
 
 </body>
 </html>

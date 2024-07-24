@@ -34,6 +34,17 @@ function calculateReadingTime($title, $header, $content) {
     return $readingTimeInMinutes + $extraReadingTimeInMinutes;
 }
 
+function emptyTempUploadFolder() {
+    $folderPath = __DIR__ . '/temp_upload/';
+    $files = glob($folderPath . '*'); // get all file names
+
+    foreach ($files as $file) {
+        if (is_file($file)) {
+            unlink($file); // delete file
+        }
+    }
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['articleContent']) && !empty($_POST['articleTitle']) && !empty($_POST['article_id'])) {
     $article_id = $_POST['article_id'];
     $title = trim($_POST['articleTitle']);
@@ -60,10 +71,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['articleContent']) && 
 
     // Handle file upload if a new image is provided
     if (isset($_FILES['mainImage']) && $_FILES['mainImage']['error'] == 0) {
-        $imageDir = "./images/"; // Ensure this directory exists and is writable
-        $imageFile = $imageDir . basename($_FILES["mainImage"]["name"]);
+        $imageDir = "../images/"; // Ensure this directory exists and is writable
+        $timestamp = time();
+        $sanitizedTitle = preg_replace('/[^a-zA-Z0-9_-]/', '_', substr($title, 0, 50));
+        $imageFileType = strtolower(pathinfo($_FILES["mainImage"]["name"], PATHINFO_EXTENSION));
+        $imageFile = $imageDir . "{$sanitizedTitle}_{$timestamp}.{$imageFileType}";
         $uploadOk = 1;
-        $imageFileType = strtolower(pathinfo($imageFile, PATHINFO_EXTENSION));
 
         // Check if image file is an actual image
         $check = getimagesize($_FILES["mainImage"]["tmp_name"]);
@@ -72,13 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['articleContent']) && 
             $uploadOk = 0;
         }
 
-        // Check if file already exists
-        if (file_exists($imageFile)) {
-            echo "Sorry, file already exists.";
-            $uploadOk = 0;
-        }
-
-        // Check file size
+        // Check if file size is too large
         if ($_FILES["mainImage"]["size"] > 1000000) { // Size in bytes
             echo "Sorry, your file is too large.";
             $uploadOk = 0;
@@ -117,10 +124,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['articleContent']) && 
 
         if ($stmt->rowCount() > 0) {
             echo "Article updated successfully.";
+            emptyTempUploadFolder();
             header("Location: ../admin_post.php");
+            exit;
         } else {
-            header("Location: ../admin_post.php");
             echo "No changes were made to the article.";
+            header("Location: ../admin_post.php");
+            exit;
         }
     } catch (PDOException $e) {
         echo "Error updating article: " . $e->getMessage();
