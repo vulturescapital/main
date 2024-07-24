@@ -17,9 +17,9 @@ try {
     $queryParams = [];
     $query = "SELECT a.*, c.color AS category_color, c.name AS category_name
               FROM article a
-              JOIN category c ON a.category_id = c.id";
+              JOIN category c ON a.category_id = c.id WHERE a.date <= CURDATE()";
     if ($categoryId) {
-        $query .= " WHERE a.category_id = :category_id";
+        $query .= " AND a.category_id = :category_id";
         $queryParams[':category_id'] = $categoryId;
     }
     $query .= " ORDER BY a.id DESC LIMIT :startAt, :articlesPerPage";

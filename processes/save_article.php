@@ -1,56 +1,62 @@
 <?php
-session_start();
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header("Location: index.php");
-    exit;
-}
 set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__ . '/..');
 require_once 'dbconfig.php';
-
-function calculateExtraReadingTimeForImages($content)
-{
-    $initialSecondsPerImage = 12 / 60;
-    $minimumSecondsPerImage = 1 / 60;
-    $extraReadingTimeInSeconds = 0;
-    $imageCount = substr_count($content, '<img>');
-
-    for ($i = 0; $i < $imageCount; $i++) {
-        $secondsToAdd = max($initialSecondsPerImage - $i / 60, $minimumSecondsPerImage);
-        $extraReadingTimeInSeconds += $secondsToAdd;
-    }
-    return $extraReadingTimeInSeconds;
+session_start();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: ../index.php");
+    exit;
 }
 
-// Ensure user is logged in
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header("Location: index.php");
-    exit;
+function calculateExtraReadingTimeForImages($content) {
+    $secondsPerImage = 5; // seconds per image
+    $imageCount = substr_count($content, '<img');
+    return $imageCount * $secondsPerImage;
+}
+
+function calculateReadingTime($title, $header, $content) {
+    // Combine title, header, and content for word count
+    $fullText = $title . ' ' . $header . ' ' . $content;
+    $wordCount = str_word_count(strip_tags($fullText));
+    $wordsPerMinute = 238;
+    $readingTimeInMinutes = ceil($wordCount / $wordsPerMinute);
+
+    // Calculate extra time for images
+    $extraReadingTimeInSeconds = calculateExtraReadingTimeForImages($content);
+    $extraReadingTimeInMinutes = ceil($extraReadingTimeInSeconds / 60);
+
+    return $readingTimeInMinutes + $extraReadingTimeInMinutes;
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['articleContent']) && !empty($_POST['articleTitle'])) {
     $title = trim($_POST['articleTitle']);
     $category_id = $_POST['category_id'] ?? null;
     $content = $_POST['articleContent'];
-    $author = $_SESSION['username']; // Assuming you have the username stored in the session
-    $date = date('Y-m-d H:i:s');
+    $header = $_POST['headerParagraph'] ?? '';
+    $author = $_SESSION['username'];
+    $date = $_POST['postDate'];
+    $imageFile = null;
 
     // Handle file upload
     if (isset($_FILES['mainImage']) && $_FILES['mainImage']['error'] == 0) {
-        $imageDir = "./images/"; // Ensure this directory exists and is writable
-        $imageFile = $imageDir . basename($_FILES["mainImage"]["name"]);
+        $imageDir = __DIR__ . "/../images/"; // Ensure this directory exists and is writable
+        // Create the images directory if it doesn't exist
+        if (!is_dir($imageDir)) {
+            mkdir($imageDir, 0777, true);
+        }
+
+        // Sanitize the title to create a valid file name
+        $sanitizedTitle = preg_replace('/[^a-zA-Z0-9_-]/', '_', substr($title, 0, 50));
+        $timestamp = time();
+        $imageFileType = strtolower(pathinfo($_FILES["mainImage"]["name"], PATHINFO_EXTENSION));
+        $imageFileName = "{$sanitizedTitle}_{$timestamp}.{$imageFileType}";
+        $imageFilePath = $imageDir . $imageFileName;
+
         $uploadOk = 1;
-        $imageFileType = strtolower(pathinfo($imageFile, PATHINFO_EXTENSION));
 
         // Check if image file is an actual image
         $check = getimagesize($_FILES["mainImage"]["tmp_name"]);
         if ($check === false) {
             echo "File is not an image.";
-            $uploadOk = 0;
-        }
-
-        // Check if file already exists
-        if (file_exists($imageFile)) {
-            echo "Sorry, file already exists.";
             $uploadOk = 0;
         }
 
@@ -69,9 +75,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['articleContent']) && 
         // Check if $uploadOk is set to 0 by an error
         if ($uploadOk === 0) {
             echo "Sorry, your file was not uploaded.";
-            // if everything is ok, try to upload file
         } else {
-            if (!move_uploaded_file($_FILES["mainImage"]["tmp_name"], $imageFile)) {
+            if (!move_uploaded_file($_FILES["mainImage"]["tmp_name"], $imageFilePath)) {
                 echo "Sorry, there was an error uploading your file.";
                 $uploadOk = 0;
             }
@@ -82,15 +87,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['articleContent']) && 
     }
 
     if ($uploadOk) {
-        $readingDurationInSeconds = ceil((str_word_count($content) / 265)); // words per minute to seconds
-        $extraReadingTimeForImages = calculateExtraReadingTimeForImages($content);
-        $totalReadingTimeInSeconds = $readingDurationInSeconds + $extraReadingTimeForImages;
+        $totalReadingTimeInMinutes = calculateReadingTime($title, $header, $content);
+        $relativeImagePath = '../images/' . $imageFileName;
 
         // Prepare SQL statement
         $stmt = $pdo->prepare("INSERT INTO article (name, author, date, category_id, image, file, duree_reading, texte, header) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
         // Bind and execute
-        $stmt->execute([$title, $author, $date, $category_id, $imageFile, null, $totalReadingTimeInSeconds, $content, null]);
+        $stmt->execute([$title, $author, $date, $category_id, $relativeImagePath, null, $totalReadingTimeInMinutes, $content, $header]);
         header("Location: ../index_admin.php");
         echo "Article saved successfully.";
     }

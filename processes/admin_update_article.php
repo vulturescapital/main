@@ -7,18 +7,31 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__ . '/..');
 require_once 'dbconfig.php';
 
-function calculateExtraReadingTimeForImages($content)
-{
-    $initialSecondsPerImage = 12 / 60;
-    $minimumSecondsPerImage = 1 / 60;
+function calculateExtraReadingTimeForImages($content) {
+    $initialSecondsPerImage = 5; // seconds per image
+    $minimumSecondsPerImage = 1;
     $extraReadingTimeInSeconds = 0;
-    $imageCount = substr_count($content, '<img>');
+    $imageCount = substr_count($content, '<img');
 
     for ($i = 0; $i < $imageCount; $i++) {
-        $secondsToAdd = max($initialSecondsPerImage - $i / 60, $minimumSecondsPerImage);
+        $secondsToAdd = max($initialSecondsPerImage - $i, $minimumSecondsPerImage);
         $extraReadingTimeInSeconds += $secondsToAdd;
     }
     return $extraReadingTimeInSeconds;
+}
+
+function calculateReadingTime($title, $header, $content) {
+    // Combine title, header, and content for word count
+    $fullText = $title . ' ' . $header . ' ' . $content;
+    $wordCount = str_word_count(strip_tags($fullText));
+    $wordsPerMinute = 238;
+    $readingTimeInMinutes = ceil($wordCount / $wordsPerMinute);
+
+    // Calculate extra time for images
+    $extraReadingTimeInSeconds = calculateExtraReadingTimeForImages($content);
+    $extraReadingTimeInMinutes = ceil($extraReadingTimeInSeconds / 60);
+
+    return $readingTimeInMinutes + $extraReadingTimeInMinutes;
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['articleContent']) && !empty($_POST['articleTitle']) && !empty($_POST['article_id'])) {
@@ -27,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['articleContent']) && 
     $category_id = $_POST['category_id'] ?? null;
     $content = $_POST['articleContent'];
     $header = $_POST['header'];
-    $author_id = $_POST['author_id']; // Get the author ID from the form
+    $author_id = $_POST['author_id'];
     $date = $_POST['date'];
     $imageFile = null;
 
@@ -90,25 +103,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['articleContent']) && 
         }
     }
 
-    $readingDurationInSeconds = ceil((str_word_count($content) / 265)); // words per minute to seconds
-    $extraReadingTimeForImages = calculateExtraReadingTimeForImages($content);
-    $totalReadingTimeInSeconds = $readingDurationInSeconds + $extraReadingTimeForImages;
+    $totalReadingTimeInMinutes = calculateReadingTime($title, $header, $content);
 
     // Prepare SQL statement for update
     try {
         if ($imageFile) {
             $stmt = $pdo->prepare("UPDATE article SET name = ?, author = ?, date = ?, category_id = ?, image = ?, duree_reading = ?, texte = ?, header = ? WHERE id = ?");
-            $stmt->execute([$title, $author, $date, $category_id, $imageFile, $totalReadingTimeInSeconds, $content, $header, $article_id]);
+            $stmt->execute([$title, $author, $date, $category_id, $imageFile, $totalReadingTimeInMinutes, $content, $header, $article_id]);
         } else {
             $stmt = $pdo->prepare("UPDATE article SET name = ?, author = ?, date = ?, category_id = ?, duree_reading = ?, texte = ?, header = ? WHERE id = ?");
-            $stmt->execute([$title, $author, $date, $category_id, $totalReadingTimeInSeconds, $content, $header, $article_id]);
+            $stmt->execute([$title, $author, $date, $category_id, $totalReadingTimeInMinutes, $content, $header, $article_id]);
         }
 
         if ($stmt->rowCount() > 0) {
             echo "Article updated successfully.";
             header("Location: ../admin_post.php");
         } else {
-
             header("Location: ../admin_post.php");
             echo "No changes were made to the article.";
         }

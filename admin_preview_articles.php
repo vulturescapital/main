@@ -4,25 +4,43 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: index.php");
     exit;
 }
+error_log("POST data: " . print_r($_POST, true));
+error_log("FILES data: " . print_r($_FILES, true));
+$image = '';
+if (!empty($_FILES['mainImage']['name']) && $_FILES['mainImage']['error'] === UPLOAD_ERR_OK) {
+    // This is a newly uploaded image
+    $temp_dir = 'temp_uploads/';
+    if (!is_dir($temp_dir)) {
+        mkdir($temp_dir, 0755, true);
+    }
+    $temp_path = $temp_dir . basename($_FILES['mainImage']['name']);
+    if (move_uploaded_file($_FILES['mainImage']['tmp_name'], $temp_path)) {
+        $image = $temp_path;
+    }
+} elseif (!empty($_POST['current_image'])) {
+    $image = $_POST['current_image'];
+} else {
+    $image = 'default_image.jpg'; // Fallback to a default image if needed
+}
 
 // Use POST data instead of database query
 $article = [
     'id' => $_POST['article_id'],
     'name' => $_POST['articleTitle'],
-    'author' => $_POST['author_id'], // You might need to fetch the author name based on this ID
+    'author' => $_POST['author_id'],
     'date' => $_POST['date'],
-    'image' => $_FILES['mainImage']['name'] ?? $_POST['current_image'], // Use uploaded image name or current image
+    'image' => $image,
     'duree_reading' => $_POST['duree_reading'],
     'header' => $_POST['header'],
     'texte' => $_POST['articleContent'],
     'category_id' => $_POST['category_id']
 ];
+error_log("Selected image: " . $image);
 
 // Fetch author name if needed
 $stmt = $pdo->prepare("SELECT username FROM user WHERE id = ?");
 $stmt->execute([$article['author']]);
 $article['author'] = $stmt->fetchColumn();
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,54 +52,63 @@ $article['author'] = $stmt->fetchColumn();
         :root {
             --background-color-light: #fbf7f0;
             --text-color-light: #333333;
-            --text-color-light-bis:#003300;
+            --text-color-light-bis: #003300;
         }
+
         body {
             font-family: Unica, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, FZLanTingHeiS, sans-serif;
             line-height: 1.6;
             color: var(--text-color-light);
             background-color: var(--background-color-light);
         }
-        
+
         .horizontal-line {
             border-top: 0.5px solid #333;
             margin-bottom: 20px;
         }
+
         .article-header {
             text-align: center;
             max-width: 950px;
             margin: 0 auto;
             padding: 40px 20px;
         }
+
         .article-title {
             font-size: 3.5rem;
             font-weight: bold;
             margin-bottom: 20px;
             line-height: 1.2;
         }
+
         .article-subtitle {
             font-size: 2rem;
             font-weight: normal;
             margin-bottom: 30px;
         }
+
         .article-author, .article-date, .article-reading-time {
             font-size: 0.9rem;
             color: #666;
         }
+
         .article-image-container {
             margin-bottom: 2rem;
         }
+
         .article-image {
             max-width: 66.5%;
             border-radius: 8px;
             display: block;
             margin: 0 auto;
         }
+
         .article-content {
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
         }
+
         .article-content section.article-content {
             position: relative;
             padding: 0 40px;
@@ -89,6 +116,7 @@ $article['author'] = $stmt->fetchColumn();
             line-height: 1.8;
             text-align: justify;
         }
+
         .article-content section.article-content::before,
         .article-content section.article-content::after {
             content: '';
@@ -98,16 +126,20 @@ $article['author'] = $stmt->fetchColumn();
             width: 0.5px;
             background-color: #333;
         }
+
         .article-content section.article-content::before {
             left: 0;
         }
+
         .article-content section.article-content::after {
             right: 0;
         }
+
         .share-container {
             text-align: center;
             margin-bottom: 40px;
         }
+
         .share-container h2 {
             font-size: 20px;
             margin-bottom: 15px;
@@ -116,11 +148,13 @@ $article['author'] = $stmt->fetchColumn();
             text-transform: uppercase;
             letter-spacing: 1px;
         }
+
         .share-buttons {
             display: flex;
             justify-content: center;
             gap: 15px;
         }
+
         .share-button {
             width: 40px;
             height: 40px;
@@ -136,15 +170,18 @@ $article['author'] = $stmt->fetchColumn();
             font-size: 18px;
             transition: background-color 0.3s, color 0.3s;
         }
+
         .share-button:hover {
             background-color: #000;
             color: #fff;
         }
+
         .share-button svg {
             width: 20px;
             height: 20px;
             fill: currentColor;
         }
+
         .share-link {
             margin-left: 15px;
             padding: 10px 20px;
@@ -157,9 +194,11 @@ $article['author'] = $stmt->fetchColumn();
             cursor: pointer;
             transition: background-color 0.3s;
         }
+
         .share-link:hover {
             background-color: #333;
         }
+
         .buy-me-a-coffee-container {
             display: flex;
             justify-content: center;
@@ -167,10 +206,12 @@ $article['author'] = $stmt->fetchColumn();
             margin-top: 20px;
             margin-bottom: 50px;
         }
+
         @media (max-width: 768px) {
             .article-content section.article-content {
                 padding: 0 20px;
             }
+
             .article-content section.article-content::before,
             .article-content section.article-content::after {
                 display: none;
@@ -195,7 +236,8 @@ $article['author'] = $stmt->fetchColumn();
         </div>
         <hr class="horizontal-line">
         <figure class="article-image-container">
-            <img src="<?= htmlspecialchars($article['image']); ?>" alt="<?= htmlspecialchars($article['name']); ?>"
+            <img src="<?php echo htmlspecialchars($article['image']); ?>"
+                 alt="<?php echo htmlspecialchars($article['name']); ?>"
                  class="article-image">
         </figure>
         <div class="article-content">
