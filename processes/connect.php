@@ -27,6 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['loggedin'] = true;
             $_SESSION['username'] = $row['username'];
             $_SESSION['user_id'] = $row['id'];
+            $_SESSION['credential_id'] = $row['credential_id'];
 
             // Rediriger vers la page d'accueil de l'admin
             header("Location: ../index_admin.php");

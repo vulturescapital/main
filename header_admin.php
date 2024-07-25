@@ -5,7 +5,6 @@ if (empty($_SESSION['csrf_token'])) {
 }
 ?>
 
-
 <head>
     <!-- Les scripts de thème doivent être chargés avant les autres ressources -->
     <script>
@@ -29,9 +28,8 @@ if (empty($_SESSION['csrf_token'])) {
     <link rel="stylesheet" type="text/css" href="css/editor.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="icon" type="image/png" href="../images/logo.png">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 <div class="container">
@@ -40,11 +38,22 @@ if (empty($_SESSION['csrf_token'])) {
         <ul class="nav-links">
             <li><a href="./index_admin.php">Overview</a></li>
             <li><a href="#">Quickstart</a></li>
-            <li><a href="./editor.php">Add Article</a></li>
-            <li><a href="./admin_post.php">Posts</a></li>
+            <li>
+                <a href="#" class="submenu-toggle">Users <i class="fas fa-chevron-down"></i></a>
+                <ul class="submenu">
+                    <li><a href="./admin_users.php">All Users</a></li>
+                    <li><a href="./admin_add_user.php">Add User</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" class="submenu-toggle">Posts <i class="fas fa-chevron-down"></i></a>
+                <ul class="submenu">
+                    <li><a href="./admin_post.php">All Posts</a></li>
+                    <li><a href="./editor.php">Add Article</a></li>
+                </ul>
+            </li>
             <li><a href="#">Categories</a></li>
             <li><a href="#">Comments</a></li>
-            <li><a href="#">Users</a></li>
             <li><a href="#">Settings</a></li>
         </ul>
         <a href="processes/logout.php" class="logout-btn">Se déconnecter</a>
@@ -68,6 +77,16 @@ if (empty($_SESSION['csrf_token'])) {
                 sidebar.classList.toggle('collapsed');
                 mainContent.classList.toggle('expanded');
                 toggleBtn.classList.toggle('collapsed');
+            });
+
+            // Submenu toggle
+            document.querySelectorAll('.submenu-toggle').forEach(item => {
+                item.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const submenu = this.nextElementSibling;
+                    submenu.classList.toggle('show');
+                    this.classList.toggle('expanded');
+                });
             });
         });
     </script>

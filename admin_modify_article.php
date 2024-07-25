@@ -137,7 +137,8 @@ try {
 
             <div class="form-group">
                 <label for="duree_reading">Reading Duration</label>
-                <p class="current-value">Current duration: <?= htmlspecialchars($article['duree_reading']) ?> minutes</p>
+                <p class="current-value">Current duration: <?= htmlspecialchars($article['duree_reading']) ?>
+                    minutes</p>
                 <input type="hidden" name="duree_reading" value="<?= htmlspecialchars($article['duree_reading']) ?>">
             </div>
 
@@ -152,8 +153,10 @@ try {
             </div>
 
             <div class="button-container">
-                <button type="button" class="button button-preview" onclick="submitForm('preview')">Preview Article</button>
-                <button type="button" class="button button-update" onclick="submitForm('update')">Update Article</button>
+                <button type="button" class="button button-preview" onclick="submitForm('preview')">Preview Article
+                </button>
+                <button type="button" class="button button-update" onclick="submitForm('update')">Update Article
+                </button>
             </div>
         </form>
     </div>
@@ -165,14 +168,13 @@ try {
     function calculateReadingTime(text) {
         const wordsPerMinute = 238;
         const wordCount = text.split(/\s+/).length;
-        let readingTime = Math.ceil(wordCount / wordsPerMinute); // minutes
-        return readingTime;
+        return Math.ceil(wordCount / wordsPerMinute);
     }
 
-    function calculateExtraReadingTimeForImages(content) {
+    function calculateImageTime(content) {
         const imageCount = (content.match(/<img/g) || []).length;
-        const extraReadingTime = imageCount * (5 / 60); // 5 seconds per image, converted to minutes
-        return Math.ceil(extraReadingTime); // Convert to minutes and round up
+        const secondsPerImage = 12;
+        return Math.ceil((imageCount * secondsPerImage) / 60);
     }
 
     function calculateTotalReadingTime() {
@@ -180,14 +182,14 @@ try {
         const header = tinymce.get('header').getContent({format: 'text'});
         const content = tinymce.get('editor').getContent({format: 'text'});
 
-        const text = title + ' ' + header + ' ' + content;
-        let readingTime = calculateReadingTime(text);
-        const extraReadingTime = calculateExtraReadingTimeForImages(tinymce.get('editor').getContent());
+        const fullText = title + ' ' + header + ' ' + content;
+        const textReadingTime = calculateReadingTime(fullText);
+        const imageReadingTime = calculateImageTime(tinymce.get('editor').getContent());
 
-        readingTime += extraReadingTime;
+        const totalReadingTime = textReadingTime + imageReadingTime;
 
-        document.querySelector('.current-value').innerText = `Current duration: ${readingTime} minutes`;
-        document.querySelector('input[name="duree_reading"]').value = readingTime;
+        document.querySelector('.current-value').innerText = `Current duration: ${totalReadingTime} minutes`;
+        document.querySelector('input[name="duree_reading"]').value = totalReadingTime;
     }
 
     document.getElementById('title').addEventListener('input', calculateTotalReadingTime);
@@ -256,10 +258,10 @@ try {
 
     // Initial display of reading time
     document.addEventListener('DOMContentLoaded', function () {
-        const initialReadingTime = <?= htmlspecialchars($article['duree_reading']) ?>;
-        document.querySelector('.current-value').innerText = `Current duration: ${initialReadingTime} minutes`;
-        document.querySelector('input[name="duree_reading"]').value = initialReadingTime;
+        calculateTotalReadingTime();
     });
+
+
 </script>
 
 </body>

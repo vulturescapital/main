@@ -7,24 +7,27 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     exit;
 }
 
-function calculateExtraReadingTimeForImages($content) {
-    $secondsPerImage = 5; // seconds per image
-    $imageCount = substr_count($content, '<img');
-    return $imageCount * $secondsPerImage;
+function calculateReadingTime($text) {
+    $wordsPerMinute = 238;
+    // Use preg_split to match JavaScript's split(/\s+/)
+    $wordCount = count(preg_split('/\s+/', strip_tags($text), -1, PREG_SPLIT_NO_EMPTY));
+    $readingTime = ceil($wordCount / $wordsPerMinute);
+    return $readingTime;
 }
 
-function calculateReadingTime($title, $header, $content) {
-    // Combine title, header, and content for word count
+function calculateImageTime($content) {
+    $imageCount = substr_count($content, '<img');
+    $secondsPerImage = 12;
+    $imageTimeInMinutes = ceil(($imageCount * $secondsPerImage) / 60);
+    return $imageTimeInMinutes;
+}
+
+function calculateTotalReadingTime($title, $header, $content) {
     $fullText = $title . ' ' . $header . ' ' . $content;
-    $wordCount = str_word_count(strip_tags($fullText));
-    $wordsPerMinute = 238;
-    $readingTimeInMinutes = ceil($wordCount / $wordsPerMinute);
-
-    // Calculate extra time for images
-    $extraReadingTimeInSeconds = calculateExtraReadingTimeForImages($content);
-    $extraReadingTimeInMinutes = ceil($extraReadingTimeInSeconds / 60);
-
-    return $readingTimeInMinutes + $extraReadingTimeInMinutes;
+    $textReadingTime = calculateReadingTime($fullText);
+    $imageReadingTime = calculateImageTime($content);
+    $totalReadingTime = $textReadingTime + $imageReadingTime;
+    return $totalReadingTime;
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['articleContent']) && !empty($_POST['articleTitle'])) {
@@ -87,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['articleContent']) && 
     }
 
     if ($uploadOk) {
-        $totalReadingTimeInMinutes = calculateReadingTime($title, $header, $content);
+        $totalReadingTimeInMinutes = calculateTotalReadingTime($title, $header, $content);
         $relativeImagePath = '../images/' . $imageFileName;
 
         // Prepare SQL statement
