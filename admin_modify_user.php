@@ -37,7 +37,7 @@ try {
     }
 
     // Check if the logged-in user has the right credentials to modify a user
-    if ($logged_in_user_credential != 'Admin' && $_SESSION['user_id'] != $user_id) {
+    if ($logged_in_user_credential['level_name'] != 'Admin' && $_SESSION['user_id'] != $user_id) {
         $_SESSION['error'] = "Vous n'avez pas les droits nécessaires pour modifier cet utilisateur.";
         header("Location: admin_users.php");
         exit;

@@ -14,6 +14,7 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
+
 }
 
 body {
@@ -880,73 +881,70 @@ p {
     cursor: pointer;
     margin-left: 10px;
 }
+.container-main-contact {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding-bottom: 30px;
+}
+
+.contact-container {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 400px;
+    max-width: 100%;
+    margin-bottom: 30px;
+}
 
 .contact-form {
-    display: flex;
-    flex-direction: column;
+    padding: 30px;
 }
 
-.contact-form label {
-    margin-top: 20px;
-    color: #666;
-    font-weight: 600;
+.contact-form h2 {
+    margin-bottom: 15px;
+    font-size: 24px;
+    color: #333;
 }
 
-.contact-form input,
-.contact-form textarea {
-    padding: 15px;
-    margin-top: 10px;
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.input-group input, .input-group textarea {
+    width: 100%;
+    padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    font-size: 16px;
-    font-family: 'Poppins', sans-serif;
-    transition: all 0.3s ease;
+    box-sizing: border-box;
+    font-size: 14px;
+    color: #333;
 }
 
-.contact-form input:focus,
-.contact-form textarea:focus {
-    border-color: var(--text-color-light);
-    box-shadow: 0 0 5px rgba(85, 114, 229, 0.2);
+.input-group input:focus, .input-group textarea:focus {
+    border-color: var(--primary-color);
     outline: none;
 }
 
-.contact-form button {
-    padding: 15px 30px;
-    margin-top: 30px;
-    background-color: var(--text-color-light);
-    color: white;
+button {
+    display: inline-block;
+    background-color: #003300;
+    color: var(--background-color-light);
     border: none;
+    padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 18px;
-    font-weight: 600;
-    transition: background-color 0.3s ease;
-}
-
-.contact-form button:hover {
-    background-color: var(--text-color-light);
-}
-
-.contact-form .form-group {
-    margin-bottom: 1.5em;
-}
-
-.contact-form i {
-    position: absolute;
-    margin-left: 10px;
-    margin-top: 14px;
-    color: #bbb;
-}
-
-.contact-form input[type="text"],
-.contact-form input[type="email"],
-.contact-form input[type="text"]:focus,
-.contact-form input[type="email"]:focus {
-    padding-left: 40px;
-}
-
-.contact-form .form-group i {
-    left: 15px;
+    font-size: 16px;
+    transition: background 0.3s ease;
 }
 
 .page-container {

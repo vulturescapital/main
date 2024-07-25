@@ -1,5 +1,5 @@
 <?php
-session_start();
+set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__ . '/..');
 require_once 'dbconfig.php';
 
 if (!isset($_SESSION['user_id'])) {
