@@ -2,30 +2,34 @@
 include 'header.php'; ?>
 <div id="popup" class="popup"></div>
 <div id="notification" class="notification"></div>
-<div class="container-main-contact">
-    <div class="contact-container">
-        <div class="contact-form">
-            <h2>Contact Us</h2>
-            <form action="processes/contact_process.php" method="post">
-                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
-                <div class="input-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-                <div class="input-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="input-group">
-                    <label for="subject">Subject</label>
-                    <input type="text" id="subject" name="subject" required>
-                </div>
-                <div class="input-group">
-                    <label for="content">Content</label>
-                    <textarea id="content" name="content" rows="5" required></textarea>
-                </div>
-                <button type="submit">Send Message</button>
-            </form>
+<div class="main-content">
+
+    <div class="container-main-contact">
+        <div class="contact-container">
+            <div class="contact-form">
+                <h2>Contact Us</h2>
+                <form action="processes/contact_process.php" method="post">
+                    <input type="hidden" name="csrf_token"
+                           value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
+                    <div class="input-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="content">Content</label>
+                        <textarea id="content" name="content" rows="5" required></textarea>
+                    </div>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
