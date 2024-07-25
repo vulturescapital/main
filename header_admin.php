@@ -4,7 +4,6 @@ if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 ?>
-
 <head>
     <!-- Les scripts de thème doivent être chargés avant les autres ressources -->
     <script>

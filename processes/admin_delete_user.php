@@ -1,7 +1,6 @@
 <?php
 set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__ . '/..');
 require_once 'dbconfig.php';
-session_start();
 
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: ../index.php");
@@ -24,8 +23,8 @@ try {
     $logged_in_user_credential = $stmt->fetch(PDO::FETCH_ASSOC);
 
     // Check if the logged-in user has the right credentials to delete a user
-    if ($logged_in_user_credential['level_name'] != 'Admin') {
-        $_SESSION['error'] = "Vous n'avez pas les droits nécessaires pour supprimer un utilisateur.";
+    if (!in_array($logged_in_user_credential['level_name'], ['Admin'])) {
+        $_SESSION['error'] = "Vous n'avez pas les droits nécessaires pour supprimer un article.";
         header("Location: ../admin_users.php");
         exit;
     }

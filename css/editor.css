@@ -492,3 +492,11 @@ th {
 .sidebar.collapsed .submenu {
     display: none;
 }
+#password-criteria p {
+    display: flex;
+    align-items: center;
+    font-size: 0.9em;
+}
+#password-criteria .invalid { color: red; }
+#password-criteria .valid { color: green; }
+#password-criteria i { margin-right: 8px; }

@@ -10,7 +10,7 @@ try {
     $stmt = $pdo->query("
         SELECT u.id, u.name, u.surname, u.email, u.created_at, c.level_name 
         FROM user u
-        LEFT JOIN credentials c ON u.credential_id = c.id
+        LEFT JOIN credentials c ON u.credential_id = c.id WHERE u.credential_id!='5'
     ");
     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -44,7 +44,7 @@ try {
                 <td><?= date('d/m/Y', strtotime($user['created_at'])) ?></td>
                 <td><?= htmlspecialchars($user['level_name']) ?></td>
                 <td>
-                    <a href="processes/" class="modify-btn">Modifier</a>
+                    <a href="admin_modify_user.php?id=<?= $user['id'] ?>" class="modify-btn">Modifier</a>
                     <a href="processes/admin_delete_user.php?id=<?= $user['id'] ?>" class="delete-btn" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">Supprimer</a>
                 </td>
             </tr>

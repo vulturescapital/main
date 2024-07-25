@@ -4,12 +4,22 @@ ini_set('display_errors', 1);
 
 set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__ . '/..');
 require_once 'dbconfig.php';
-session_start();
 
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']);
 
     try {
+        $stmt = $pdo->prepare("SELECT c.level_name FROM user u LEFT JOIN credentials c ON u.credential_id = c.id WHERE u.id = :id");
+        $stmt->bindParam(':id', $_SESSION['user_id'], PDO::PARAM_INT);
+        $stmt->execute();
+        $logged_in_user_credential = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Check if the logged-in user has the right credentials to delete a user
+        if (!in_array($logged_in_user_credential['level_name'], ['Admin', 'Editor'])) {
+            $_SESSION['error'] = "Vous n'avez pas les droits nécessaires pour mettre à jour un article.";
+            header("Location: ../admin_post.php");
+            exit;
+        }
         // Fetch the image path associated with the article
         $stmt = $pdo->prepare("SELECT image FROM article WHERE id = :id");
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);

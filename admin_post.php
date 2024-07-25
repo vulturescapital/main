@@ -40,3 +40,24 @@ try {
         <?php endforeach; ?>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        <?php if (isset($_SESSION['success'])): ?>
+        Swal.fire({
+            icon: 'success',
+            title: 'Succès',
+            text: '<?= htmlspecialchars($_SESSION['success']) ?>'
+        });
+        <?php unset($_SESSION['success']); ?>
+        <?php endif; ?>
+
+        <?php if (isset($_SESSION['error'])): ?>
+        Swal.fire({
+            icon: 'error',
+            title: 'Erreur',
+            text: '<?= htmlspecialchars($_SESSION['error']) ?>'
+        });
+        <?php unset($_SESSION['error']); ?>
+        <?php endif; ?>
+    });
+</script>

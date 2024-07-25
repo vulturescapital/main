@@ -7,7 +7,8 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__ . '/..');
 require_once 'dbconfig.php';
 
-function calculateExtraReadingTimeForImages($content) {
+function calculateExtraReadingTimeForImages($content)
+{
     $initialSecondsPerImage = 5; // seconds per image
     $minimumSecondsPerImage = 1;
     $extraReadingTimeInSeconds = 0;
@@ -20,7 +21,8 @@ function calculateExtraReadingTimeForImages($content) {
     return $extraReadingTimeInSeconds;
 }
 
-function calculateReadingTime($title, $header, $content) {
+function calculateReadingTime($title, $header, $content)
+{
     // Combine title, header, and content for word count
     $fullText = $title . ' ' . $header . ' ' . $content;
     $wordCount = str_word_count(strip_tags($fullText));
@@ -34,7 +36,8 @@ function calculateReadingTime($title, $header, $content) {
     return $readingTimeInMinutes + $extraReadingTimeInMinutes;
 }
 
-function emptyTempUploadFolder() {
+function emptyTempUploadFolder()
+{
     $folderPath = __DIR__ . '/temp_upload/';
     $files = glob($folderPath . '*'); // get all file names
 
@@ -57,6 +60,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['articleContent']) && 
 
     // Fetch the author's name using the author_id
     try {
+        $stmt = $pdo->prepare("SELECT c.level_name FROM user u LEFT JOIN credentials c ON u.credential_id = c.id WHERE u.id = :id");
+        $stmt->bindParam(':id', $_SESSION['user_id'], PDO::PARAM_INT);
+        $stmt->execute();
+        $logged_in_user_credential = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!in_array($logged_in_user_credential['level_name'], ['Admin', 'Editor', 'Author'])) {
+            $_SESSION['error'] = "Vous n'avez pas les droits nécessaires pour mettre à jour un article.";
+            header("Location: ../admin_post.php");
+            exit;
+        }
+
         $stmt = $pdo->prepare("SELECT username FROM user WHERE id = ?");
         $stmt->execute([$author_id]);
         $author = $stmt->fetchColumn();

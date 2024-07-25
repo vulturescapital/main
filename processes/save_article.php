@@ -1,56 +1,39 @@
 <?php
-set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__ . '/..');
-require_once 'dbconfig.php';
 session_start();
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header("Location: ../index.php");
+require_once 'dbconfig.php';
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../admin_login.php");
     exit;
 }
 
-function calculateReadingTime($text) {
-    $wordsPerMinute = 238;
-    // Use preg_split to match JavaScript's split(/\s+/)
-    $wordCount = count(preg_split('/\s+/', strip_tags($text), -1, PREG_SPLIT_NO_EMPTY));
-    $readingTime = ceil($wordCount / $wordsPerMinute);
-    return $readingTime;
-}
+try {
+    // Fetch the logged-in user's credential level
+    $stmt = $pdo->prepare("SELECT c.level_name FROM user u LEFT JOIN credentials c ON u.credential_id = c.id WHERE u.id = :id");
+    $stmt->bindParam(':id', $_SESSION['user_id'], PDO::PARAM_INT);
+    $stmt->execute();
+    $logged_in_user_credential = $stmt->fetch(PDO::FETCH_ASSOC);
 
-function calculateImageTime($content) {
-    $imageCount = substr_count($content, '<img');
-    $secondsPerImage = 12;
-    $imageTimeInMinutes = ceil(($imageCount * $secondsPerImage) / 60);
-    return $imageTimeInMinutes;
-}
+    if (!in_array($logged_in_user_credential['level_name'], ['Admin', 'Editor', 'Author','Contributor'])) {
+        $_SESSION['error'] = "Vous n'avez pas les droits nécessaires pour ajouter un article.";
+        header("Location: ../index_admin.php");
+        exit;
+    }
 
-function calculateTotalReadingTime($title, $header, $content) {
-    $fullText = $title . ' ' . $header . ' ' . $content;
-    $textReadingTime = calculateReadingTime($fullText);
-    $imageReadingTime = calculateImageTime($content);
-    $totalReadingTime = $textReadingTime + $imageReadingTime;
-    return $totalReadingTime;
-}
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $title = $_POST['title'];
+        $author = $_POST['author'];
+        $date = $_POST['date'];
+        $category_id = intval($_POST['category_id']);
+        $content = $_POST['content'];
+        $header = $_POST['header'];
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['articleContent']) && !empty($_POST['articleTitle'])) {
-    $title = trim($_POST['articleTitle']);
-    $category_id = $_POST['category_id'] ?? null;
-    $content = $_POST['articleContent'];
-    $header = $_POST['headerParagraph'] ?? '';
-    $author = $_SESSION['username'];
-    $date = $_POST['postDate'];
-    $imageFile = null;
-
-    // Handle file upload
-    if (isset($_FILES['mainImage']) && $_FILES['mainImage']['error'] == 0) {
-        $imageDir = __DIR__ . "/../images/"; // Ensure this directory exists and is writable
-        // Create the images directory if it doesn't exist
-        if (!is_dir($imageDir)) {
-            mkdir($imageDir, 0777, true);
-        }
-
-        // Sanitize the title to create a valid file name
-        $sanitizedTitle = preg_replace('/[^a-zA-Z0-9_-]/', '_', substr($title, 0, 50));
-        $timestamp = time();
+        // Image upload logic
+        $uploadOk = 1;
+        $imageDir = "../images/";
         $imageFileType = strtolower(pathinfo($_FILES["mainImage"]["name"], PATHINFO_EXTENSION));
+        $timestamp = time();
+        $sanitizedTitle = preg_replace("/[^a-zA-Z0-9]/", "", $title);
         $imageFileName = "{$sanitizedTitle}_{$timestamp}.{$imageFileType}";
         $imageFilePath = $imageDir . $imageFileName;
 
@@ -84,26 +67,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['articleContent']) && 
                 $uploadOk = 0;
             }
         }
-    } else {
-        echo "No file was uploaded or there was an upload error.";
-        $uploadOk = 0;
+
+        if ($uploadOk) {
+            $totalReadingTimeInMinutes = calculateTotalReadingTime($title, $header, $content);
+            $relativeImagePath = '../images/' . $imageFileName;
+
+            // Prepare SQL statement
+            $stmt = $pdo->prepare("INSERT INTO article (name, author, date, category_id, image, file, duree_reading, texte, header) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+            // Bind and execute
+            $stmt->execute([$title, $author, $date, $category_id, $relativeImagePath, null, $totalReadingTimeInMinutes, $content, $header]);
+            header("Location: ../index_admin.php");
+            echo "Article saved successfully.";
+        }
+
+        // Close connection
+        $pdo = null;
     }
-
-    if ($uploadOk) {
-        $totalReadingTimeInMinutes = calculateTotalReadingTime($title, $header, $content);
-        $relativeImagePath = '../images/' . $imageFileName;
-
-        // Prepare SQL statement
-        $stmt = $pdo->prepare("INSERT INTO article (name, author, date, category_id, image, file, duree_reading, texte, header) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
-        // Bind and execute
-        $stmt->execute([$title, $author, $date, $category_id, $relativeImagePath, null, $totalReadingTimeInMinutes, $content, $header]);
-        header("Location: ../index_admin.php");
-        echo "Article saved successfully.";
-    }
-
-    // Close connection
-    $pdo = null;
+    $conn = null;
+} catch (PDOException $e) {
+    $_SESSION['error'] = "Erreur lors de la vérification des droits: " . $e->getMessage();
+    header("Location: ../index_admin.php");
 }
-$conn = null;
 ?>

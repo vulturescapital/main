@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['email']) && !empty($_
 
         try {
             // Check if the email is already subscribed
-            $checkStmt = $pdo->prepare("SELECT * FROM newsletter WHERE email = :email");
+            $checkStmt = $pdo->prepare("SELECT * FROM user WHERE email = :email AND credential_id='5' ");
             $checkStmt->execute(['email' => $email]);
             if ($checkStmt->rowCount() > 0) {
                 header('Location: ' . append_query_params(get_clean_referer_url(), ['error' => 'email_exists']));
@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['email']) && !empty($_
             }
 
             // Prepare the SQL query to insert a new email
-            $stmt = $pdo->prepare("INSERT INTO newsletter (email) VALUES (:email)");
+            $stmt = $pdo->prepare("INSERT INTO user (email) VALUES (:email)");
             $stmt->bindParam(':email', $email, PDO::PARAM_STR);
             $stmt->execute();
 
