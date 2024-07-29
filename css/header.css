@@ -1,158 +1,130 @@
+/* Base Styles */
+:root {
+    --background-color: #ffffff;
+    --text-color-primary: #000000;
+    --text-color-secondary: #666666;
+}
+
+
 /* Header Styles */
 header {
-    background: var(--background-color-light);
     color: var(--text-color-light-bis);
+    padding: 0;
+    margin: 0;
 }
-header, .navbar {
-    margin-top: 0 !important; /* !important to ensure override */
-    padding-top: 0 !important; /* Also ensure no padding is causing the issue */
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between; /* Space out the items */
+    align-items: center;
+    width: 100%;
+    padding: 0;
+}
+
+.navbar-brand {
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 2.75rem;
 }
 
 .navbar-nav {
     display: flex;
-    align-items: center;
+    justify-content: center; /* Center the items */
+    margin: 0 4rem 0 0; /* Add margin to the right */
+    padding: 0; /* Remove padding */
+    list-style-type: none; /* Remove list dots */
 }
 
-.header-logo {
-    text-decoration: none;
-    color: var(--text-color-light-bis);
-    font-weight: 700;
-    font-size: 2rem;
-}
-.nav-link {
-    color: var(--text-color-light); /* or use a specific color */
-    background-color: transparent; /* Ensures no background color change */
-    text-transform: uppercase;
-    font-size: 16px;
-    text-decoration: none; /* No underline by default */
+.nav-item {
+    margin: 0 1rem; /* Space between items */
 }
 
-.header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.main-nav {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-}
-
-.navbar-brand,
 .nav-link {
     color: var(--text-color-light-bis);
+    background-color: transparent;
     text-transform: uppercase;
-    font-size: 16px;
+    font-size: 1.25rem; /* Increase the font size */
     text-decoration: none;
 }
 
-.navbar-light .navbar-brand {
-    color: #003300;
-    font-weight: bold;
-    font-size: 1.5rem;
-}
-.nav-link:not(:hover) {
-    text-decoration: none; /* Ensure no underline when not hovered */
-    color: var(--text-color-light-bis); /* Ensure consistent color */
-}
-.nav-link:active,
-.nav-link:focus,
-.nav-link.active {
-    color: var(--text-color-light); /* Use the same color as your normal state */
-    background-color: transparent; /* No background color */
+.search-icon .nav-link {
+    display: flex; /* Ensure icon is in line */
+    align-items: center;
+
 }
 
-/* Dark mode adjustments */
-body.dark-mode header {
-    background-color: var(--background-color-dark);
-    color: var(--text-color-dark);
-}
-
-body.dark-mode .navbar-brand {
-    color: var(--text-color-dark);
-}
-
-/* Media queries for container padding */
-@media (min-width: 576px) {
-    .container {
-        padding-right: 15px;
-        padding-left: 15px;
-    }
-}
-
-@media (min-width: 768px) {
-    .container {
-        padding-right: 30px;
-        padding-left: 30px;
-    }
-}
-
-@media (min-width: 992px) {
-    .container {
-        padding-right: 30px;
-        padding-left: 30px;
-    }
-}
-
-@media (min-width: 1200px) {
-    .container {
-        padding-right: 30px;
-        padding-left: 30px;
-    }
-}
-/* Theme toggle button and icons */
-#theme-toggle {
-    border: none;
-    background: none;
-    cursor: pointer;
-    padding: 0;
-    margin: 0;
-    margin-left: 20px;
-}
-#theme-toggle:focus,
-#theme-toggle:active {
-    outline: none;  /* Removes the outline on focus */
-    box-shadow: none;  /* Removes any shadow on focus */
-    border: none;  /* Ensures no border is visible on click */
-}
-
-/* Initially, hide the sun icon since light mode is the default */
-.fa-sun {
-    display: none;
-}
-
-/* No need to hide the moon icon because it should show by default */
-.fa-moon {
-    display: inline;
-    color: var(--background-color-dark); /* Example color for the moon icon */
-}
-
-/* When the body has the dark-mode class, we display the sun and hide the moon */
-body.dark-mode .fa-moon {
-    display: none;
-}
-
-body.dark-mode .fa-sun {
-    display: inline;
-    color: var(--background-color-light); /* Example color for the sun icon */
-}
-.search-results {
-    background-color: white;
-    max-height: 200px;
-    overflow-y: auto;
-    position: absolute;
+/* Search Overlay Styles */
+.search-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    z-index: 1000;
+    height: 100%;
+    background-color: var(--background-color);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+.search-overlay-content {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.close-search {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    color: var(--text-color-primary);
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.search-input {
+    margin-top: 2rem;
+    width: 100%;
+    padding: 0.5rem 0;
+    font-size: 1.125rem;
+    border: none;
+    border-bottom: 1px solid var(--text-color-primary);
+    background: none;
+    outline: none;
+    margin-bottom: 1.5rem;
+}
+
+.search-results {
+    width: 100%;
+    max-height: 20rem;
+    overflow-y: auto;
+    background-color: var(--background-color);
+}
+
+.results-header {
+    font-size: 1rem;
+    font-weight: normal;
+    margin-bottom: 0.5rem;
+}
+
+.results-section {
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
 }
 
 .search-result-item {
-    padding: 10px;
+    border-bottom: 1px solid #eee;
+    padding: 0.5rem;
 }
 
 .search-result-item a {
     text-decoration: none;
-    color: black;
+    color: var(--text-color-primary);
 }
 
 .search-result-item a:hover {

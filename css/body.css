@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
 :root {
-    --background-color-light: #fbf7f0;
+    --background-color-light: rgb(249, 249, 249);
     --text-color-light: #333333;
     --text-color-light-bis:#003300 ;
     --background-color-dark: #333333;
     --text-color-dark: #ffffff;
-    --footer-background-light: #fbf7f0;
+    --footer-background-light: rgb(249, 249, 249);
     --footer-background-dark: #333333;
     --gray-light:#bebebe;
 }
@@ -412,10 +412,11 @@ p {
 }
 
 .article-title {
-    font-size: 3.5rem;
-    font-weight: bold;
-    margin-bottom: 20px;
+    font-size: 6rem;
+    margin-bottom: 90px;
     line-height: 1.2;
+    font-family: Unica, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, FZLanTingHeiS, sans-serif;
+    font-weight: 400;
 }
 
 .article-subtitle {

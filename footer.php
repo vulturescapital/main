@@ -1,8 +1,8 @@
 <link rel="stylesheet" href="../css/footer.css">
 
-<footer class="footer">
-    <div class="footer-content">
-        <div class="footer-section">
+<footer class="vultures-footer">
+    <div class="vultures-footer-content">
+        <div class="vultures-footer-section">
             <h4>ABOUT</h4>
             <ul>
                 <li><a href="index.php">Home</a></li>
@@ -10,7 +10,7 @@
                 <li><a href="contact.php">Contact</a></li>
             </ul>
         </div>
-        <div class="footer-section">
+        <div class="vultures-footer-section">
             <h4>LOGIN</h4>
             <ul>
                 <li><a href="admin_login.php">Admin Login</a></li>
