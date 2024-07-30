@@ -27,19 +27,21 @@
             <a href="index.php" class="navbar-brand d-flex align-items-center">
                 <img src="./images/logo.png" alt="Vulture Logo" style="height: 35px;">
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
-                    aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarContent">
+            <div class="d-flex order-lg-3">
+                <div class="search-icon mr-3">
+                    <a href="javascript:void(0);" class="nav-link" id="search-toggle"><i class="fas fa-search"></i></a>
+                </div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
+                        aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse order-lg-2" id="navbarContent">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item"><a href="./articles_choices.php" class="nav-link">Articles</a></li>
                     <li class="nav-item"><a href="./contact.php" class="nav-link">Contact</a></li>
                     <li class="nav-item"><a href="./newsletter.php" class="nav-link">Newsletter</a></li>
                 </ul>
-                <div class="search-icon">
-                    <a href="javascript:void(0);" class="nav-link" id="search-toggle"><i class="fas fa-search"></i></a>
-                </div>
             </div>
         </div>
     </nav>

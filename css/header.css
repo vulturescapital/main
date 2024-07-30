@@ -17,7 +17,6 @@ body {
     width: 100%;
 }
 
-
 .navbar-brand {
     text-decoration: none;
     font-weight: 700;
@@ -45,9 +44,18 @@ body {
     padding: 0.5rem 0; /* Adjust padding to bring links closer */
 }
 
-.search-icon .nav-link {
+.nav-link {
     display: flex; /* Ensure icon is in line */
     align-items: center;
+}
+
+.search-icon {
+    display: flex;
+    align-items: center;
+}
+
+.navbar .navbar-toggler {
+    margin-left: 1rem;
 }
 
 /* Search Overlay Styles */
@@ -125,4 +133,23 @@ body {
 
 .search-result-item a:hover {
     background-color: #f0f0f0;
+}
+@media (max-width: 1200px) {
+    .nav-link {
+        font-size: 1rem; /* Increase the font size */
+    }
+}
+@media (max-width: 992px) {
+    .navbar .navbar-toggler {
+        margin-left: 0;
+    }
+    .search-icon {
+        margin-right: 0.5rem;
+    }
+    .navbar .order-lg-2 {
+        order: 3;
+    }
+    .navbar .order-lg-3 {
+        order: 2;
+    }
 }
