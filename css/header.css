@@ -2,25 +2,21 @@
 :root {
     --background-color: #ffffff;
     --text-color-primary: #000000;
-    --text-color-secondary: #666666;
 }
 
-
-/* Header Styles */
-header {
-    color: var(--text-color-light-bis);
-    padding: 0;
+/* Remove default margin and padding from the body */
+body {
     margin: 0;
-}
-
-/* Navbar */
-.navbar {
-    display: flex;
-    justify-content: space-between; /* Space out the items */
-    align-items: center;
-    width: 100%;
     padding: 0;
 }
+
+/* Navbar Styles */
+.navbar {
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    width: 100%;
+}
+
 
 .navbar-brand {
     text-decoration: none;
@@ -44,14 +40,14 @@ header {
     color: var(--text-color-light-bis);
     background-color: transparent;
     text-transform: uppercase;
-    font-size: 1.25rem; /* Increase the font size */
+    font-size: 0.8rem; /* Increase the font size */
     text-decoration: none;
+    padding: 0.5rem 0; /* Adjust padding to bring links closer */
 }
 
 .search-icon .nav-link {
     display: flex; /* Ensure icon is in line */
     align-items: center;
-
 }
 
 /* Search Overlay Styles */

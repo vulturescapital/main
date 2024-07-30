@@ -1,12 +1,11 @@
 <?php
 include 'header.php';
-include 'dbconfig.php'; // Assuming your PDO connection is in this file
 
 try {
-    // Récupérer l'article le plus lu
-    $mostReadQuery = "SELECT * FROM article ORDER BY views DESC LIMIT 1";
+    // Récupérer les articles les plus lus
+    $mostReadQuery = "SELECT * FROM article ORDER BY views DESC LIMIT 5";
     $mostReadStmt = $pdo->query($mostReadQuery);
-    $mostReadArticle = $mostReadStmt->fetch(PDO::FETCH_ASSOC);
+    $mostReadArticles = $mostReadStmt->fetchAll(PDO::FETCH_ASSOC);
 
     // Récupérer toutes les catégories
     $categoriesQuery = "SELECT * FROM category";
@@ -41,6 +40,7 @@ try {
     <style>
         .category {
             margin-bottom: 108px;
+            margin-top: 108px;
             position: relative;
             padding-bottom: 10px; /* Add padding bottom to create space */
         }
@@ -79,13 +79,16 @@ try {
             flex: 0 0 auto; /* Prevent flex items from shrinking or growing */
             width: 300px; /* Set fixed width for articles */
             height: 400px; /* Set fixed height for articles */
+            border-radius: 10px;
+            overflow: hidden; /* Ensure the blur effect doesn't overflow */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .article img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 4.5px;
+            border-radius: 10px;
         }
 
         .article .title {
@@ -95,7 +98,8 @@ try {
             left: 10px;
             color: white;
             padding: 5px 10px; /* Adjust padding to fit text */
-            background-color: rgba(0, 0, 0, 0.1); /* Semi-transparent background */
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+            border-radius: 5px;
         }
 
         .article .author {
@@ -103,7 +107,25 @@ try {
             top: 10px;
             left: 10px;
             color: white;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+            padding: 5px 10px;
+            border-radius: 5px;
         }
+
+        .article::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 10px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.3) 100%);
+            transition: opacity 0.3s ease;
+            opacity: 0;
+            z-index: -1;
+        }
+
 
         .arrows {
             display: flex;
@@ -154,16 +176,76 @@ try {
             outline: none;
             border: none;
         }
+
+        .gallery-cell {
+            margin-top: 10px;
+            width: 90%;
+            max-height: 700px;
+            margin-right: 10px;
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden; /* Ensure the blur effect doesn't overflow */
+        }
+
+        .gallery-cell img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .gallery-cell .author,
+        .gallery-cell .title {
+            position: absolute;
+            color: white;
+            padding: 5px 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+        }
+
+        .gallery-cell .author {
+            top: 10px;
+            left: 10px;
+        }
+
+        .gallery-cell .title {
+            bottom: 10px;
+            left: 10px;
+            font-size: xx-large;
+        }
+
+        .gallery-cell:hover {
+            box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+            0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+            0 12.5px 10px rgba(0, 0, 0, 0.06),
+            0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+            0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+            0 100px 80px rgba(0, 0, 0, 0.12);
+        }
+
+
     </style>
 </head>
 <body>
+<div class="carousel-wrapper">
+    <div class="gallery js-flickity"
+         data-flickity-options='{ "wrapAround": true, "prevNextButtons": false, "cellAlign": "center" }'>
+        <?php foreach ($mostReadArticles as $article): ?>
+            <div class="gallery-cell">
+                <?php if ($article['image']): ?>
+                    <img src="<?php echo htmlspecialchars($article['image']); ?>"
+                         alt="<?php echo htmlspecialchars($article['name']); ?>"
+                         class="carousel-image">
+                <?php endif; ?>
+                <div class="author"><?php echo htmlspecialchars($article['author']); ?></div>
+                <div class="title"><?php echo htmlspecialchars($article['name']); ?></div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</div>
+
 <div class="container">
-    <?php if ($mostReadArticle): ?>
-        <section class="hero">
-            <h1><?php echo htmlspecialchars($mostReadArticle['name']); ?></h1>
-            <a href="article.php?id=<?php echo $mostReadArticle['id']; ?>" class="btn">Lire plus</a>
-        </section>
-    <?php endif; ?>
+
 
     <?php foreach ($categories as $category): ?>
         <?php if (isset($articlesByCategory[$category['id']]) && count($articlesByCategory[$category['id']]) > 0): ?>
@@ -207,8 +289,7 @@ try {
         <?php endif; ?>
     <?php endforeach; ?>
 </div>
-<?php include "footer.php"
-?>
+<?php include "footer.php" ?>
 <script>
     function scrollArticlesLeft(element) {
         const articlesDiv = element.closest('.category').querySelector('.articles');
@@ -221,6 +302,61 @@ try {
         console.log("Scrolling right", articlesDiv); // Debugging line
         articlesDiv.scrollBy({left: 300, behavior: 'smooth'});
     }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        var flkty = new Flickity('.main-carousel', {
+            cellAlign: 'center',
+            contain: true,
+            pageDots: true,
+            prevNextButtons: true,
+            wrapAround: true,
+            autoPlay: 3000
+        });
+
+        // Optional: Synchronize dots with Flickity instance
+        const dots = document.querySelectorAll('.dot');
+        flkty.on('change', function (index) {
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        });
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+        const colorThief = new ColorThief();
+        const images = document.querySelectorAll('.carousel-image');
+
+        images.forEach(image => {
+            if (image.complete) {
+                applyShadow(image);
+            } else {
+                image.addEventListener('load', function () {
+                    applyShadow(image);
+                });
+            }
+        });
+
+        function applyShadow(image) {
+            const dominantColor = colorThief.getColor(image);
+            const boxShadowColor = `rgba(${dominantColor[0]}, ${dominantColor[1]}, ${dominantColor[2]}, 0.5)`;
+            const galleryCell = image.closest('.gallery-cell');
+
+            galleryCell.addEventListener('mouseover', function () {
+                galleryCell.style.boxShadow = `
+                    0 2.8px 2.2px ${boxShadowColor},
+                    0 6.7px 5.3px ${boxShadowColor},
+                    0 12.5px 10px ${boxShadowColor},
+                    0 22.3px 17.9px ${boxShadowColor},
+                    0 41.8px 33.4px ${boxShadowColor},
+                    0 100px 80px ${boxShadowColor}
+                `;
+            });
+
+            galleryCell.addEventListener('mouseout', function () {
+                galleryCell.style.boxShadow = 'none';
+            });
+        }
+    });
+
 </script>
 </body>
 </html>
