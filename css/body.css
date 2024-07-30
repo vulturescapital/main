@@ -1,20 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
+/* Variables */
 :root {
     --background-color-light: rgb(249, 249, 249);
     --text-color-light: #333333;
-    --text-color-light-bis:#003300 ;
+    --text-color-light-bis: #003300;
     --background-color-dark: #333333;
     --text-color-dark: #ffffff;
     --footer-background-light: rgb(249, 249, 249);
     --footer-background-dark: #333333;
-    --gray-light:#bebebe;
+    --gray-light: #bebebe;
 }
+
+/* Global Styles */
 html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-
 }
 
 body {
@@ -26,14 +28,17 @@ body {
     flex-direction: column;
     min-height: 100vh;
 }
+
 .main-content {
     flex: 1 0 auto;
 }
+
 .container {
     margin-top: 10px;
     width: 90%;
 }
 
+/* Light & Dark Mode Styles */
 body.light-mode {
     background-color: var(--background-color-light);
     color: var(--text-color-light);
@@ -44,6 +49,7 @@ body.dark-mode {
     color: var(--text-color-dark);
 }
 
+/* Responsive Container */
 @media (min-width: 1200px) {
     .container {
         max-width: 1140px;
@@ -56,32 +62,31 @@ body.dark-mode {
     }
 }
 
+/* Category Card */
 .category-card {
     margin-bottom: 20px;
     text-align: center;
-    /* Ajouter un padding pour de l'espace autour du contenu */
     padding: 15px;
-    /* Optionnel: Ajouter un fond différent pour le mode sombre */
 }
 
 .category-card img {
-    width: 500%; /* Force l'image à prendre toute la largeur de .category-card */
-    height: 200px; /* Ajustez la hauteur comme souhaité */
-    object-fit: cover; /* Cela permet de s'assurer que l'image couvre la zone définie */
-    border-radius: 0.25rem; /* Les bords arrondis pour esthétique */
-    margin-bottom: 15px; /* Un peu d'espace entre l'image et le texte */
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 0.25rem;
+    margin-bottom: 15px;
 }
 
-/* Assurer que le texte est centré dans la carte */
-.category-card h3,
-.category-card p {
+.category-card h3, .category-card p {
     margin: 10px 0;
-    text-align: center; /* Cela centrera le texte horizontalement */
+    text-align: center;
 }
+
 .category-card:hover {
     transform: translateY(-5px);
 }
 
+/* Responsive Navigation */
 @media (max-width: 768px) {
     .main-nav {
         text-align: center;
@@ -105,66 +110,61 @@ body.dark-mode .navbar-nav .nav-link {
 body.dark-mode header {
     background-color: var(--background-color-dark);
 }
+
+/* Carousel Styles */
 .custom-container {
-    position: relative; /* Assurez-vous que votre conteneur personnalisé est positionné relativement */
+    position: relative;
 }
+
 .carousel-indicators {
     text-align: center;
     position: absolute;
-    bottom: -25px; /* Ajustez en fonction de la hauteur souhaitée sous les images du carrousel */
+    bottom: -25px;
     left: 0;
     right: 0;
-}    
+}
+
 .carousel-item .card {
-    margin-bottom: 2rem; /* Ajustez cette valeur selon l'espace souhaité entre les images et les tirets */
-}
-/* Light Mode */
-body.light-mode .carousel-indicators li {
-    background-color: #000; /* Noir pour le mode clair */
+    margin-bottom: 2rem;
 }
 
-/* Dark Mode */
-body.dark-mode .carousel-indicators li {
-    background-color: #fff; /* Blanc pour le mode sombre */
-}
-/* Light Mode */
-body.light-mode .carousel-control-next-icon {
-    filter: invert(100%); /* Cela changera la flèche en noir */
-}
-
-/* Dark Mode */
-body.dark-mode .carousel-control-next-icon {
-    filter: invert(0%); /* Cela maintiendra la flèche en blanc */
-}
-.carousel-control-next {
-    right: -25px; /* Réglez ce nombre pour pousser le contrôle plus à droite */
-}
-.carousel-control-prev {
-    left: -25px; /* Réglez ce nombre pour pousser le contrôle plus à gauche */
-}
-.card {
-    margin-right: 15px; /* Espace entre les cartes */
-    min-width: 25%;
-    border-radius: 5px;
-}
-#articleCarousel {
-    margin-left: 15px; /* Ou la marge que vous souhaitez */
-}
-
-/* Pour un contrôle de couleur selon le thème */
+/* Light Mode Carousel */
 body.light-mode .carousel-indicators li {
     background-color: #000;
 }
 
-body.light-mode .carousel-control-next-icon,
-body.light-mode .carousel-control-prev-icon {
-    filter: invert(1);
-}
-.custom-container .carousel {
-    padding-left: 15px; /* Ajustez si nécessaire pour aligner le contenu */
+body.light-mode .carousel-control-next-icon {
+    filter: invert(100%);
 }
 
-/* Styles for breadcrumb */
+/* Dark Mode Carousel */
+body.dark-mode .carousel-indicators li {
+    background-color: #fff;
+}
+
+body.dark-mode .carousel-control-next-icon {
+    filter: invert(0%);
+}
+
+.carousel-control-next {
+    right: -25px;
+}
+
+.carousel-control-prev {
+    left: -25px;
+}
+
+.card {
+    margin-right: 15px;
+    min-width: 25%;
+    border-radius: 5px;
+}
+
+#articleCarousel {
+    margin-left: 15px;
+}
+
+/* Breadcrumb */
 .breadcrumb {
     background: transparent;
     padding: 0;
@@ -178,7 +178,7 @@ body.light-mode .carousel-control-prev-icon {
 }
 
 .breadcrumb-item a {
-    color: #0275d8; /* Or your preferred color */
+    color: #0275d8;
     text-decoration: none;
 }
 
@@ -186,7 +186,7 @@ body.light-mode .carousel-control-prev-icon {
     text-decoration: underline;
 }
 
-/* Styles for the page title and description */
+/* Page Title and Description */
 h1 {
     font-size: 2.5rem;
     font-weight: bold;
@@ -198,6 +198,7 @@ p {
     color: #7e7e7e;
 }
 
+/* Custom Select */
 .custom-select-wrapper {
     position: relative;
     user-select: none;
@@ -208,74 +209,78 @@ p {
     border: 1px solid #ccc;
     cursor: pointer;
     background-color: #fff;
-    width: 20%; /* Adjust width as needed */
+    width: 20%;
     box-sizing: border-box;
     border-radius: 0.8rem;
     display: block;
     position: relative;
-    z-index: 2; /* Stays on top of other elements */
-    transition: all 0.3s ease; /* Smooth transition for hover effects, etc. */
+    z-index: 2;
+    transition: all 0.3s ease;
 }
 
 .custom-options {
     border: 1px solid #ccc;
-    display: grid; /* Maintain the grid display */
+    display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     grid-gap: 0.6rem;
     column-gap: 10px;
     position: absolute;
-    top: 120%; /* Positioned just below the trigger */
+    top: 120%;
     left: 0;
-    width: 20%; /* Match the trigger width if necessary */
+    width: 20%;
     background: white;
     border-radius: 0.9rem;
     overflow-y: hidden;
-    max-height: 0; /* Start with max-height at 0 for the collapsing effect */
+    max-height: 0;
     transform-origin: top;
-    transform: scaleY(0); /* Start scaled down */
-    visibility: hidden; /* Start hidden */
+    transform: scaleY(0);
+    visibility: hidden;
     padding: 0.5rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    transition: transform 0.3s ease-in-out, max-height 0.3s ease-in-out, visibility 0.3s ease-in-out,color .3s ease;; /* Smooth transitions */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out, max-height 0.3s ease-in-out, visibility 0.3s ease-in-out, color 0.3s ease;
     z-index: 1;
     font-size: 1.125rem;
     font-weight: 700;
     color: var(--gray-light);
 }
+
 .custom-option-all {
-    grid-column: 1 / -1; /* Makes 'All' span all columns */
-    margin-bottom: 1rem; /* Adjust this value to increase the gap */
+    grid-column: 1 / -1;
+    margin-bottom: 1rem;
 }
+
 .custom-select-trigger i {
     position: absolute;
     right: 10px;
     top: 35%;
 }
-.custom-options.show {
-    max-height: 500px; /* Enough height to show all options */
-    transform: scaleY(1); /* Scale to full size */
-    visibility: visible; /* Make visible */
-    overflow-y: auto; /* Allow scrolling */
-}
 
+.custom-options.show {
+    max-height: 500px;
+    transform: scaleY(1);
+    visibility: visible;
+    overflow-y: auto;
+}
 
 .custom-option:hover {
-    font-weight: bold; /* Make text bold on hover */
-    color: #495057; /* Change text color on hover if needed */
+    font-weight: bold;
+    color: #495057;
 }
+
 .custom-select-trigger:focus + .custom-options,
 .custom-select-trigger:active + .custom-options,
 .custom-options.show {
-    transform: scaleY(1); /* Scale to show the content */
-    visibility: visible; /* Make the dropdown visible */
-    max-height: 500px; /* Provide enough space for the content */
-    transition: transform 0.2s ease-in-out, visibility 0.2s ease-in-out; /* Quicker transition for visibility */
+    transform: scaleY(1);
+    visibility: visible;
+    max-height: 500px;
+    transition: transform 0.2s ease-in-out, visibility 0.2s ease-in-out;
+}
 
-}
 .container.mt-4 {
-  padding: 2px; /* Adjust padding as needed */
+    padding: 2px;
 }
-/* Adjust the overall grid layout */
+
+/* Articles Container */
 .articles-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -291,105 +296,102 @@ p {
     flex-direction: column;
     height: 100%;
     overflow: hidden;
+}
 
-}
 .article-link {
-    text-decoration: none; /* Removes underline from all text */
-    color: inherit; /* Text color will be inherited from parent element */
+    text-decoration: none;
+    color: inherit;
 }
+
 .article-link:hover, .article-link:visited, .article-link:link, .article-link:active {
-    text-decoration: none; /* Removes underline from all text on different link states */
-    color: inherit; /* Maintains the text color consistent on different link states */
+    text-decoration: none;
+    color: inherit;
 }
+
 .article-link .card-footer .badge {
-    background-color: inherit; /* It will take the color from the inline style */
-    color: #fff; /* Text color white */
-    /* Additional styles as needed */
+    background-color: inherit;
+    color: #fff;
 }
 
 .card-img-top {
     width: 100%;
     height: 180px;
     object-fit: cover;
-    border: 5px solid #fff; /* Add white border */
-    border-radius: 15px; /* Maintain border radius */
+    border: 5px solid #fff;
+    border-radius: 15px;
 }
 
-
 .card-body {
-  flex: 1; /* Forces the card body to fill the available space, pushing the footer to the bottom */
-  padding: 15px; /* Adjust padding as needed */
+    flex: 1;
+    padding: 15px;
 }
 
 .card-date-author {
-  display: flex;
-  justify-content: space-between; /* Aligns the date and author on the same line */
-  margin-bottom: 10px; /* Space between date/author and title */
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
 }
 
 .card-date-author small {
-  font-size: 0.75rem;
-  color: #6c757d;
+    font-size: 0.75rem;
+    color: #6c757d;
 }
 
 .card-title {
-  font-size: 1rem; /* Example font size */
-  line-height: 1.2; /* Example line height */
-  max-height: 2.4rem; /* Example: 2 lines of text, adjust as needed */
-  overflow: hidden; /* Hides any content that overflows the element's box */
-  display: -webkit-box;
-  -webkit-line-clamp: 2; /* Number of lines you want to display */
-  -webkit-box-orient: vertical;
-  text-overflow: ellipsis; /* Adds an ellipsis to any overflow text */
+    font-size: 1rem;
+    line-height: 1.2;
+    max-height: 2.4rem;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
 }
 
-
 .card-footer {
-  padding: 10px 15px;
-  background-color: #fff;
-  display: flex;
-  justify-content: end; /* Positions the tag at the end */
-  align-items: center;
-  border-top: none;
+    padding: 10px 15px;
+    background-color: #fff;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    border-top: none;
 }
 
 .badge {
-  background-color: var(--text-color-light);
-  color: #fff; /* Sets the text color to white */
-  padding: 5px 15px;
-  border-radius: 15px;
-  font-size: 0.75rem;
-  text-transform: uppercase;
+    background-color: var(--text-color-light);
+    color: #fff;
+    padding: 5px 15px;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
 }
 
-
-/* Adjustments for responsive layout */
+/* Responsive Grid Layout */
 @media (min-width: 1200px) {
     .row {
-        grid-template-columns: repeat(4, 1fr); /* 4 columns for large screens */
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
 @media (max-width: 1199px) {
     .row {
-        grid-template-columns: repeat(3, 1fr); /* 3 columns for medium screens */
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
 @media (max-width: 768px) {
     .row {
-        grid-template-columns: repeat(2, 1fr); /* 2 columns for small screens */
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (max-width: 576px) {
     .row {
-        grid-template-columns: 1fr; /* 1 column for extra small screens */
+        grid-template-columns: 1fr;
     }
 }
-/*fin summury artcile*/
-/* Article page*/
 
+/* Article Page */
 .article-page .breadcrumb {
     background: none;
     padding-left: 0;
@@ -430,7 +432,7 @@ p {
     margin-bottom: 30px;
 }
 
-.article-author, .article-date,.article-reading-time {
+.article-author, .article-date, .article-reading-time {
     font-size: 0.9rem;
     color: #666;
 }
@@ -477,57 +479,57 @@ p {
     text-decoration: underline;
 }
 
-
+/* Related Articles */
 .related-container {
-  padding: 2px; /* Adjust padding as needed */
+    padding: 2px;
 }
 
 .related-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
 .related-col {
-  flex: 1;
-  max-width: 250px; /* Set maximum width for smaller cards */
+    flex: 1;
+    max-width: 250px;
 }
 
 .related-card {
-  border-radius: 15px;
-  overflow: hidden;
-  background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease-in-out;
+    border-radius: 15px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
 }
 
 .related-img-top {
     width: 100%;
     height: 180px;
     object-fit: cover;
-    border: 5px solid #fff; /* Add white border */
-    border-radius: 15px; /* Maintain border radius */
+    border: 5px solid #fff;
+    border-radius: 15px;
 }
 
 .related-article-link {
-  color: inherit;
-  text-decoration: none;
+    color: inherit;
+    text-decoration: none;
 }
 
 .related-article-link:hover {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 .related-card-body {
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
 }
 
 .related-date-author {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
 }
 
 .related-title {
@@ -537,25 +539,27 @@ p {
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: normal; /* Changed from nowrap to normal to allow wrapping */
-    margin: 0; /* Adjust as needed */
-    line-height: 1.2; /* Adjust line height to control the spacing between lines */
-    height: 2.4em; /* Height should be line-height multiplied by the number of lines */
+    white-space: normal;
+    margin: 0;
+    line-height: 1.2;
+    height: 2.4em;
 }
+
 .related-articles-container {
-    margin-top: 5em; /* Adjust the value to your preference */
+    margin-top: 5em;
     width: 66.5%;
 }
-.related-title:hover,
-.related-title:active,
-.related-title:focus,
-.related-title:visited {
-    text-decoration: none; /* Ensures no underline appears on hover */
-    color: inherit; /* The color will remain the same as it's inherited from the parent */
+
+.related-title:hover, .related-title:active, .related-title:focus, .related-title:visited {
+    text-decoration: none;
+    color: inherit;
 }
+
 .custom-container-padding {
-    padding-left: 80px; /* Adds 50px padding to the left */
+    padding-left: 80px;
 }
+
+/* Pagination */
 .pagination {
     display: flex;
     justify-content: center;
@@ -564,43 +568,41 @@ p {
     margin-top: 2rem;
     margin-bottom: 3rem;
 }
+
 .pagination li {
     margin: 0 5px;
-    position: relative; /* Ensure stacking context for z-index */
+    position: relative;
     color: var(--text-color-light-bis);
 }
 
-
-.pagination li.active a,
-.pagination li.active span {
+.pagination li.active a, .pagination li.active span {
     color: #fff;
     background-color: var(--text-color-light-bis);
 }
 
-.pagination li a:hover:not(.active),
-.pagination li span:hover:not(.active) {
+.pagination li a:hover:not(.active), .pagination li span:hover:not(.active) {
     background-color: var(--text-color-light-bis);
-    border:none;
+    border: none;
 }
+
 .page-item.active .page-link {
-    background-color: var(--text-color-light-bis); /* Change this to your desired color */
-    color: white; /* Optional: change text color */
-    border: none; /* Optional: change border color */
+    background-color: var(--text-color-light-bis);
+    color: white;
+    border: none;
 }
-.pagination .disabled a,
-.pagination .disabled span {
+
+.pagination .disabled a, .pagination .disabled span {
     color: #6c757d;
     background-color: #fff;
     border-color: #ddd;
     cursor: not-allowed;
 }
 
-/* Remove white rectangle if caused by an extra element */
 .pagination .extra-element {
-    display: none; /* Hide the extra element */
+    display: none;
 }
-.pagination li a,
-.pagination li span {
+
+.pagination li a, .pagination li span {
     color: var(--text-color-light);
     text-decoration: none;
     background-color: #fff;
@@ -611,15 +613,15 @@ p {
     min-width: 38px;
 }
 
+/* Content Area */
 .content-area {
     display: flex;
     justify-content: space-between;
     width: 100%;
 }
 
-
 .article-content-wrapper {
-    width: 100%; /* Adjust the width as necessary */
+    width: 100%;
 }
 
 .buy-me-a-coffee-container a {
@@ -630,7 +632,7 @@ p {
     margin-bottom: 50px;
 }
 
-/* Subscription form styles */
+/* Subscription Form */
 .subscription-form {
     margin-bottom: 30px;
 }
@@ -642,11 +644,12 @@ p {
     border-radius: 20px;
     width: 300px;
 }
-.subscription-form input[type="email"]:focus,
-.subscription-form input[type="email"]:active {
-    outline: none;  /* Removes the outline on focus */
-    box-shadow: none;  /* Removes any shadow on focus */
+
+.subscription-form input[type="email"]:focus, .subscription-form input[type="email"]:active {
+    outline: none;
+    box-shadow: none;
 }
+
 .subscription-form button {
     padding: 10px 20px;
     background-color: #000000;
@@ -655,23 +658,25 @@ p {
     border-radius: 20px;
     cursor: pointer;
 }
-.subscription-form button:focus{
-    outline: none;  /* Removes the outline on focus */
-    box-shadow: none;
 
+.subscription-form button:focus {
+    outline: none;
+    box-shadow: none;
 }
+
+/* Share Container */
 .share-container {
     text-align: center;
-    margin-bottom: 40px; /* Added space under the share element */
+    margin-bottom: 40px;
 }
 
 .share-container h2 {
-    font-size: 20px; /* Slightly reduced font size */
+    font-size: 20px;
     margin-bottom: 15px;
     margin-top: 20px;
     font-weight: 100;
-    text-transform: uppercase; /* Makes "SHARE" all caps */
-    letter-spacing: 1px; /* Adds some letter spacing for a sleeker look */
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .share-buttons {
@@ -691,7 +696,7 @@ p {
     text-decoration: none;
     color: #000;
     font-weight: bold;
-    border: 1px solid #000; /* Changed from 2px to 1px for thinner circle */
+    border: 1px solid #000;
     font-size: 18px;
     transition: background-color 0.3s, color 0.3s;
 }
@@ -724,38 +729,35 @@ p {
     background-color: #333;
 }
 
-
+/* Horizontal Line */
 .horizontal-line {
     border-top: 0.5px solid #333;
-
     margin-bottom: 20px;
 }
 
-/* Styles for the outer container */
+/* Article Content Section */
 .article-content {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
 }
 
-/* Styles for the inner section with vertical lines */
 .article-content section.article-content {
     position: relative;
-    padding: 0 40px; /* Add horizontal padding for the content */
+    padding: 0 40px;
     font-size: 1.1rem;
     line-height: 1.8;
     text-align: justify;
 }
 
-/* Create vertical lines */
 .article-content section.article-content::before,
 .article-content section.article-content::after {
     content: '';
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 0.5px; /* Width of the vertical line */
-    background-color: #333; /* Color of the vertical line */
+    width: 0.5px;
+    background-color: #333;
 }
 
 .article-content section.article-content::before {
@@ -766,12 +768,11 @@ p {
     right: 0;
 }
 
-/* Styles for paragraphs within the content */
 .article-content section.article-content p {
     margin-bottom: 20px;
 }
 
-/* Responsive adjustments */
+/* Responsive Adjustments for Article Content */
 @media (max-width: 768px) {
     .article-content section.article-content {
         padding: 0 20px;
@@ -779,9 +780,11 @@ p {
 
     .article-content section.article-content::before,
     .article-content section.article-content::after {
-        display: none; /* Hide vertical lines on smaller screens */
+        display: none;
     }
 }
+
+/* Popup Notification */
 .popup {
     visibility: hidden;
     min-width: 250px;
@@ -800,16 +803,15 @@ p {
 }
 
 .popup.success {
-    border-color: #4CAF50; /* Green for success */
-    color: #ffffff; /* Green text for success */
-    background-color: #4CAF50; /* Transparent background */
-
+    border-color: #4CAF50;
+    color: #ffffff;
+    background-color: #4CAF50;
 }
 
 .popup.error {
-    border-color: #f44336; /* Red for error */
-    color: #333; /* Red text for error */
-    background-color:#f44336;
+    border-color: #f44336;
+    color: #333;
+    background-color: #f44336;
 }
 
 .popup.show {
@@ -817,6 +819,7 @@ p {
     opacity: 1;
 }
 
+/* Newsletter Subscription */
 .newsletter-container {
     margin: 40px auto;
     padding: 20px;
@@ -824,12 +827,21 @@ p {
     z-index: 1;
     color: var(--text-color-light-bis);
 }
+
+.newsletter-heading { /* New styles for the Newsletter heading */
+    font-size: 120px;
+    font-family: PitchSans, "system-ui", "Segoe UI", "Helvetica Neue", Arial, FZLanTingHeiS, sans-serif;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
 .newsletter-container::before,
 .newsletter-container::after {
     content: '';
     position: absolute;
     pointer-events: none;
 }
+
 .newsletter-container::before {
     top: 20px;
     bottom: 20px;
@@ -838,6 +850,7 @@ p {
     border-left: 0.5px solid #333;
     border-right: 0.5px solid #333;
 }
+
 .newsletter-container::after {
     left: 20px;
     right: 20px;
@@ -846,6 +859,7 @@ p {
     border-top: 0.5px solid #333;
     border-bottom: 0.5px solid #333;
 }
+
 .newsletter-header {
     text-align: center;
     text-transform: uppercase;
@@ -854,18 +868,21 @@ p {
     margin-bottom: 20px;
     font-family: PitchSans, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, FZLanTingHeiS, sans-serif;
 }
+
 .newsletter-title {
     font-size: 3rem;
     font-family: Rosart, Georgia, Times New Roman, FZNewBaoSong, serif;
     text-align: center;
     margin-bottom: 20px;
 }
+
 .newsletter-form {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 30px;
 }
+
 .newsletter-input {
     width: 60%;
     padding: 12px;
@@ -873,6 +890,7 @@ p {
     border-radius: 25px;
     font-size: 16px;
 }
+
 .newsletter-submit {
     background-color: var(--text-color-light-bis);
     color: #fff;
@@ -883,11 +901,21 @@ p {
     cursor: pointer;
     margin-left: 10px;
 }
+
+/* Contact Form */
+.main-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .container-main-contact {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
+    height: 100%; /* Ensure the container takes full height */
     padding-bottom: 30px;
 }
 
@@ -898,7 +926,6 @@ p {
     overflow: hidden;
     width: 400px;
     max-width: 100%;
-    margin-bottom: 30px;
 }
 
 .contact-form {
@@ -949,6 +976,7 @@ button {
     transition: background 0.3s ease;
 }
 
+/* Login Form */
 .page-container {
     display: flex;
     justify-content: center;
@@ -956,6 +984,7 @@ button {
     height: 100%;
     margin-bottom: 50px;
 }
+
 .login-container {
     background-color: white;
     padding: 20px;
@@ -964,23 +993,26 @@ button {
     width: 300px;
     text-align: center;
 }
+
 .login-container h2 {
     margin-top: 0;
     margin-bottom: 20px;
 }
+
 .login-container label {
     display: block;
     margin-bottom: 8px;
     text-align: left;
 }
-.login-container input[type="text"],
-.login-container input[type="password"] {
+
+.login-container input[type="text"], .login-container input[type="password"] {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+
 .login-container input[type="submit"] {
     width: 100%;
     padding: 10px;

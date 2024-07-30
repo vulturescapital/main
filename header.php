@@ -14,12 +14,8 @@
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/body.css">
     <link rel="stylesheet" href="../css/footer.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet"/>
-    <!-- Flickity CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"/>
     <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
-    <!-- Flickity JavaScript -->
-    <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="icon" type="image/png" href="../images/logo.png">
@@ -29,7 +25,7 @@
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container d-flex justify-content-between align-items-center">
             <a href="index.php" class="navbar-brand d-flex align-items-center">
-                <img src="./images/logo.jpeg" alt="Vulture Logo" style="height: 35px;">
+                <img src="./images/logo.png" alt="Vulture Logo" style="height: 35px;">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
                     aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,7 +43,6 @@
             </div>
         </div>
     </nav>
-
 </header>
 
 <!-- Search Overlay -->
@@ -60,11 +55,13 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
 <script src="../js/main.js"></script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const searchToggle = document.getElementById('search-toggle');

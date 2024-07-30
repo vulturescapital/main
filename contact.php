@@ -3,7 +3,6 @@ include 'header.php'; ?>
 <div id="popup" class="popup"></div>
 <div id="notification" class="notification"></div>
 <div class="main-content">
-
     <div class="container-main-contact">
         <div class="contact-container">
             <div class="contact-form">

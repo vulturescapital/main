@@ -180,7 +180,7 @@ try {
         .gallery-cell {
             margin-top: 10px;
             width: 90%;
-            max-height: 700px;
+            max-height: 650px;
             margin-right: 10px;
             position: relative;
             border-radius: 10px;
@@ -214,13 +214,13 @@ try {
             font-size: xx-large;
         }
 
-        .gallery-cell:hover {
-            box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
-            0 6.7px 5.3px rgba(0, 0, 0, 0.048),
-            0 12.5px 10px rgba(0, 0, 0, 0.06),
-            0 22.3px 17.9px rgba(0, 0, 0, 0.072),
-            0 41.8px 33.4px rgba(0, 0, 0, 0.086),
-            0 100px 80px rgba(0, 0, 0, 0.12);
+        .article-link {
+            display: block;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            color: inherit; /* Ensure the text color is inherited */
+            text-decoration: none; /* Remove underline from links */
         }
 
 
@@ -232,21 +232,20 @@ try {
          data-flickity-options='{ "wrapAround": true, "prevNextButtons": false, "cellAlign": "center" }'>
         <?php foreach ($mostReadArticles as $article): ?>
             <div class="gallery-cell">
-                <?php if ($article['image']): ?>
-                    <img src="<?php echo htmlspecialchars($article['image']); ?>"
-                         alt="<?php echo htmlspecialchars($article['name']); ?>"
-                         class="carousel-image">
-                <?php endif; ?>
-                <div class="author"><?php echo htmlspecialchars($article['author']); ?></div>
-                <div class="title"><?php echo htmlspecialchars($article['name']); ?></div>
+                <a href="article.php?id=<?php echo htmlspecialchars($article['id']); ?>" class="article-link">
+                    <?php if ($article['image']): ?>
+                        <img src="<?php echo htmlspecialchars($article['image']); ?>"
+                             alt="<?php echo htmlspecialchars($article['name']); ?>"
+                             class="carousel-image">
+                    <?php endif; ?>
+                    <div class="author"><?php echo htmlspecialchars($article['author']); ?></div>
+                    <div class="title"><?php echo htmlspecialchars($article['name']); ?></div>
+                </a>
             </div>
         <?php endforeach; ?>
     </div>
 </div>
-
 <div class="container">
-
-
     <?php foreach ($categories as $category): ?>
         <?php if (isset($articlesByCategory[$category['id']]) && count($articlesByCategory[$category['id']]) > 0): ?>
             <section class="category">
@@ -275,12 +274,15 @@ try {
                     <div class="articles">
                         <?php foreach ($articlesByCategory[$category['id']] as $article): ?>
                             <div class="article">
-                                <?php if ($article['image']): ?>
-                                    <img src="<?php echo htmlspecialchars($article['image']); ?>"
-                                         alt="<?php echo htmlspecialchars($article['name']); ?>">
-                                <?php endif; ?>
-                                <div class="author"><?php echo htmlspecialchars($article['author']); ?></div>
-                                <div class="title"><?php echo htmlspecialchars($article['name']); ?></div>
+                                <a href="article.php?id=<?php echo htmlspecialchars($article['id']); ?>"
+                                   class="article-link">
+                                    <?php if ($article['image']): ?>
+                                        <img src="<?php echo htmlspecialchars($article['image']); ?>"
+                                             alt="<?php echo htmlspecialchars($article['name']); ?>">
+                                    <?php endif; ?>
+                                    <div class="author"><?php echo htmlspecialchars($article['author']); ?></div>
+                                    <div class="title"><?php echo htmlspecialchars($article['name']); ?></div>
+                                </a>
                             </div>
                         <?php endforeach; ?>
                     </div>

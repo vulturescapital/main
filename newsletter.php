@@ -3,6 +3,8 @@ include 'header.php';
 ?>
     <div class="main-content">
         <div class="container">
+            <div class="newsletter-heading">Newsletter</div> <!-- Added this line -->
+
             <div class="newsletter-container">
                 <div class="newsletter-header">JOIN OUR MAILING LIST</div>
                 <div class="newsletter-title">
@@ -18,6 +20,7 @@ include 'header.php';
             </div>
         </div>
     </div>
+
 <?php
 include 'footer.php';
 ?>
