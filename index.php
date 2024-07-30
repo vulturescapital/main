@@ -1,9 +1,6 @@
 <?php
 include 'header.php';
 include 'dbconfig.php'; // Assuming your PDO connection is in this file
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
 try {
     // Récupérer l'article le plus lu
