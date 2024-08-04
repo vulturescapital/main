@@ -50,18 +50,12 @@ try {
 }
 ?>
 
-<body>
+
 <div class="container mt-4">
-    <!--<nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.php">Accueil</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Actu des finances</li>
-        </ol>-->
-    </nav>
-    <h1 class="mt-4 mb-4">Actu des finances</h1>
-    <p class="mb-4">Bienvenue sur cette page qui regroupe tous nos articles liés à l'actualité financière. Vous
-        retrouverez ici des actus pour vous tenir au courant des dernières nouveautés, sorties et événements qui
-        concernent la finance.</p>
+    <h1 class="article-list-title mt-4 mb-4">Actu des finances</h1>
+    <p class="article-list-description mb-4">Bienvenue sur cette page qui regroupe tous nos articles liés à l'actualité
+        financière. Vous retrouverez ici des actus pour vous tenir au courant des dernières nouveautés, sorties et
+        événements qui concernent la finance.</p>
 
     <div class="custom-select-wrapper">
         <div class="custom-select-trigger">
@@ -69,44 +63,44 @@ try {
             <i class="fas fa-chevron-down"></i>
         </div>
         <div class="custom-options">
-            <span class="custom-option custom-option-all" data-value="all">Tout</span> <!-- Appliquez la classe ici -->
+            <span class="custom-option custom-option-all" data-value="all">Tout</span>
             <?php foreach ($categories as $category): ?>
                 <span class="custom-option" data-value="<?= htmlspecialchars($category['id']); ?>">
-                            <?= htmlspecialchars($category['name']); ?>
-                        </span>
+                <?= htmlspecialchars($category['name']); ?>
+            </span>
             <?php endforeach; ?>
         </div>
     </div>
 </div>
 
-<div class="container mt-4" id="article-container">
-    <div class="row">
+<div class="container mt-4">
+    <div class="article-list-row" id="article-container">
         <?php foreach ($articles as $article):
-            // Assuming you have a JOIN to get the color from the categories table
             $categoryColor = htmlspecialchars($article['category_color']);
             ?>
-            <div class="col-lg-3 col-md-4 col-sm-6 mb-4"
+            <div class="article-list-col-lg-3 article-list-col-md-4 article-list-col-sm-6 mb-4"
                  data-category="<?= htmlspecialchars($article['category_id']); ?>">
-                <a href="article.php?id=<?= htmlspecialchars($article['id']); ?>" class="article-link">
-                    <div class="card h-100">
-                        <img class="card-img-top" src="<?= htmlspecialchars($article['image']); ?>" alt="Article Image">
-                        <div class="card-body">
+                <a href="article.php?id=<?= htmlspecialchars($article['id']); ?>" class="article-list-link">
+                    <div class="article-list-card h-100">
+                        <img class="article-list-card-img-top" src="<?= htmlspecialchars($article['image']); ?>"
+                             alt="Article Image">
+                        <div class="article-list-card-body">
                             <div class="d-flex justify-content-between">
                                 <?php
-                                // Format and display the publication date
                                 $date = new DateTime($article['date']);
                                 $formattedDate = strtoupper($date->format('F j, Y'));
                                 ?>
                                 <small class="text-muted"><?= htmlspecialchars($formattedDate); ?></small>
                                 <small class="text-muted"><?= htmlspecialchars($article['author']); ?></small>
                             </div>
-                            <h5 class="card-title mt-2"><?= htmlspecialchars($article['name']); ?></h5>
+                            <h5 class="article-list-card-title mt-2"><?= htmlspecialchars($article['name']); ?></h5>
                         </div>
-                        <div class="card-footer bg-white">
+                        <div class="article-list-card-footer">
                             <span class="badge"
                                   style="background-color: <?= $categoryColor; ?>; color: #fff;"><?= htmlspecialchars($article['category_name']); ?></span>
                         </div>
                     </div>
+                </a>
             </div>
         <?php endforeach; ?>
     </div>
@@ -118,7 +112,6 @@ try {
                 </a>
             </li>
 
-            <!-- Numbered page links -->
             <?php for ($i = 1; $i <= $totalPages; $i++): ?>
                 <?php if ($i === 1 || $i === $totalPages || ($i >= $page - 2 && $i <= $page + 2)): ?>
                     <li class="page-item <?= ($page === $i) ? 'active' : '' ?>">
@@ -129,7 +122,6 @@ try {
                 <?php endif; ?>
             <?php endfor; ?>
 
-            <!-- Next Button -->
             <li class="page-item <?= ($page >= $totalPages) ? 'disabled' : '' ?>">
                 <a class="page-link" href="?page=<?= min($totalPages, $page + 1); ?>" aria-label="Next">
                     <span aria-hidden="true">Suivant &raquo;</span>
@@ -139,17 +131,53 @@ try {
     </nav>
 </div>
 <script>
-    $('.custom-option').on('click', function () {
-        var value = $(this).data('value');
-        var url = 'articles_choices.php';
+    document.addEventListener('DOMContentLoaded', function () {
+        const customSelectTrigger = document.querySelector('.custom-select-trigger');
+        const customOptions = document.querySelector('.custom-options');
+        const customOptionItems = document.querySelectorAll('.custom-option');
 
-        // If 'All' is selected, do not add the 'category_id' parameter
-        if (value !== 'all') {
-            url += '?category_id=' + value;
+        function setOptionsWidth() {
+            customOptions.style.width = `${customSelectTrigger.offsetWidth}px`;
         }
 
-        window.location.href = url;
+        customSelectTrigger.addEventListener('click', function (e) {
+            console.log('Trigger clicked');
+            e.stopPropagation();
+            customOptions.classList.toggle('open');
+            console.log('Dropdown state:', customOptions.classList.contains('open') ? 'open' : 'closed');
+            setOptionsWidth(); // Set width on click
+        });
+
+        customOptionItems.forEach(function (option) {
+            option.addEventListener('click', function (e) {
+                console.log('Option clicked:', this.innerHTML);
+                customSelectTrigger.innerHTML = `${this.innerHTML} <i class="fas fa-chevron-down"></i>`;
+                customOptions.classList.remove('open');
+                e.stopPropagation();
+
+                var value = this.getAttribute('data-value');
+                var url = 'articles_choices.php';
+
+                if (value !== 'all') {
+                    url += '?category_id=' + value;
+                }
+
+                console.log('Redirecting to:', url);
+                window.location.href = url;
+            });
+        });
+
+        document.addEventListener('click', function (e) {
+            if (!customSelectTrigger.contains(e.target) && customOptions.classList.contains('open')) {
+                console.log('Click outside, closing dropdown');
+                customOptions.classList.remove('open');
+            }
+        });
+
+        window.addEventListener('resize', setOptionsWidth); // Adjust width on window resize
+        setOptionsWidth(); // Set initial width
     });
+
 
 </script>
 <!-- Include jQuery if it's not already included -->
@@ -159,5 +187,4 @@ try {
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 
 <!-- Insert the rest of your page content here -->
-</div>
 <?php include 'footer.php'; ?>

@@ -2,6 +2,8 @@
 :root {
     --background-color: #ffffff;
     --text-color-primary: #000000;
+    --spacing-header: 0.4rem;
+
 }
 
 /* Remove default margin and padding from the body */
@@ -12,9 +14,10 @@ body {
 
 /* Navbar Styles */
 .navbar {
-    margin: 0; /* Remove default margin */
+    width: 90%; /* Set width to 90% */
+    margin: 0 auto; /* Center the navbar */
     padding: 0; /* Remove default padding */
-    width: 100%;
+    margin-top: 5px;
 }
 
 .navbar-brand {
@@ -134,21 +137,26 @@ body {
 .search-result-item a:hover {
     background-color: #f0f0f0;
 }
+
 @media (max-width: 1200px) {
     .nav-link {
         font-size: 1rem; /* Increase the font size */
     }
 }
+
 @media (max-width: 992px) {
     .navbar .navbar-toggler {
         margin-left: 0;
     }
+
     .search-icon {
         margin-right: 0.5rem;
     }
+
     .navbar .order-lg-2 {
         order: 3;
     }
+
     .navbar .order-lg-3 {
         order: 2;
     }
