@@ -42,7 +42,6 @@ body {
     color: var(--text-color-light-bis);
     background-color: transparent;
     text-transform: uppercase;
-    font-size: 0.8rem; /* Increase the font size */
     text-decoration: none;
     padding: 0.5rem 0; /* Adjust padding to bring links closer */
 }
