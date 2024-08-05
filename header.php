@@ -95,6 +95,7 @@ set_error_handler(function ($errno, $errstr, $errfile, $errline) {
 <!-- Search Overlay -->
 <div id="search-overlay" class="search-overlay d-none">
     <div class="search-overlay-content">
+        <input type="hidden" id="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
         <button id="close-search" class="close-search">&times;</button>
         <input type="text" id="search-input" class="search-input" placeholder="Search Vultures Blog">
         <div id="search-results" class="search-results"></div>
@@ -114,6 +115,7 @@ set_error_handler(function ($errno, $errstr, $errfile, $errline) {
         const closeSearch = document.getElementById('close-search');
         const searchInput = document.getElementById('search-input');
         const searchResults = document.getElementById('search-results');
+        const csrfToken = document.getElementById('csrf_token').value;
 
         searchToggle.addEventListener('click', function () {
             searchOverlay.classList.remove('d-none');
@@ -130,7 +132,7 @@ set_error_handler(function ($errno, $errstr, $errfile, $errline) {
             if (query.length > 2) {
                 fetch(`processes/search.php?query=${encodeURIComponent(query)}`, {
                     headers: {
-                        'X-CSRF-Token': '<?php echo $_SESSION['csrf_token']; ?>'
+                        'X-CSRF-Token': csrfToken
                     }
                 })
                     .then(response => {

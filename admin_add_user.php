@@ -1,4 +1,6 @@
 <?php
+define('SECURE_ACCESS', true);
+
 ob_start(); // Start output buffering
 include 'header_admin.php';
 
