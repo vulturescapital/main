@@ -1,4 +1,6 @@
 <?php
+define('SECURE_ACCESS', true);
+
 include 'header.php'; ?>
 <div id="popup" class="popup"></div>
 <div id="notification" class="notification"></div>

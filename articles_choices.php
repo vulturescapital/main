@@ -1,16 +1,19 @@
 <?php
+define('SECURE_ACCESS', true);
+
 include 'header.php'; ?>
 
 <?php
 $articlesPerPage = 20;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$categoryId = isset($_GET['category_id']) ? $_GET['category_id'] : null;
+$categoryId = isset($_GET['category_id']) ? (int)$_GET['category_id'] : null;
 $startAt = ($page - 1) * $articlesPerPage;
 
 try {
     $categories = $pdo->query("SELECT id, name FROM category")->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
-    die("Error: " . $e->getMessage());
+    error_log($e->getMessage()); // Log the error
+    die("An error occurred. Please try again later."); // User-friendly message
 }
 
 try {
@@ -28,7 +31,7 @@ try {
     $articleStmt->bindValue(':startAt', $startAt, PDO::PARAM_INT);
     $articleStmt->bindValue(':articlesPerPage', $articlesPerPage, PDO::PARAM_INT);
     if ($categoryId) {
-        $articleStmt->bindParam(':category_id', $categoryId);
+        $articleStmt->bindValue(':category_id', $categoryId, PDO::PARAM_INT);
     }
     $articleStmt->execute();
     $articles = $articleStmt->fetchAll(PDO::FETCH_ASSOC);
@@ -40,16 +43,16 @@ try {
     }
     $totalStmt = $pdo->prepare($totalQuery);
     if ($categoryId) {
-        $totalStmt->bindParam(':category_id', $categoryId);
+        $totalStmt->bindValue(':category_id', $categoryId, PDO::PARAM_INT);
     }
     $totalStmt->execute();
     $totalArticles = $totalStmt->fetchColumn();
     $totalPages = ceil($totalArticles / $articlesPerPage);
 } catch (PDOException $e) {
-    die("Error: " . $e->getMessage());
+    error_log($e->getMessage()); // Log the error
+    die("An error occurred. Please try again later."); // User-friendly message
 }
 ?>
-
 
 <div class="container mt-4">
     <h1 class="article-list-title mt-4 mb-4">Actu des finances</h1>
@@ -130,6 +133,7 @@ try {
         </ul>
     </nav>
 </div>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const customSelectTrigger = document.querySelector('.custom-select-trigger');
@@ -141,16 +145,13 @@ try {
         }
 
         customSelectTrigger.addEventListener('click', function (e) {
-            console.log('Trigger clicked');
             e.stopPropagation();
             customOptions.classList.toggle('open');
-            console.log('Dropdown state:', customOptions.classList.contains('open') ? 'open' : 'closed');
-            setOptionsWidth(); // Set width on click
+            setOptionsWidth();
         });
 
         customOptionItems.forEach(function (option) {
             option.addEventListener('click', function (e) {
-                console.log('Option clicked:', this.innerHTML);
                 customSelectTrigger.innerHTML = `${this.innerHTML} <i class="fas fa-chevron-down"></i>`;
                 customOptions.classList.remove('open');
                 e.stopPropagation();
@@ -162,29 +163,26 @@ try {
                     url += '?category_id=' + value;
                 }
 
-                console.log('Redirecting to:', url);
                 window.location.href = url;
             });
         });
 
         document.addEventListener('click', function (e) {
             if (!customSelectTrigger.contains(e.target) && customOptions.classList.contains('open')) {
-                console.log('Click outside, closing dropdown');
                 customOptions.classList.remove('open');
             }
         });
 
-        window.addEventListener('resize', setOptionsWidth); // Adjust width on window resize
-        setOptionsWidth(); // Set initial width
+        window.addEventListener('resize', setOptionsWidth);
+        setOptionsWidth();
     });
-
-
 </script>
+
 <!-- Include jQuery if it's not already included -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
 
 <!-- Include the Select2 JS -->
-<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
 
 <!-- Insert the rest of your page content here -->
 <?php include 'footer.php'; ?>

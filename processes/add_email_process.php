@@ -1,22 +1,19 @@
 <?php
+define('SECURE_ACCESS', true);
+
 session_start();
 ob_start();
 set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__ . '/..');
 
-// Include the database configuration file
-require_once 'dbconfig.php';
 function get_clean_referer_url()
 {
     if (!empty($_SERVER['HTTP_REFERER'])) {
         $url = $_SERVER['HTTP_REFERER'];
-        // Parse URL to remove existing query parameters related to success or error codes
         $parsed_url = parse_url($url);
         parse_str($parsed_url['query'] ?? '', $query_params);
 
-        // Remove specific query parameters
         unset($query_params['success'], $query_params['error']);
 
-        // Rebuild the URL without the specific query parameters
         $clean_url = '';
         if (!empty($parsed_url['path'])) {
             $clean_url .= $parsed_url['path'];
@@ -26,10 +23,9 @@ function get_clean_referer_url()
         }
         return $clean_url;
     }
-    return '/'; // Default to home if referer is not set
+    return '/';
 }
 
-// Helper function to append query parameters correctly
 function append_query_params($url, $params)
 {
     $parsed_url = parse_url($url);
@@ -46,46 +42,46 @@ function append_query_params($url, $params)
     return $clean_url;
 }
 
-// Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['email']) && !empty($_POST['csrf_token'])) {
-    // Validate CSRF token
     if (hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+        require_once 'dbconfig.php';
+
         $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
 
-        // Validate the email
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             header('Location: ' . append_query_params(get_clean_referer_url(), ['error' => 'invalid_email']));
             exit;
         }
 
         try {
-            // Check if the email is already subscribed
-            $checkStmt = $pdo->prepare("SELECT * FROM user WHERE email = :email AND credential_id='5' ");
+            $pdo->beginTransaction();
+
+            $checkStmt = $pdo->prepare("SELECT 1 FROM user WHERE email = :email AND credential_id='5'");
             $checkStmt->execute(['email' => $email]);
             if ($checkStmt->rowCount() > 0) {
+                $pdo->rollBack();
                 header('Location: ' . append_query_params(get_clean_referer_url(), ['error' => 'email_exists']));
                 exit;
             }
 
-            // Prepare the SQL query to insert a new email
             $stmt = $pdo->prepare("INSERT INTO user (email) VALUES (:email)");
             $stmt->bindParam(':email', $email, PDO::PARAM_STR);
             $stmt->execute();
 
-            // Redirect to the original page with a success parameter
+            $pdo->commit();
+
             header('Location: ' . append_query_params(get_clean_referer_url(), ['success' => '1']));
             exit;
 
         } catch (PDOException $e) {
-            // Log the error for review by an admin
+            $pdo->rollBack();
             error_log("Error during subscription: " . $e->getMessage());
-
-            // Redirect to the original page with an error parameter
             header('Location: ' . append_query_params(get_clean_referer_url(), ['error' => 'db_error']));
             exit;
+        } finally {
+            $pdo = null;
         }
     } else {
-        // Invalid CSRF token
         header('Location: ' . append_query_params(get_clean_referer_url(), ['error' => 'invalid_csrf']));
         exit;
     }
@@ -94,7 +90,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['email']) && !empty($_
     exit;
 }
 
-// End output buffering and flush the output
 ob_end_flush();
-$conn = null;
 ?>

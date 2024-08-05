@@ -1,4 +1,6 @@
 <?php
+define('SECURE_ACCESS', true);
+
 include 'header.php';
 ?>
     <div class="main-content">

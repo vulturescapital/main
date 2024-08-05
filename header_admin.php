@@ -1,13 +1,62 @@
-<?php include 'dbconfig.php'; ?>
 <?php
+// Ensure this file is included, not accessed directly
+if (!defined('SECURE_ACCESS') || SECURE_ACCESS !== true) {
+    header("HTTP/1.1 403 Forbidden");
+    exit('Direct access forbidden.');
+}
+
+// Include database configuration securely
+require_once 'dbconfig.php';
+
+
+// Generate CSRF token if it doesn't exist
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
+
+// Validate CSRF token for POST requests
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        header("HTTP/1.1 403 Forbidden");
+        exit('CSRF token validation failed.');
+    }
+}
+
+// Set security headers
+header("X-Content-Type-Options: nosniff");
+header("X-Frame-Options: DENY");
+header("X-XSS-Protection: 1; mode=block");
+header("Referrer-Policy: strict-origin-when-cross-origin");
+
+// Disable error display and enable logging
+ini_set('display_errors', 0);
+ini_set('log_errors', 1);
+ini_set('error_log', '/path/to/error.log'); // Make sure this path is correct and writable
+
+// Set a custom error handler
+set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+    error_log("Error [$errno] $errstr on line $errline in file $errfile");
+    return true;
+});
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <!-- Les scripts de thème doivent être chargés avant les autres ressources -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vultures Admin</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/editor.css">
+    <link rel="stylesheet" href="css/editor.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" type="image/png" href="../images/logo.png">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        // Votre script pour définir le thème
+        // Theme script
         (function () {
             var theme = localStorage.getItem('theme');
             if (theme === 'dark') {
@@ -17,18 +66,6 @@ if (empty($_SESSION['csrf_token'])) {
             }
         })();
     </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vultures Admin</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Votre CSS personnalisé après Bootstrap pour pouvoir écraser les styles si nécessaire -->
-    <link rel="stylesheet" href="../css/editor.css">
-    <link rel="stylesheet" type="text/css" href="css/editor.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="icon" type="image/png" href="../images/logo.png">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 <div class="container">
@@ -60,32 +97,36 @@ if (empty($_SESSION['csrf_token'])) {
     <button class="toggle-sidebar">
         <i class="fas fa-chevron-left"></i>
     </button>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-    <script src="../js/main.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const toggleBtn = document.querySelector('.toggle-sidebar');
-            const sidebar = document.querySelector('.sidebar');
-            const mainContent = document.querySelector('.main-content');
+</div>
 
-            toggleBtn.addEventListener('click', function () {
-                sidebar.classList.toggle('collapsed');
-                mainContent.classList.toggle('expanded');
-                toggleBtn.classList.toggle('collapsed');
-            });
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script src="../js/main.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const toggleBtn = document.querySelector('.toggle-sidebar');
+        const sidebar = document.querySelector('.sidebar');
+        const mainContent = document.querySelector('.main-content');
 
-            // Submenu toggle
-            document.querySelectorAll('.submenu-toggle').forEach(item => {
-                item.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const submenu = this.nextElementSibling;
-                    submenu.classList.toggle('show');
-                    this.classList.toggle('expanded');
-                });
+        toggleBtn.addEventListener('click', function () {
+            sidebar.classList.toggle('collapsed');
+            mainContent.classList.toggle('expanded');
+            toggleBtn.classList.toggle('collapsed');
+        });
+
+        // Submenu toggle
+        document.querySelectorAll('.submenu-toggle').forEach(item => {
+            item.addEventListener('click', function (e) {
+                e.preventDefault();
+                const submenu = this.nextElementSibling;
+                submenu.classList.toggle('show');
+                this.classList.toggle('expanded');
             });
         });
-    </script>
+    });
+</script>
+</body>
+</html>

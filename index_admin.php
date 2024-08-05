@@ -1,4 +1,7 @@
-<?php include 'header_admin.php';
+<?php
+define('SECURE_ACCESS', true);
+
+include 'header_admin.php';
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: index.php");
     exit;

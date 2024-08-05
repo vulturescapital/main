@@ -1,11 +1,13 @@
 <?php
+define('SECURE_ACCESS', true);
+
 include 'header.php';
 $article = [];
 $related_articles = [];
 
 // Validate the ID and fetch article details.
 if (!empty($_GET['id']) && is_numeric($_GET['id'])) {
-    $article_id = $_GET['id'];
+    $article_id = (int)$_GET['id'];
 
     // Prepare and execute the statement to select the article.
     $stmt = $pdo->prepare("SELECT * FROM article WHERE id = :id");

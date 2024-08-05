@@ -492,7 +492,6 @@ body {
     }
 }
 
-/* Article Page */
 
 /* Article Page */
 
@@ -590,7 +589,6 @@ body {
 .related-articles-container {
     padding: 2px;
     max-width: 70%;
-    margin: 5% auto 0 auto;
 }
 
 .related-articles-row {
@@ -797,6 +795,151 @@ body {
     }
 }
 
+/* Base Adjustments for the Article Page Content */
+.article-page-content {
+    max-width: 70%;
+    margin: 0 auto;
+    padding: 2%;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    text-align: justify;
+}
+
+.article-page-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 1rem auto; /* Add margin for spacing */
+}
+
+/* Responsive Adjustments for Article Page Content */
+@media (max-width: 1024px) {
+    .article-page-content {
+        max-width: 90%;
+        padding: 1%;
+    }
+}
+
+@media (max-width: 768px) {
+    .article-page-content {
+        max-width: 100%;
+        padding: 0;
+    }
+}
+
+/* Responsive Adjustments for Article Page Header */
+@media (max-width: 768px) {
+    .article-page-header {
+        max-width: 100%;
+        padding: 0;
+    }
+    .article-page-title {
+        font-size: 2.5rem;
+        margin-bottom: 3%;
+    }
+    .article-page-subtitle {
+        font-size: 1.5rem;
+        margin-bottom: 1.5%;
+    }
+    .article-page-meta {
+        font-size: 1rem;
+        line-height: 1.4;
+    }
+    .article-page-author,
+    .article-page-date,
+    .article-page-reading-time {
+        font-size: 0.8rem;
+    }
+}
+
+/* Responsive Adjustments for Related Articles */
+@media (max-width: 768px) {
+    .related-articles-container {
+        max-width: 100%;
+        padding: 0;
+    }
+    .related-articles-row {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    .related-articles-col {
+        max-width: 100%;
+    }
+    .related-articles-card {
+        width: 100%;
+    }
+    .related-articles-img-top {
+        height: auto;
+    }
+}
+
+/* Responsive Adjustments for Share Container */
+@media (max-width: 768px) {
+    .share-container {
+        padding: 0;
+    }
+    .share-buttons {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        gap: 10px;
+    }
+    .share-button,
+    .share-link {
+        font-size: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .share-button {
+        padding: 0.5rem;
+        border-radius: 50%;
+    }
+    .share-link {
+        padding: 0.625rem 1.25rem;
+    }
+}
+
+/* Responsive Adjustments for Horizontal Line */
+@media (max-width: 768px) {
+    .horizontal-line {
+        margin-bottom: 1%;
+    }
+}
+
+/* Responsive Adjustments for Buy Me a Coffee Container */
+@media (max-width: 768px) {
+    .buy-me-a-coffee-container {
+        margin: 1% auto 3% auto;
+    }
+}
+
+/* Responsive Adjustments for Newsletter Container */
+@media (max-width: 768px) {
+    .newsletter-container {
+        max-width: 100%;
+        padding: 0;
+    }
+    .newsletter-header {
+        font-size: 1.2rem;
+        margin-bottom: 1%;
+    }
+    .newsletter-title {
+        font-size: 1rem;
+        margin-bottom: 1%;
+    }
+    .newsletter-form {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .newsletter-input,
+    .newsletter-submit {
+        width: 100%;
+        font-size: 1rem;
+    }
+}
+
 /* Popup Notification */
 
 .popup {
@@ -835,19 +978,22 @@ body {
 
 /* Newsletter Subscription */
 
+/* Newsletter Subscription */
+
 .newsletter-container {
-    margin: 40px auto;
-    padding: 20px;
+    width: 90%;
+    margin: 0 auto;
+    padding: 1.25rem;
     position: relative;
     z-index: 1;
     color: var(--text-color-light-bis);
 }
 
-.newsletter-heading { /* New styles for the Newsletter heading */
-    font-size: 120px;
+.newsletter-heading {
+    font-size: 7.5rem; /* Adjusted from 120px to 7.5rem */
     font-family: PitchSans, "system-ui", "Segoe UI", "Helvetica Neue", Arial, FZLanTingHeiS, sans-serif;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 10rem; /* Increased space below heading */
 }
 
 .newsletter-container::before,
@@ -858,8 +1004,8 @@ body {
 }
 
 .newsletter-container::before {
-    top: 20px;
-    bottom: 20px;
+    top: 1.25rem;
+    bottom: 1.25rem;
     left: 0;
     right: 0;
     border-left: 0.5px solid #333;
@@ -867,8 +1013,8 @@ body {
 }
 
 .newsletter-container::after {
-    left: 20px;
-    right: 20px;
+    left: 1.25rem;
+    right: 1.25rem;
     top: 0;
     bottom: 0;
     border-top: 0.5px solid #333;
@@ -880,7 +1026,7 @@ body {
     text-transform: uppercase;
     font-size: 1.5rem;
     letter-spacing: 1px;
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
     font-family: PitchSans, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial, FZLanTingHeiS, sans-serif;
 }
 
@@ -888,33 +1034,89 @@ body {
     font-size: 3rem;
     font-family: Rosart, Georgia, Times New Roman, FZNewBaoSong, serif;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
 }
 
 .newsletter-form {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 30px;
+    margin-top: 1.875rem;
 }
 
 .newsletter-input {
     width: 60%;
-    padding: 12px;
+    padding: 0.75rem;
     border: 1px solid #ccc;
-    border-radius: 25px;
-    font-size: 16px;
+    border-radius: 1.5625rem; /* 25px converted to rem */
+    font-size: 1rem; /* 16px converted to rem */
 }
 
 .newsletter-submit {
     background-color: var(--text-color-light-bis);
     color: #fff;
     border: none;
-    padding: 12px 24px;
-    border-radius: 25px;
-    font-size: 16px;
+    padding: 0.75rem 1.5rem;
+    border-radius: 1.5625rem; /* 25px converted to rem */
+    font-size: 1rem; /* 16px converted to rem */
     cursor: pointer;
-    margin-left: 10px;
+    margin-left: 0.625rem; /* 10px converted to rem */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+    .newsletter-heading {
+        font-size: 4rem; /* Adjusted font size for smaller screens */
+        margin-bottom: 2rem; /* Adjusted space for smaller screens */
+    }
+
+    .newsletter-title {
+        font-size: 2rem; /* Adjusted font size for smaller screens */
+    }
+
+    .newsletter-header {
+        font-size: 1.25rem; /* Adjusted font size for smaller screens */
+    }
+
+    .newsletter-form {
+        flex-direction: column;
+    }
+
+    .newsletter-input {
+        width: 80%;
+        margin-bottom: 0.625rem; /* 10px converted to rem */
+    }
+
+    .newsletter-submit {
+        width: 80%;
+        margin-left: 0; /* Remove margin-left for column layout */
+    }
+}
+
+@media (max-width: 768px) {
+    .newsletter-heading {
+        font-size: 3rem; /* Adjusted font size for smaller screens */
+        margin-bottom: 1.5rem; /* Adjusted space for smaller screens */
+    }
+
+    .newsletter-title {
+        font-size: 1.5rem; /* Adjusted font size for smaller screens */
+    }
+
+    .newsletter-header {
+        font-size: 1rem; /* Adjusted font size for smaller screens */
+    }
+
+    .newsletter-input,
+    .newsletter-submit {
+        width: 100%;
+        font-size: 0.875rem; /* Adjusted font size for smaller screens */
+    }
+
+    .newsletter-submit {
+        padding: 0.625rem 1.25rem;
+        font-size: 0.875rem; /* Adjusted font size for smaller screens */
+    }
 }
 
 /* Contact Form */
@@ -932,46 +1134,46 @@ body {
     align-items: center;
     width: 100%;
     height: 100%; /* Ensure the container takes full height */
-    padding-bottom: 30px;
+    padding-bottom: 1.875rem; /* 30px converted to rem */
 }
 
 .contact-container {
     background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 0.625rem; /* 10px converted to rem */
+    box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.1); /* 0 4px 10px converted to rem */
     overflow: hidden;
-    width: 400px;
+    width: 25rem; /* 400px converted to rem */
     max-width: 100%;
 }
 
 .contact-form {
-    padding: 30px;
+    padding: 1.875rem; /* 30px converted to rem */
 }
 
 .contact-form h2 {
-    margin-bottom: 15px;
-    font-size: 24px;
+    margin-bottom: 0.9375rem; /* 15px converted to rem */
+    font-size: 1.5rem; /* 24px converted to rem */
     color: #333;
 }
 
 .input-group {
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem; /* 20px converted to rem */
 }
 
 .input-group label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 0.3125rem; /* 5px converted to rem */
     font-weight: bold;
     color: #555;
 }
 
 .input-group input, .input-group textarea {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    padding: 0.625rem; /* 10px converted to rem */
+    border: 0.0625rem solid #ddd; /* 1px converted to rem */
+    border-radius: 0.3125rem; /* 5px converted to rem */
     box-sizing: border-box;
-    font-size: 14px;
+    font-size: 0.875rem; /* 14px converted to rem */
     color: #333;
 }
 
@@ -985,11 +1187,34 @@ button {
     background-color: #003300;
     color: var(--background-color-light);
     border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
+    padding: 0.625rem 1.25rem; /* 10px 20px converted to rem */
+    border-radius: 0.3125rem; /* 5px converted to rem */
     cursor: pointer;
-    font-size: 16px;
+    font-size: 1rem; /* 16px converted to rem */
     transition: background 0.3s ease;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .contact-container {
+        width: 90%;
+        margin: 10px auto;
+        padding: 1.25rem; /* Adjust padding for smaller screens */
+    }
+
+    .contact-form h2 {
+        font-size: 1.25rem; /* Reduce font size for smaller screens */
+    }
+
+    .input-group input, .input-group textarea {
+        font-size: 0.875rem; /* Ensure inputs and textareas are legible */
+    }
+
+    button {
+        width: 100%;
+        font-size: 0.875rem; /* Adjust button font size for smaller screens */
+        padding: 0.75rem 1rem; /* Adjust padding for smaller screens */
+    }
 }
 
 /* Login Form */

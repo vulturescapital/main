@@ -1,4 +1,6 @@
 <?php
+define('SECURE_ACCESS', true);
+
 session_start();
 ob_start();
 set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__ . '/..');
@@ -10,10 +12,11 @@ require_once 'dbconfig.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['email']) && !empty($_POST['csrf_token'])) {
     // Validate CSRF token
     if (hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-        $name = filter_var($_POST['name'], FILTER_SANITIZE_STRING);
-        $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-        $subject = filter_var($_POST['subject'], FILTER_SANITIZE_STRING);
-        $content = filter_var($_POST['content'], FILTER_SANITIZE_STRING);
+        // Sanitize and validate inputs
+        $name = filter_var(trim($_POST['name']), FILTER_SANITIZE_STRING);
+        $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
+        $subject = filter_var(trim($_POST['subject']), FILTER_SANITIZE_STRING);
+        $content = filter_var(trim($_POST['content']), FILTER_SANITIZE_STRING);
 
         // Validate the email
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -54,5 +57,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['email']) && !empty($_
 
 // End output buffering and flush the output
 ob_end_flush();
-$conn = null;
+$pdo = null;
 ?>

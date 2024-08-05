@@ -1,5 +1,7 @@
 <?php
-include 'header.php';
+define('SECURE_ACCESS', true);
+// Include header
+require_once 'header.php';
 
 try {
     // Récupérer les articles les plus lus

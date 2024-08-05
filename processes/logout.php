@@ -1,4 +1,6 @@
 <?php
+define('SECURE_ACCESS', true);
+
 // Start the session if it hasn't been started already
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -7,8 +9,11 @@ if (session_status() == PHP_SESSION_NONE) {
 // Unset all of the session variables.
 $_SESSION = array();
 
-// Regenerate the session ID for added security
-// This helps prevent session fixation attacks
+// Destroy the session.
+session_destroy();
+
+// Regenerate the session ID for added security.
+// This helps prevent session fixation attacks.
 session_regenerate_id(true);
 
 // Redirect to the login page
