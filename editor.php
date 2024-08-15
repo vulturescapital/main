@@ -22,8 +22,9 @@ try {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1  .0">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Create Your Article</title>
 </head>
 <body>
 <?php include 'header_admin.php'; ?>
@@ -66,22 +67,60 @@ try {
                 <textarea id="editor" name="articleContent">Start writing your amazing article here!</textarea>
             </div>
 
+            <!-- Hidden field to store the calculated reading time -->
+            <input type="hidden" name="duree_reading" value="0">
+
             <button type="submit" class="button-category-publish">Publish Article</button>
         </form>
     </div>
-</div>
 </div>
 
 <script src="https://cdn.tiny.cloud/1/r0jevhd96d198uc5hif2msl0nr3r3g4k3hd8xbwgnecunv9z/tinymce/7/tinymce.min.js"
         referrerpolicy="origin"></script>
 <script>
+    // Function to calculate reading time based on text and image content
+    function calculateReadingTime(text) {
+        const wordsPerMinute = 238;
+        const wordCount = text.split(/\s+/).length;
+        return Math.ceil(wordCount / wordsPerMinute);
+    }
+
+    function calculateImageTime(content) {
+        const imageCount = (content.match(/<img/g) || []).length;
+        const secondsPerImage = 12;
+        return Math.ceil((imageCount * secondsPerImage) / 60);
+    }
+
+    function calculateTotalReadingTime() {
+        const title = document.getElementById('title').value;
+        const header = tinymce.get('headerParagraph').getContent({format: 'text'});
+        const content = tinymce.get('editor').getContent({format: 'text'});
+
+        const fullText = title + ' ' + header + ' ' + content;
+        const textReadingTime = calculateReadingTime(fullText);
+        const imageReadingTime = calculateImageTime(tinymce.get('editor').getContent());
+
+        const totalReadingTime = textReadingTime + imageReadingTime;
+
+        // Update the hidden input with the calculated reading time
+        document.querySelector('input[name="duree_reading"]').value = totalReadingTime;
+    }
+
+    // Initialize TinyMCE editors and set up event listeners
     tinymce.init({
         selector: '#editor, #headerParagraph',
-        plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate mentions tableofcontents footnotes mergetags autocorrect typography inlinecss markdown',
-        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+        plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | addcomment showcomments | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
         height: 300,
         menubar: false,
         statusbar: false,
+    });
+
+    document.getElementById('title').addEventListener('input', calculateTotalReadingTime);
+
+    // Initial calculation on page load
+    document.addEventListener('DOMContentLoaded', function () {
+        calculateTotalReadingTime();
     });
 </script>
 

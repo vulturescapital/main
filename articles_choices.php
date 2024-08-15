@@ -54,135 +54,135 @@ try {
 }
 ?>
 
-<div class="container mt-4">
-    <h1 class="article-list-title mt-4 mb-4">Actu des finances</h1>
-    <p class="article-list-description mb-4">Bienvenue sur cette page qui regroupe tous nos articles liés à l'actualité
-        financière. Vous retrouverez ici des actus pour vous tenir au courant des dernières nouveautés, sorties et
-        événements qui concernent la finance.</p>
+    <div class="container mt-4">
+        <h1 class="article-list-title mt-4 mb-4">Actu des finances</h1>
+        <p class="article-list-description mb-4">Bienvenue sur cette page qui regroupe tous nos articles liés à l'actualité
+            financière. Vous retrouverez ici des actus pour vous tenir au courant des dernières nouveautés, sorties et
+            événements qui concernent la finance.</p>
 
-    <div class="custom-select-wrapper">
-        <div class="custom-select-trigger">
-            <span>Select Category</span>
-            <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="custom-options">
-            <span class="custom-option custom-option-all" data-value="all">Tout</span>
-            <?php foreach ($categories as $category): ?>
-                <span class="custom-option" data-value="<?= htmlspecialchars($category['id']); ?>">
+        <div class="custom-select-wrapper">
+            <div class="custom-select-trigger">
+                <span>Select Category</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="custom-options">
+                <span class="custom-option custom-option-all" data-value="all">Tout</span>
+                <?php foreach ($categories as $category): ?>
+                    <span class="custom-option" data-value="<?= htmlspecialchars($category['id']); ?>">
                 <?= htmlspecialchars($category['name']); ?>
             </span>
-            <?php endforeach; ?>
+                <?php endforeach; ?>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="container mt-4">
-    <div class="article-list-row" id="article-container">
-        <?php foreach ($articles as $article):
-            $categoryColor = htmlspecialchars($article['category_color']);
-            ?>
-            <div class="article-list-col-lg-3 article-list-col-md-4 article-list-col-sm-6 mb-4"
-                 data-category="<?= htmlspecialchars($article['category_id']); ?>">
-                <a href="article.php?id=<?= htmlspecialchars($article['id']); ?>" class="article-list-link">
-                    <div class="article-list-card h-100">
-                        <img class="article-list-card-img-top" src="<?= htmlspecialchars($article['image']); ?>"
-                             alt="Article Image">
-                        <div class="article-list-card-body">
-                            <div class="d-flex justify-content-between">
-                                <?php
-                                $date = new DateTime($article['date']);
-                                $formattedDate = strtoupper($date->format('F j, Y'));
-                                ?>
-                                <small class="text-muted"><?= htmlspecialchars($formattedDate); ?></small>
-                                <small class="text-muted"><?= htmlspecialchars($article['author']); ?></small>
+    <div class="container mt-4">
+        <div class="article-list-row" id="article-container">
+            <?php foreach ($articles as $article):
+                $categoryColor = htmlspecialchars($article['category_color']);
+                ?>
+                <div class="article-list-col-lg-3 article-list-col-md-4 article-list-col-sm-6 mb-4"
+                     data-category="<?= htmlspecialchars($article['category_id']); ?>">
+                    <a href="article.php?id=<?= htmlspecialchars($article['id']); ?>" class="article-list-link">
+                        <div class="article-list-card h-100">
+                            <img class="article-list-card-img-top" src="<?= htmlspecialchars($article['image']); ?>"
+                                 alt="Article Image">
+                            <div class="article-list-card-body">
+                                <div class="d-flex justify-content-between">
+                                    <?php
+                                    $date = new DateTime($article['date']);
+                                    $formattedDate = strtoupper($date->format('F j, Y'));
+                                    ?>
+                                    <small class="text-muted"><?= htmlspecialchars($formattedDate); ?></small>
+                                    <small class="text-muted"><?= htmlspecialchars($article['author']); ?></small>
+                                </div>
+                                <h5 class="article-list-card-title mt-2"><?= htmlspecialchars($article['name']); ?></h5>
                             </div>
-                            <h5 class="article-list-card-title mt-2"><?= htmlspecialchars($article['name']); ?></h5>
-                        </div>
-                        <div class="article-list-card-footer">
+                            <div class="article-list-card-footer">
                             <span class="badge"
                                   style="background-color: <?= $categoryColor; ?>; color: #fff;"><?= htmlspecialchars($article['category_name']); ?></span>
+                            </div>
                         </div>
-                    </div>
-                </a>
-            </div>
-        <?php endforeach; ?>
+                    </a>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>">
+                    <a class="page-link" href="?page=<?= max(1, $page - 1); ?>" aria-label="Previous">
+                        <span aria-hidden="true">&laquo; Précédent</span>
+                    </a>
+                </li>
+
+                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                    <?php if ($i === 1 || $i === $totalPages || ($i >= $page - 2 && $i <= $page + 2)): ?>
+                        <li class="page-item <?= ($page === $i) ? 'active' : '' ?>">
+                            <a class="page-link" href="?page=<?= $i; ?>"><?= $i; ?></a>
+                        </li>
+                    <?php elseif ($i === $page - 3 || $i === $page + 3): ?>
+                        <li class="page-item disabled"><span class="page-link">...</span></li>
+                    <?php endif; ?>
+                <?php endfor; ?>
+
+                <li class="page-item <?= ($page >= $totalPages) ? 'disabled' : '' ?>">
+                    <a class="page-link" href="?page=<?= min($totalPages, $page + 1); ?>" aria-label="Next">
+                        <span aria-hidden="true">Suivant &raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
-    <nav aria-label="Page navigation">
-        <ul class="pagination">
-            <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>">
-                <a class="page-link" href="?page=<?= max(1, $page - 1); ?>" aria-label="Previous">
-                    <span aria-hidden="true">&laquo; Précédent</span>
-                </a>
-            </li>
 
-            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                <?php if ($i === 1 || $i === $totalPages || ($i >= $page - 2 && $i <= $page + 2)): ?>
-                    <li class="page-item <?= ($page === $i) ? 'active' : '' ?>">
-                        <a class="page-link" href="?page=<?= $i; ?>"><?= $i; ?></a>
-                    </li>
-                <?php elseif ($i === $page - 3 || $i === $page + 3): ?>
-                    <li class="page-item disabled"><span class="page-link">...</span></li>
-                <?php endif; ?>
-            <?php endfor; ?>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const customSelectTrigger = document.querySelector('.custom-select-trigger');
+            const customOptions = document.querySelector('.custom-options');
+            const customOptionItems = document.querySelectorAll('.custom-option');
 
-            <li class="page-item <?= ($page >= $totalPages) ? 'disabled' : '' ?>">
-                <a class="page-link" href="?page=<?= min($totalPages, $page + 1); ?>" aria-label="Next">
-                    <span aria-hidden="true">Suivant &raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</div>
+            function setOptionsWidth() {
+                customOptions.style.width = `${customSelectTrigger.offsetWidth}px`;
+            }
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const customSelectTrigger = document.querySelector('.custom-select-trigger');
-        const customOptions = document.querySelector('.custom-options');
-        const customOptionItems = document.querySelectorAll('.custom-option');
+            customSelectTrigger.addEventListener('click', function (e) {
+                e.stopPropagation();
+                customOptions.classList.toggle('open');
+                setOptionsWidth();
+            });
 
-        function setOptionsWidth() {
-            customOptions.style.width = `${customSelectTrigger.offsetWidth}px`;
-        }
+            customOptionItems.forEach(function (option) {
+                option.addEventListener('click', function (e) {
+                    customSelectTrigger.innerHTML = `${this.innerHTML} <i class="fas fa-chevron-down"></i>`;
+                    customOptions.classList.remove('open');
+                    e.stopPropagation();
 
-        customSelectTrigger.addEventListener('click', function (e) {
-            e.stopPropagation();
-            customOptions.classList.toggle('open');
+                    var value = this.getAttribute('data-value');
+                    var url = 'articles_choices.php';
+
+                    if (value !== 'all') {
+                        url += '?category_id=' + value;
+                    }
+
+                    window.location.href = url;
+                });
+            });
+
+            document.addEventListener('click', function (e) {
+                if (!customSelectTrigger.contains(e.target) && customOptions.classList.contains('open')) {
+                    customOptions.classList.remove('open');
+                }
+            });
+
+            window.addEventListener('resize', setOptionsWidth);
             setOptionsWidth();
         });
+    </script>
 
-        customOptionItems.forEach(function (option) {
-            option.addEventListener('click', function (e) {
-                customSelectTrigger.innerHTML = `${this.innerHTML} <i class="fas fa-chevron-down"></i>`;
-                customOptions.classList.remove('open');
-                e.stopPropagation();
+    <!-- Include jQuery if it's not already included -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
 
-                var value = this.getAttribute('data-value');
-                var url = 'articles_choices.php';
+    <!-- Include the Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
 
-                if (value !== 'all') {
-                    url += '?category_id=' + value;
-                }
-
-                window.location.href = url;
-            });
-        });
-
-        document.addEventListener('click', function (e) {
-            if (!customSelectTrigger.contains(e.target) && customOptions.classList.contains('open')) {
-                customOptions.classList.remove('open');
-            }
-        });
-
-        window.addEventListener('resize', setOptionsWidth);
-        setOptionsWidth();
-    });
-</script>
-
-<!-- Include jQuery if it's not already included -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
-
-<!-- Include the Select2 JS -->
-<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
-
-<!-- Insert the rest of your page content here -->
+    <!-- Insert the rest of your page content here -->
 <?php include 'footer.php'; ?>

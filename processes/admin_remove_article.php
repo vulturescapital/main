@@ -50,15 +50,11 @@ try {
         $imagePath = $article['image'];
         error_log("Fetched image path from database: " . $imagePath);
 
-        // Construct and normalize the image path
-        $baseDir = realpath(__DIR__ . '/../images');
-        if ($baseDir === false) {
-            $baseDir = __DIR__ . '/../images';
-        }
-        $absoluteImagePath = $baseDir . '/' . basename($imagePath);
+        // Extract the directory path from the image path
+        $articleDir = dirname(realpath(__DIR__ . '/../' . $imagePath));
 
-        // Log the normalized image path
-        error_log("Normalized Image Path: " . $absoluteImagePath);
+        // Log the directory path
+        error_log("Article Directory Path: " . $articleDir);
 
         // Delete the article from the database
         $stmt = $pdo->prepare("DELETE FROM article WHERE id = :id");
@@ -68,15 +64,34 @@ try {
         if ($stmt->rowCount() > 0) {
             $_SESSION['delete_status'] = "Article supprimé avec succès.";
 
-            // Delete the associated image file
-            if (file_exists($absoluteImagePath)) {
-                if (unlink($absoluteImagePath)) {
-                    error_log("Image deleted successfully: " . $absoluteImagePath);
-                } else {
-                    error_log("Failed to delete the image: " . $absoluteImagePath);
+            // Function to delete a directory and all its contents
+            function deleteDirectory($dir) {
+                if (!file_exists($dir)) {
+                    return false;
                 }
+
+                if (!is_dir($dir)) {
+                    return unlink($dir);
+                }
+
+                foreach (scandir($dir) as $item) {
+                    if ($item == '.' || $item == '..') {
+                        continue;
+                    }
+
+                    if (!deleteDirectory($dir . DIRECTORY_SEPARATOR . $item)) {
+                        return false;
+                    }
+                }
+
+                return rmdir($dir);
+            }
+
+            // Delete the associated directory
+            if (deleteDirectory($articleDir)) {
+                error_log("Directory deleted successfully: " . $articleDir);
             } else {
-                error_log("Image file does not exist: " . $absoluteImagePath);
+                error_log("Failed to delete the directory: " . $articleDir);
             }
 
             $pdo->commit();
