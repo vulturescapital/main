@@ -15,7 +15,7 @@ try {
     $categories = $categoriesStmt->fetchAll(PDO::FETCH_ASSOC);
 
     // Récupérer tous les articles
-    $articlesQuery = "SELECT * FROM article";
+    $articlesQuery = "SELECT * FROM article WHERE date <= CURDATE()";
     $articlesStmt = $pdo->query($articlesQuery);
     $articles = $articlesStmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -38,14 +38,14 @@ try {
          data-flickity-options='{ "wrapAround": true, "prevNextButtons": false, "cellAlign": "center" }'>
         <?php foreach ($mostReadArticles as $article): ?>
             <div class="index-gallery-cell">
-                <a href="article.php?id=<?php echo htmlspecialchars($article['id']); ?>" class="index-article-link">
-                    <?php if ($article['image']): ?>
-                        <img src="<?php echo htmlspecialchars($article['image']); ?>"
-                             alt="<?php echo htmlspecialchars($article['name']); ?>" class="index-carousel-image">
-                    <?php endif; ?>
-                    <div class="index-gallery-author"><?php echo htmlspecialchars($article['author']); ?></div>
-                    <div class="index-gallery-title"><?php echo htmlspecialchars($article['name']); ?></div>
-                </a>
+                <img src="<?php echo htmlspecialchars($article['image']); ?>"
+                     alt="<?php echo htmlspecialchars($article['name']); ?>" class="index-carousel-image">
+                <div class="index-gallery-content">
+                    <h2 class="index-gallery-title"
+                        id="carousel-title-<?php echo $article['id']; ?>"><?php echo htmlspecialchars($article['name']); ?></h2>
+                    <a href="article.php?id=<?php echo htmlspecialchars($article['id']); ?>"
+                       class="index-gallery-button">En savoir plus</a>
+                </div>
             </div>
         <?php endforeach; ?>
     </div>
@@ -81,13 +81,13 @@ try {
                             <div class="index-article-card">
                                 <a href="article.php?id=<?php echo htmlspecialchars($article['id']); ?>"
                                    class="index-article-link">
-                                    <?php if ($article['image']): ?>
-                                        <img src="<?php echo htmlspecialchars($article['image']); ?>"
-                                             alt="<?php echo htmlspecialchars($article['name']); ?>"
-                                             class="index-article-image">
-                                    <?php endif; ?>
+                                    <img src="<?php echo htmlspecialchars($article['image']); ?>"
+                                         alt="<?php echo htmlspecialchars($article['name']); ?>"
+                                         class="index-article-image">
                                     <div class="index-article-author"><?php echo htmlspecialchars($article['author']); ?></div>
-                                    <div class="index-article-title"><?php echo htmlspecialchars($article['name']); ?></div>
+                                    <div class="index-article-title" id="article-title-<?php echo $article['id']; ?>">
+                                        <?php echo htmlspecialchars($article['name']); ?>
+                                    </div>
                                 </a>
                             </div>
                         <?php endforeach; ?>
@@ -99,6 +99,95 @@ try {
 </div>
 <?php include "footer.php" ?>
 <script>
+    // Function to preload images
+    function preloadImages(images) {
+        return Promise.all(images.map(src => {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = resolve;
+                img.onerror = reject;
+                img.src = src;
+            });
+        }));
+    }
+
+    // Function to get average RGB
+    function getAverageRGB(imgEl) {
+        var blockSize = 5, // only visit every 5 pixels
+            defaultRGB = {r:0,g:0,b:0}, // for non-supporting envs
+            canvas = document.createElement('canvas'),
+            context = canvas.getContext && canvas.getContext('2d'),
+            data, width, height,
+            i = -4,
+            length,
+            rgb = {r:0,g:0,b:0},
+            count = 0;
+
+        if (!context) {
+            return defaultRGB;
+        }
+
+        height = canvas.height = imgEl.naturalHeight || imgEl.offsetHeight || imgEl.height;
+        width = canvas.width = imgEl.naturalWidth || imgEl.offsetWidth || imgEl.width;
+
+        context.drawImage(imgEl, 0, 0);
+
+        try {
+            data = context.getImageData(0, 0, width, height);
+        } catch(e) {
+            /* security error, img on diff domain */
+            return defaultRGB;
+        }
+
+        length = data.data.length;
+
+        while ( (i += blockSize * 4) < length ) {
+            ++count;
+            rgb.r += data.data[i];
+            rgb.g += data.data[i+1];
+            rgb.b += data.data[i+2];
+        }
+
+        // ~~ used to floor values
+        rgb.r = ~~(rgb.r/count);
+        rgb.g = ~~(rgb.g/count);
+        rgb.b = ~~(rgb.b/count);
+
+        return rgb;
+    }
+
+    // Function to set title color
+    function setTitleColor() {
+        var carouselCells = document.querySelectorAll('.index-gallery-cell');
+        var articleCards = document.querySelectorAll('.index-article-card');
+
+        function setColorForElement(img, title, author = null) {
+            if (img && title) {
+                var rgb = getAverageRGB(img);
+                var brightness = (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000;
+                var color = brightness > 128 ? 'black' : 'white';
+                title.style.color = color;
+                if (author) {
+                    author.style.color = color;
+                }
+            }
+        }
+
+        carouselCells.forEach(function(cell) {
+            var img = cell.querySelector('.index-carousel-image');
+            var title = cell.querySelector('.index-gallery-title');
+            setColorForElement(img, title);
+        });
+
+        articleCards.forEach(function(card) {
+            var img = card.querySelector('.index-article-image');
+            var title = card.querySelector('.index-article-title');
+            var author = card.querySelector('.index-article-author');
+            setColorForElement(img, title, author);
+        });
+    }
+
+    // Function to scroll articles
     function scrollArticlesLeft(element) {
         const articlesDiv = element.closest('.index-category-section').querySelector('.index-articles');
         articlesDiv.scrollBy({left: -300, behavior: 'smooth'});
@@ -108,4 +197,44 @@ try {
         const articlesDiv = element.closest('.index-category-section').querySelector('.index-articles');
         articlesDiv.scrollBy({left: 300, behavior: 'smooth'});
     }
+
+    // Main initialization function
+    function initializeGallery() {
+        // Initialize Flickity
+        var elem = document.querySelector('.index-gallery');
+        var flkty = new Flickity(elem, {
+            wrapAround: true,
+            prevNextButtons: false,
+            cellAlign: 'center'
+        });
+
+        // Set initial title colors
+        setTitleColor();
+
+        // Add Flickity event listener
+        flkty.on('select', function() {
+            setTitleColor();
+        });
+    }
+
+    // Wait for the DOM to be fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get all carousel image sources
+        const carouselImages = Array.from(document.querySelectorAll('.index-carousel-image')).map(img => img.src);
+
+        // Preload carousel images
+        preloadImages(carouselImages)
+            .then(() => {
+                // Initialize the gallery once images are loaded
+                initializeGallery();
+            })
+            .catch(error => {
+                console.error('Error preloading images:', error);
+                // Initialize the gallery even if image preloading fails
+                initializeGallery();
+            });
+
+        // Set colors for article cards (these don't need to wait for carousel images)
+        setTitleColor();
+    });
 </script>

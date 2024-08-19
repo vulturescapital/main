@@ -4,9 +4,13 @@ if (!defined('SECURE_ACCESS') || SECURE_ACCESS !== true) {
     header("HTTP/1.1 403 Forbidden");
     exit('Direct access forbidden.');
 }
-
-// Include database configuration securely
 require_once 'dbconfig.php';
+
+// Check if the user is logged in
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: admin_login.php");
+    exit('Access denied. Please login.');
+}
 
 
 // Generate CSRF token if it doesn't exist

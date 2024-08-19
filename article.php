@@ -226,6 +226,10 @@ if (!empty($_GET['id']) && is_numeric($_GET['id'])) {
                     </div>
                 <?php endforeach; ?>
         </div>
+        <div id="lightbox" class="lightbox">
+            <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+            <img class="lightbox-content" id="lightbox-image">
+        </div>
     </div>
 <?php endif; ?>
     <div class="newsletter-container">
