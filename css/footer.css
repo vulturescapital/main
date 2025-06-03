@@ -1,0 +1,41 @@
+.vultures-footer {
+    flex-shrink: 0;
+    color: var(--text-color-light-bis);
+    width: 100%;
+}
+
+.vultures-footer-content {
+    display: flex;
+    justify-content: flex-start; /* Align items to the left */
+    padding: 1.25em;
+    max-width: 110rem;
+    margin: 0 auto;
+}
+
+.vultures-footer-section {
+    flex: 1;
+    margin: 0 1em;
+}
+
+.vultures-footer-section h4 {
+    font-size: 1.125rem;
+    margin-bottom: 0.625rem;
+}
+
+.vultures-footer-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.vultures-footer-section ul li {
+    margin-bottom: 0.3125rem;
+}
+
+.vultures-footer-section ul li a {
+    color: var(--text-color-primary);
+    text-decoration: none;
+}
+
+.vultures-footer-section ul li a:hover {
+    text-decoration: underline;
+}
